@@ -10,8 +10,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class QuizMakerTest {
-
-    private UniqueNumberGenoratorUtilities uniqueNumberGenoratorUtilities;
     private QuizMaker quizmaker;
     private Quiz quiz;
     private Server server;
@@ -21,7 +19,6 @@ public class QuizMakerTest {
 
     @Before
     public void buildUp() {
-        uniqueNumberGenoratorUtilities = mock(UniqueNumberGenoratorUtilities.class);
         quiz = mock(Quiz.class);
         server = mock(Server.class);
 
@@ -31,6 +28,7 @@ public class QuizMakerTest {
     @Test
     public void shouldBeAbleToCreateAQuiz() {
         String expected = "The colour quiz!";
+
         when(server.createQuiz(expected)).thenReturn(quiz);
         quizmaker.createQuiz(expected);
 
@@ -59,5 +57,18 @@ public class QuizMakerTest {
         thrown.expectMessage("Title is empty. Please enter a title with at least one character.");
 
         quizmaker.createQuiz(null);
+    }
+
+    @Test
+    public void shouldHaveAppropriateMessageIfTitleIsAnEmptyString() throws IllegalArgumentException {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("Title is empty. Please enter a title with at least one character.");
+
+        quizmaker.createQuiz("    ");
+    }
+
+    @Test
+    public void shouldBeAbleToAddQuestionToQuizCreated() {
+
     }
 }
