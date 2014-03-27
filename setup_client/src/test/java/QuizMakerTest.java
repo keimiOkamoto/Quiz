@@ -16,6 +16,9 @@ public class QuizMakerTest {
     private Quiz quiz;
     private Server server;
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     @Before
     public void buildUp() {
         uniqueNumberGenoratorUtilities = mock(UniqueNumberGenoratorUtilities.class);
@@ -25,9 +28,6 @@ public class QuizMakerTest {
         quizmaker = new QuizMakerImpl(server);
     }
 
-    /*
-     * Retrieves quiz by id
-     */
     @Test
     public void shouldBeAbleToCreateAQuiz() {
         String expected = "The colour quiz!";
@@ -51,5 +51,13 @@ public class QuizMakerTest {
         actual = quizmaker.getTitle();
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldHaveAppropriateMessageIfTitleIsNull() throws IllegalArgumentException {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("Title is empty. Please enter a title with at least one character.");
+
+        quizmaker.createQuiz(null);
     }
 }
