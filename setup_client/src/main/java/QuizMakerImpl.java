@@ -19,4 +19,8 @@ public class QuizMakerImpl implements QuizMaker {
         return quiz.getTitle();
     }
 
+    @Override
+    public void addQuestion(Question question) {
+        quiz.addQuestion(question);
+    }
 }

@@ -5,6 +5,7 @@ import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -69,6 +70,14 @@ public class QuizMakerTest {
 
     @Test
     public void shouldBeAbleToAddQuestionToQuizCreated() {
+        String title = "A quiz";
+        when(server.createQuiz(anyString())).thenReturn(quiz);
+        quizmaker.createQuiz(title);
+        verify(server).createQuiz(title);
 
+        Question question = mock(Question.class);
+
+        quizmaker.addQuestion(question);
+        verify(quiz).addQuestion(question);
     }
 }
