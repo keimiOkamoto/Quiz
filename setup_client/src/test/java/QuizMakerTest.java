@@ -14,6 +14,7 @@ public class QuizMakerTest {
     private QuizMaker quizmaker;
     private Quiz quiz;
     private Server server;
+    private Question question;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -22,6 +23,7 @@ public class QuizMakerTest {
     public void buildUp() {
         quiz = mock(Quiz.class);
         server = mock(Server.class);
+        question = mock(Question.class);
 
         quizmaker = new QuizMakerImpl(server);
     }
@@ -69,15 +71,21 @@ public class QuizMakerTest {
     }
 
     @Test
-    public void shouldBeAbleToAddQuestionToQuizCreated() {
+    public void shouldBeAbleToAddQuestionToQuizCreated() throws IllegalQuizException {
         String title = "A quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         quizmaker.createQuiz(title);
         verify(server).createQuiz(title);
 
-        Question question = mock(Question.class);
-
         quizmaker.addQuestion(question);
         verify(quiz).addQuestion(question);
+    }
+
+    @Test
+    public void shouldThrowIllegalQuizExceptionIfQuizIsNull() throws IllegalQuizException {
+        thrown.expect(IllegalQuizException.class);
+        thrown.expectMessage("Quiz does not exist. Please create a quiz and try again.");
+
+        quizmaker.addQuestion(question);
     }
 }

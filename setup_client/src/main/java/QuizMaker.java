@@ -20,5 +20,5 @@ public interface QuizMaker {
      *
      * @param question for a quiz
      */
-    void addQuestion(Question question);
+    void addQuestion(Question question) throws IllegalQuizException;
 }

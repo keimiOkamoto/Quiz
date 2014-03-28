@@ -20,7 +20,8 @@ public class QuizMakerImpl implements QuizMaker {
     }
 
     @Override
-    public void addQuestion(Question question) {
+    public void addQuestion(Question question) throws IllegalQuizException {
+        if (quiz == null) throw new IllegalQuizException();
         quiz.addQuestion(question);
     }
 }
