@@ -6,7 +6,7 @@ public interface QuizMaker {
      * @param title a title for the quiz
      * @return a unique id
      */
-    int createQuiz(String title);
+    int createQuiz(String title) throws IllegalArgumentException;
 
     /**
      * Getter for a title of a quiz
@@ -16,9 +16,11 @@ public interface QuizMaker {
     String getTitle();
 
     /**
-     * Adds a question to a qiz
+     * Adds a question to a quiz.
      *
      * @param question for a quiz
+     * @throws IllegalQuizException if quiz does not exist.
+     * @throws IllegalArgumentException if question is null or empty.
      */
-    void addQuestion(Question question) throws IllegalQuizException;
+    void addQuestion(String question) throws IllegalQuizException, IllegalArgumentException;
 }

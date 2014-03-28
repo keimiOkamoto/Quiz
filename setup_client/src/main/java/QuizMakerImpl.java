@@ -8,7 +8,7 @@ public class QuizMakerImpl implements QuizMaker {
     }
 
     @Override
-    public int createQuiz(String title) {
+    public int createQuiz(String title) throws IllegalArgumentException {
         if (title == null || title.trim().equals("")) throw new IllegalArgumentException("Title is empty. Please enter a title with at least one character.");
         quiz = server.createQuiz(title.trim());
         return 0;
@@ -20,8 +20,10 @@ public class QuizMakerImpl implements QuizMaker {
     }
 
     @Override
-    public void addQuestion(Question question) throws IllegalQuizException {
+    public void addQuestion(String questionString) throws IllegalQuizException, IllegalArgumentException {
         if (quiz == null) throw new IllegalQuizException();
+        if (questionString == null || questionString.trim().equals("")) throw new IllegalArgumentException("Question entered is empty. Please try again.");
+        Question question = server.createQuestion(questionString);
         quiz.addQuestion(question);
     }
 }

@@ -77,7 +77,9 @@ public class QuizMakerTest {
         quizmaker.createQuiz(title);
         verify(server).createQuiz(title);
 
-        quizmaker.addQuestion(question);
+        String question1 = "What is the biggest cat?";
+        when(server.createQuestion(anyString())).thenReturn(question);
+        quizmaker.addQuestion(question1);
         verify(quiz).addQuestion(question);
     }
 
@@ -86,6 +88,33 @@ public class QuizMakerTest {
         thrown.expect(IllegalQuizException.class);
         thrown.expectMessage("Quiz does not exist. Please create a quiz and try again.");
 
-        quizmaker.addQuestion(question);
+        String question1 = "What is the biggest cat?";
+        quizmaker.addQuestion(question1);
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionIfStringIsNull() throws IllegalQuizException {
+        String title = "A quiz";
+        when(server.createQuiz(anyString())).thenReturn(quiz);
+        quizmaker.createQuiz(title);
+        verify(server).createQuiz(title);
+
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("Question entered is empty. Please try again.");
+
+        quizmaker.addQuestion(null);
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionIfStringIsEmpty() throws IllegalQuizException {
+        String title = "A quiz";
+        when(server.createQuiz(anyString())).thenReturn(quiz);
+        quizmaker.createQuiz(title);
+        verify(server).createQuiz(title);
+
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("Question entered is empty. Please try again.");
+
+        quizmaker.addQuestion("    ");
     }
 }

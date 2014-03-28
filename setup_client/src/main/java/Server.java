@@ -5,4 +5,6 @@ public interface Server {
      * @return a quiz
      */
     Quiz createQuiz(String title);
+
+    Question createQuestion(String questionString);
 }
