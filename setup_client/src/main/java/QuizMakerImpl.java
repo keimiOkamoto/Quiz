@@ -33,7 +33,10 @@ public class QuizMakerImpl implements QuizMaker {
     }
 
     @Override
-    public void addAnswer(String answer) {
+    public void addAnswer(String answer) throws IllegalQuestionException, IllegalArgumentException {
+        if (question == null) throw new IllegalQuestionException();
+        if (answer == null || answer.trim().equals("")) throw new IllegalArgumentException("Answer entered is empty. Please enter a valid answer.");
+
         Answer answer1 = server.createAnswer(answer);
         question.addAnswer(answer1);
     }

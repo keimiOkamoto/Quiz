@@ -3,9 +3,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -30,6 +30,9 @@ public class QuizMakerTest {
         quizmaker = new QuizMakerImpl(server);
     }
 
+    /*
+     * Start of createQuiz()
+     */
     @Test
     public void shouldBeAbleToCreateAQuiz() {
         String expected = "The colour quiz!";
@@ -72,6 +75,9 @@ public class QuizMakerTest {
         quizmaker.createQuiz("    ");
     }
 
+    /*
+     * Start of addQuiz()
+     */
     @Test
     public void shouldBeAbleToAddQuestionToQuizCreated() throws IllegalQuizException {
         String title = "A quiz";
@@ -120,8 +126,11 @@ public class QuizMakerTest {
         quizmaker.addQuestion("    ");
     }
 
+    /*
+     * Start of addAnswer()
+     */
     @Test
-    public void shouldBeAbleToAddAnswer() throws IllegalQuizException {
+    public void shouldBeAbleToAddAnswer() throws IllegalQuizException, IllegalQuestionException {
         String title = "Animal quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         quizmaker.createQuiz(title);
@@ -136,5 +145,50 @@ public class QuizMakerTest {
         when(server.createAnswer(stringAnswer)).thenReturn(answer);
         quizmaker.addAnswer(stringAnswer);
         verify(question).addAnswer(answer);
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionIfStringIsNullForAddAnswer() throws IllegalQuestionException, IllegalQuizException {
+        String title = "A Quiz";
+        when(server.createQuiz(anyString())).thenReturn(quiz);
+        quizmaker.createQuiz(title);
+        verify(server).createQuiz(title);
+
+        String questionString = "How many teeth does a lion have?";
+        when(server.createQuestion(anyString())).thenReturn(question);
+        quizmaker.addQuestion(questionString);
+        verify(quiz).addQuestion(question);
+
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("Answer entered is empty. Please enter a valid answer.");
+
+        quizmaker.addAnswer(null);
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionIfStringIsEmptyForAddAnswer() throws IllegalQuestionException, IllegalQuizException {
+        String title = "A Quiz";
+        when(server.createQuiz(anyString())).thenReturn(quiz);
+        quizmaker.createQuiz(title);
+        verify(server).createQuiz(title);
+
+        String questionString = "How many teeth does a lion have?";
+        when(server.createQuestion(anyString())).thenReturn(question);
+        quizmaker.addQuestion(questionString);
+        verify(quiz).addQuestion(question);
+
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("Answer entered is empty. Please enter a valid answer.");
+
+        quizmaker.addAnswer("       ");
+    }
+
+    @Test
+    public void shouldThrowIllegalQuestionExceptionIfQuestionDoesNotExist() throws IllegalQuestionException {
+        thrown.expect(IllegalQuestionException.class);
+        thrown.expectMessage("Question doesn't exist. There must be a question to have an answer!");
+
+        String answer = "lion";
+        quizmaker.addAnswer(answer);
     }
 }

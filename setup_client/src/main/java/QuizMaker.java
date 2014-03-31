@@ -24,7 +24,14 @@ public interface QuizMaker {
      */
     void addQuestion(String question) throws IllegalQuizException, IllegalArgumentException;
 
-    void addAnswer(String answer);
+    /**
+     * Add answer to a question.
+     *
+     * @param answer to a question.
+     * @throws IllegalQuestionException if question does not exist.
+     * @throws IllegalArgumentException if answer is null or empty.
+     */
+    void addAnswer(String answer) throws IllegalArgumentException, IllegalQuestionException;
 
 
 }
