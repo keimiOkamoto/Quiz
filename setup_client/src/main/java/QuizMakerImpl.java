@@ -1,7 +1,11 @@
-
+/**
+ * Controls the organization of the quiz.
+ */
 public class QuizMakerImpl implements QuizMaker {
     private Server server;
     private Quiz quiz;
+    private Question question;
+
 
     public QuizMakerImpl(Server server) {
         this.server = server;
@@ -23,7 +27,14 @@ public class QuizMakerImpl implements QuizMaker {
     public void addQuestion(String questionString) throws IllegalQuizException, IllegalArgumentException {
         if (quiz == null) throw new IllegalQuizException();
         if (questionString == null || questionString.trim().equals("")) throw new IllegalArgumentException("Question entered is empty. Please try again.");
-        Question question = server.createQuestion(questionString);
+
+        question = server.createQuestion(questionString);
         quiz.addQuestion(question);
+    }
+
+    @Override
+    public void addAnswer(String answer) {
+        Answer answer1 = server.createAnswer(answer);
+        question.addAnswer(answer1);
     }
 }

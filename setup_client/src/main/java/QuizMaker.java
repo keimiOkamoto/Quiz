@@ -23,4 +23,8 @@ public interface QuizMaker {
      * @throws IllegalArgumentException if question is null or empty.
      */
     void addQuestion(String question) throws IllegalQuizException, IllegalArgumentException;
+
+    void addAnswer(String answer);
+
+
 }

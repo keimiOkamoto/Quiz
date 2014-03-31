@@ -2,7 +2,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.mockito.Mockito;
+
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
@@ -15,6 +15,7 @@ public class QuizMakerTest {
     private Quiz quiz;
     private Server server;
     private Question question;
+    private Answer answer;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -24,6 +25,7 @@ public class QuizMakerTest {
         quiz = mock(Quiz.class);
         server = mock(Server.class);
         question = mock(Question.class);
+        answer = mock(Answer.class);
 
         quizmaker = new QuizMakerImpl(server);
     }
@@ -116,5 +118,23 @@ public class QuizMakerTest {
         thrown.expectMessage("Question entered is empty. Please try again.");
 
         quizmaker.addQuestion("    ");
+    }
+
+    @Test
+    public void shouldBeAbleToAddAnswer() throws IllegalQuizException {
+        String title = "Animal quiz";
+        when(server.createQuiz(anyString())).thenReturn(quiz);
+        quizmaker.createQuiz(title);
+        verify(server).createQuiz(title);
+
+        String question1 = "What is the biggest cat?";
+        when(server.createQuestion(anyString())).thenReturn(question);
+        quizmaker.addQuestion(question1);
+        verify(quiz).addQuestion(question);
+
+        String stringAnswer = "Lion";
+        when(server.createAnswer(stringAnswer)).thenReturn(answer);
+        quizmaker.addAnswer(stringAnswer);
+        verify(question).addAnswer(answer);
     }
 }

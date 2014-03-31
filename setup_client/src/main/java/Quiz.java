@@ -12,4 +12,5 @@ public interface Quiz {
      * @param question a question
      */
     void addQuestion(Question question);
+
 }
