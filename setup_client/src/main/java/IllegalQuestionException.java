@@ -3,11 +3,13 @@
  * not exist.
  */
 public class IllegalQuestionException extends Exception {
+
     /**
-     * Exception with a message that notifies user
-     * that a question does not exist.
+     * Constructor for IllegalQuestionException
+     *
+     * @param message A message fot the user
      */
-    public IllegalQuestionException () {
-        super("Question doesn't exist. There must be a question to have an answer!");
+    public IllegalQuestionException(String message) {
+        super(message);
     }
 }

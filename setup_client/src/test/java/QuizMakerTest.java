@@ -5,7 +5,6 @@ import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -141,6 +140,8 @@ public class QuizMakerTest {
         quizmaker.addQuestion(question1);
         verify(quiz).addQuestion(question);
 
+        when(question.valid(anyString())).thenReturn(true);
+
         String stringAnswer = "Lion";
         when(server.createAnswer(stringAnswer)).thenReturn(answer);
         quizmaker.addAnswer(stringAnswer);
@@ -158,6 +159,8 @@ public class QuizMakerTest {
         when(server.createQuestion(anyString())).thenReturn(question);
         quizmaker.addQuestion(questionString);
         verify(quiz).addQuestion(question);
+
+        when(question.valid(anyString())).thenReturn(true);
 
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Answer entered is empty. Please enter a valid answer.");
@@ -177,6 +180,8 @@ public class QuizMakerTest {
         quizmaker.addQuestion(questionString);
         verify(quiz).addQuestion(question);
 
+        when(question.valid(anyString())).thenReturn(true);
+
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Answer entered is empty. Please enter a valid answer.");
 
@@ -190,5 +195,26 @@ public class QuizMakerTest {
 
         String answer = "lion";
         quizmaker.addAnswer(answer);
+    }
+
+    @Test
+    public void shouldThrowIllegalQuestionExceptionIfAnswerIsInvalid() throws IllegalQuizException, IllegalQuestionException {
+        String title = "Animal quiz";
+        when(server.createQuiz(anyString())).thenReturn(quiz);
+        quizmaker.createQuiz(title);
+        verify(server).createQuiz(title);
+
+        String question1 = "What is the biggest cat?";
+        when(server.createQuestion(anyString())).thenReturn(question);
+        quizmaker.addQuestion(question1);
+        verify(quiz).addQuestion(question);
+
+        String stringAnswer = "Lion";
+        when(question.valid(stringAnswer)).thenReturn(false);
+
+        thrown.expect(IllegalQuestionException.class);
+        thrown.expectMessage("You have already entered that answer. Please enter a different one.");
+
+        quizmaker.addAnswer(stringAnswer);
     }
 }

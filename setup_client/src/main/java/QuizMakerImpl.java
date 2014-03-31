@@ -19,25 +19,24 @@ public class QuizMakerImpl implements QuizMaker {
     }
 
     @Override
-    public String getTitle() {
-        return quiz.getTitle();
-    }
-
-    @Override
     public void addQuestion(String questionString) throws IllegalQuizException, IllegalArgumentException {
         if (quiz == null) throw new IllegalQuizException();
         if (questionString == null || questionString.trim().equals("")) throw new IllegalArgumentException("Question entered is empty. Please try again.");
-
         question = server.createQuestion(questionString);
         quiz.addQuestion(question);
     }
 
     @Override
     public void addAnswer(String answer) throws IllegalQuestionException, IllegalArgumentException {
-        if (question == null) throw new IllegalQuestionException();
+        if (question == null) throw new IllegalQuestionException("Question doesn't exist. There must be a question to have an answer!");
+        if (!question.valid(answer)) throw new IllegalQuestionException("You have already entered that answer. Please enter a different one.");
         if (answer == null || answer.trim().equals("")) throw new IllegalArgumentException("Answer entered is empty. Please enter a valid answer.");
-
         Answer answer1 = server.createAnswer(answer);
         question.addAnswer(answer1);
+    }
+
+    @Override
+    public String getTitle() {
+        return quiz.getTitle();
     }
 }
