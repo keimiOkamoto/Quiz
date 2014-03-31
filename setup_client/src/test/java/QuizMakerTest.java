@@ -75,7 +75,7 @@ public class QuizMakerTest {
     }
 
     /*
-     * Start of addQuiz()
+     * Start of addQuestion()
      */
     @Test
     public void shouldBeAbleToAddQuestionToQuizCreated() throws IllegalQuizException {
@@ -123,6 +123,24 @@ public class QuizMakerTest {
         thrown.expectMessage("Question entered is empty. Please try again.");
 
         quizmaker.addQuestion("    ");
+    }
+
+    @Test
+    public void shouldThrowIllegalQuizExceptionIfQuestionAlreadyExists() throws IllegalQuizException {
+        String title = "Animal quiz";
+        when(server.createQuiz(anyString())).thenReturn(quiz);
+        quizmaker.createQuiz(title);
+        verify(server).createQuiz(title);
+
+        when(server.createQuestion(anyString())).thenReturn(question);
+
+        String stringAnswer = "Lion";
+        when(quiz.valid(stringAnswer)).thenReturn(false);
+
+        thrown.expect(IllegalQuizException.class);
+        thrown.expectMessage("You have already entered that question. Please enter a different one.");
+
+        quizmaker.addQuestion(stringAnswer);
     }
 
     /*
@@ -180,7 +198,7 @@ public class QuizMakerTest {
         quizmaker.addQuestion(questionString);
         verify(quiz).addQuestion(question);
 
-        when(question.valid(anyString())).thenReturn(true);
+        when(question.valid(anyString())).thenReturn(false);
 
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Answer entered is empty. Please enter a valid answer.");

@@ -14,6 +14,6 @@ public class IllegalQuizExceptionTest {
         thrown.expect(IllegalQuizException.class);
         thrown.expectMessage("Quiz does not exist. Please create a quiz and try again.");
 
-        throw new IllegalQuizException();
+        throw new IllegalQuizException("Quiz does not exist. Please create a quiz and try again.");
     }
 }

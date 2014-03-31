@@ -20,8 +20,9 @@ public class QuizMakerImpl implements QuizMaker {
 
     @Override
     public void addQuestion(String questionString) throws IllegalQuizException, IllegalArgumentException {
-        if (quiz == null) throw new IllegalQuizException();
+        if (quiz == null) throw new IllegalQuizException("Quiz does not exist. Please create a quiz and try again.");
         if (questionString == null || questionString.trim().equals("")) throw new IllegalArgumentException("Question entered is empty. Please try again.");
+        if (!quiz.valid(questionString)) throw new IllegalQuizException("You have already entered that question. Please enter a different one.");
         question = server.createQuestion(questionString);
         quiz.addQuestion(question);
     }
