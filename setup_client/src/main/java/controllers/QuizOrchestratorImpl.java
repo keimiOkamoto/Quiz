@@ -1,6 +1,5 @@
 package controllers;
 
-
 import exceptions.IllegalQuestionException;
 import exceptions.IllegalQuizException;
 import items.Answer;
@@ -14,7 +13,6 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
     private Server server;
     private Quiz quiz;
     private Question question;
-
 
     public QuizOrchestratorImpl(Server server) {
         this.server = server;
