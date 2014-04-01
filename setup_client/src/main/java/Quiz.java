@@ -14,4 +14,6 @@ public interface Quiz {
     void addQuestion(Question question);
 
     boolean valid(String question);
+
+    int getId();
 }

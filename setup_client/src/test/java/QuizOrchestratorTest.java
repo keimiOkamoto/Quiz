@@ -36,7 +36,6 @@ public class QuizOrchestratorTest {
     @Test
     public void shouldBeAbleToCreateAQuiz() throws IllegalQuizException {
         String expected = "The colour quiz!";
-
         when(server.createQuiz(expected)).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
         quizmaker.createQuiz(expected);
@@ -58,6 +57,21 @@ public class QuizOrchestratorTest {
         actual = quizmaker.getTitle();
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldBeAbleToReturnIdWhenCreatingAQuiz() throws IllegalQuizException {
+        String title = "Animal Quiz";
+        when(server.createQuiz(anyString())).thenReturn(quiz);
+        when(server.valid(anyString())).thenReturn(true);
+
+        int expected = 2;
+        when(quiz.getId()).thenReturn(expected);
+
+        int actual = quizmaker.createQuiz(title);
+        verify(quiz).getId();
+
+        assertEquals(expected,actual);
     }
 
     @Test
