@@ -1,12 +1,9 @@
 package controllers;
 
+import items.Question;
 import items.Quiz;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.rmi.registry.Registry;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
@@ -16,23 +13,33 @@ import static org.mockito.Mockito.when;
 public class ServerTest {
 
     private Server server;
-    private Registry registry;
+    private ItemsFactory itemsFactory;
 
     @Before
     public void buildUp() {
-        registry = mock(Registry.class);
-
-        server = new ServerImpl(registry);
+        itemsFactory = mock(ItemsFactory.class);
+        server = new ServerImpl(itemsFactory);
     }
 
     @Test
-    public void shouldBeAbleToCreateQuizWithAValidTitle () throws RemoteException, NotBoundException {
+    public void shouldBeAbleToCreateQuizWithAValidTitle() {
         String title = "Quiz about cake.";
-        Object expectedQuiz = mock(Quiz.class);
+        Quiz expectedQuiz = mock(Quiz.class);
 
-        when(registry.lookup(anyString())).thenReturn((java.rmi.Remote) expectedQuiz);
+        when(itemsFactory.generateQuiz(anyString())).thenReturn(expectedQuiz);
         Quiz actualQuiz = server.createQuiz(title);
 
         assertEquals(expectedQuiz, actualQuiz);
+    }
+
+    @Test
+    public void shouldBeAbleToCreateQuestion() {
+        String question = "Where is the treasure berried?";
+        Question expectedQuestion = mock(Question.class);
+
+        when(itemsFactory.generateQuestion(anyString())).thenReturn(expectedQuestion);
+        Question actualQuestion = server.createQuestion(question);
+
+        assertEquals(expectedQuestion, actualQuestion);
     }
 }

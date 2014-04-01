@@ -10,26 +10,20 @@ import java.rmi.registry.Registry;
 
 public class ServerImpl implements Server {
 
-    private Registry registry;
+    private ItemsFactory itemsFactory;
 
-    public ServerImpl(Registry registry) {
-        this.registry = registry;
+    public ServerImpl(ItemsFactory itemsFactory) {
+        this.itemsFactory = itemsFactory;
     }
 
     @Override
     public Quiz createQuiz(String title) {
-        Quiz newQuiz = null;
-        try {
-            newQuiz = (Quiz)registry.lookup("Quiz");
-        } catch (RemoteException | NotBoundException e) {
-            e.printStackTrace();
-        }
-        return newQuiz;
+        return itemsFactory.generateQuiz(title);
     }
 
     @Override
-    public Question createQuestion(String questionString) {
-        return null;
+    public Question createQuestion(String question) {
+        return itemsFactory.generateQuestion(question);
     }
 
     @Override

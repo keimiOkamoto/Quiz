@@ -7,6 +7,10 @@ import items.Quiz;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+/**
+ * This class is the connection between the setup client and the
+ * server.
+ */
 public interface Server {
     /**
      * creates a quiz.
@@ -19,10 +23,10 @@ public interface Server {
     /**
      * Creates a question
      *
-     * @param questionString
+     * @param question
      * @return
      */
-    Question createQuestion(String questionString);
+    Question createQuestion(String question);
 
     /**
      * Creates answers
