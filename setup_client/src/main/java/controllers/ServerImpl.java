@@ -11,9 +11,12 @@ import java.rmi.registry.Registry;
 public class ServerImpl implements Server {
 
     private ItemsFactory itemsFactory;
+    private ServerLink serverLink;
 
-    public ServerImpl(ItemsFactory itemsFactory) {
-        this.itemsFactory = itemsFactory;
+
+    public ServerImpl(ServerLink serverLink) {
+        this.serverLink = serverLink;
+        this.itemsFactory = serverLink.getItemsFactory();
     }
 
     @Override
@@ -28,12 +31,12 @@ public class ServerImpl implements Server {
 
     @Override
     public Answer createAnswer(String answer) {
-        return null;
+        return itemsFactory.generateAnswer(answer);
     }
 
     @Override
     public boolean valid(String title) {
-        return false;
+        return serverLink.titleIsValid(title);
     }
 
     @Override
