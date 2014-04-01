@@ -1,12 +1,15 @@
 public interface QuizMaker {
+
     /**
      * Creates a quiz and returns a unique id for
      * the quiz.
      *
      * @param title a title for the quiz
      * @return a unique id
+     * @throws IllegalArgumentException
+     * @throws IllegalQuizException if the name of the quiz already exists.
      */
-    int createQuiz(String title) throws IllegalArgumentException;
+    int createQuiz(String title) throws IllegalArgumentException, IllegalQuizException;
 
     /**
      * Getter for a title of a quiz

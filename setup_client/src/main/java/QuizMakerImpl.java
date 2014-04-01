@@ -12,8 +12,9 @@ public class QuizMakerImpl implements QuizMaker {
     }
 
     @Override
-    public int createQuiz(String title) throws IllegalArgumentException {
+    public int createQuiz(String title) throws IllegalArgumentException, IllegalQuizException {
         if (title == null || title.trim().equals("")) throw new IllegalArgumentException("Title is empty. Please enter a title with at least one character.");
+        if (!server.valid(title)) throw new IllegalQuizException("A quiz with the same name already exists. Please try again with another name.");
         quiz = server.createQuiz(title.trim());
         return 0;
     }

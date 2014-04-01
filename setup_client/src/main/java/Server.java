@@ -22,4 +22,12 @@ public interface Server {
      * @return Answer object
      */
     Answer createAnswer(String answer);
+
+    /**
+     * Checks if the same quiz title already exists.
+     *
+     * @param title Title of a quiz
+     * @return false if quiz with the same tile already exists.
+     */
+    boolean valid(String title);
 }

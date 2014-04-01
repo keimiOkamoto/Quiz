@@ -33,10 +33,11 @@ public class QuizMakerTest {
      * Start of createQuiz()
      */
     @Test
-    public void shouldBeAbleToCreateAQuiz() {
+    public void shouldBeAbleToCreateAQuiz() throws IllegalQuizException {
         String expected = "The colour quiz!";
 
         when(server.createQuiz(expected)).thenReturn(quiz);
+        when(server.valid(anyString())).thenReturn(true);
         quizmaker.createQuiz(expected);
 
         verify(server).createQuiz(expected);
@@ -59,7 +60,7 @@ public class QuizMakerTest {
     }
 
     @Test
-    public void shouldHaveAppropriateMessageIfTitleIsNull() throws IllegalArgumentException {
+    public void shouldHaveAppropriateMessageIfTitleIsNull() throws IllegalArgumentException, IllegalQuizException {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Title is empty. Please enter a title with at least one character.");
 
@@ -67,11 +68,22 @@ public class QuizMakerTest {
     }
 
     @Test
-    public void shouldHaveAppropriateMessageIfTitleIsAnEmptyString() throws IllegalArgumentException {
+    public void shouldHaveAppropriateMessageIfTitleIsAnEmptyString() throws IllegalArgumentException, IllegalQuizException {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Title is empty. Please enter a title with at least one character.");
 
         quizmaker.createQuiz("    ");
+    }
+
+    @Test
+    public void shouldThrowIllegalQuizExceptionIfDuplicateQuizNameExists() throws IllegalQuizException {
+        String title = "A quiz about cat";
+        when(server.valid(title)).thenReturn(false);
+
+        thrown.expect(IllegalQuizException.class);
+        thrown.expectMessage("A quiz with the same name already exists. Please try again with another name.");
+
+        quizmaker.createQuiz(title);
     }
 
     /*
@@ -81,11 +93,13 @@ public class QuizMakerTest {
     public void shouldBeAbleToAddQuestionToQuizCreated() throws IllegalQuizException {
         String title = "A quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
+        when(server.valid(anyString())).thenReturn(true);
         quizmaker.createQuiz(title);
         verify(server).createQuiz(title);
 
         String question1 = "What is the biggest cat?";
         when(server.createQuestion(anyString())).thenReturn(question);
+        when(quiz.valid(question1)).thenReturn(true);
         quizmaker.addQuestion(question1);
         verify(quiz).addQuestion(question);
     }
@@ -103,6 +117,7 @@ public class QuizMakerTest {
     public void shouldThrowIllegalArgumentExceptionIfStringIsNull() throws IllegalQuizException {
         String title = "A quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
+        when(server.valid(anyString())).thenReturn(true);
         quizmaker.createQuiz(title);
         verify(server).createQuiz(title);
 
@@ -116,6 +131,7 @@ public class QuizMakerTest {
     public void shouldThrowIllegalArgumentExceptionIfStringIsEmpty() throws IllegalQuizException {
         String title = "A quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
+        when(server.valid(anyString())).thenReturn(true);
         quizmaker.createQuiz(title);
         verify(server).createQuiz(title);
 
@@ -129,6 +145,7 @@ public class QuizMakerTest {
     public void shouldThrowIllegalQuizExceptionIfQuestionAlreadyExists() throws IllegalQuizException {
         String title = "Animal quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
+        when(server.valid(anyString())).thenReturn(true);
         quizmaker.createQuiz(title);
         verify(server).createQuiz(title);
 
@@ -150,10 +167,12 @@ public class QuizMakerTest {
     public void shouldBeAbleToAddAnswer() throws IllegalQuizException, IllegalQuestionException {
         String title = "Animal quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
+        when(server.valid(anyString())).thenReturn(true);
         quizmaker.createQuiz(title);
         verify(server).createQuiz(title);
 
         String question1 = "What is the biggest cat?";
+        when(quiz.valid(question1)).thenReturn(true);
         when(server.createQuestion(anyString())).thenReturn(question);
         quizmaker.addQuestion(question1);
         verify(quiz).addQuestion(question);
@@ -170,10 +189,12 @@ public class QuizMakerTest {
     public void shouldThrowIllegalArgumentExceptionIfStringIsNullForAddAnswer() throws IllegalQuestionException, IllegalQuizException {
         String title = "A Quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
+        when(server.valid(anyString())).thenReturn(true);
         quizmaker.createQuiz(title);
         verify(server).createQuiz(title);
 
         String questionString = "How many teeth does a lion have?";
+        when(quiz.valid(questionString)).thenReturn(true);
         when(server.createQuestion(anyString())).thenReturn(question);
         quizmaker.addQuestion(questionString);
         verify(quiz).addQuestion(question);
@@ -190,15 +211,17 @@ public class QuizMakerTest {
     public void shouldThrowIllegalArgumentExceptionIfStringIsEmptyForAddAnswer() throws IllegalQuestionException, IllegalQuizException {
         String title = "A Quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
+        when(server.valid(anyString())).thenReturn(true);
         quizmaker.createQuiz(title);
         verify(server).createQuiz(title);
 
         String questionString = "How many teeth does a lion have?";
         when(server.createQuestion(anyString())).thenReturn(question);
+        when(quiz.valid(questionString)).thenReturn(true);
         quizmaker.addQuestion(questionString);
         verify(quiz).addQuestion(question);
 
-        when(question.valid(anyString())).thenReturn(false);
+        when(question.valid(anyString())).thenReturn(true);
 
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Answer entered is empty. Please enter a valid answer.");
@@ -219,10 +242,12 @@ public class QuizMakerTest {
     public void shouldThrowIllegalQuestionExceptionIfAnswerIsInvalid() throws IllegalQuizException, IllegalQuestionException {
         String title = "Animal quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
+        when(server.valid(anyString())).thenReturn(true);
         quizmaker.createQuiz(title);
         verify(server).createQuiz(title);
 
         String question1 = "What is the biggest cat?";
+        when(quiz.valid(anyString())).thenReturn(true);
         when(server.createQuestion(anyString())).thenReturn(question);
         quizmaker.addQuestion(question1);
         verify(quiz).addQuestion(question);
