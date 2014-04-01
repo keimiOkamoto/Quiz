@@ -30,4 +30,11 @@ public interface Server {
      * @return false if quiz with the same tile already exists.
      */
     boolean valid(String title);
+
+    /**
+     * Closes a quiz with the corresponding id.
+     *
+     * @param id
+     */
+    void closeQuiz(int id);
 }

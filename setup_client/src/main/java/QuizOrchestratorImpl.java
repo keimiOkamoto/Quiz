@@ -38,6 +38,11 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
     }
 
     @Override
+    public void closeQuiz(int id) {
+        server.closeQuiz(id);
+    }
+
+    @Override
     public String getTitle() {
         return quiz.getTitle();
     }

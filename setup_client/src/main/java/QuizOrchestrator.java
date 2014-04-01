@@ -1,8 +1,7 @@
 public interface QuizOrchestrator {
 
     /**
-     * Creates a quiz and returns a unique id for
-     * the quiz.
+     * Creates a quiz and returns a unique id for the quiz.
      *
      * @param title a title for the quiz
      * @return a unique id
@@ -36,5 +35,10 @@ public interface QuizOrchestrator {
      */
     void addAnswer(String answer) throws IllegalArgumentException, IllegalQuestionException;
 
-
+    /**
+     * Closes a quiz with the corresponding ID.
+     *
+     * @param id ID of a quiz.
+     */
+    void closeQuiz(int id);
 }

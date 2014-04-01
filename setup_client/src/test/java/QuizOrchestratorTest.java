@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -259,5 +260,15 @@ public class QuizOrchestratorTest {
         thrown.expectMessage("You have already entered that answer. Please enter a different one.");
 
         quizmaker.addAnswer(stringAnswer);
+    }
+
+    /*
+     * Start of closeQuiz()
+     */
+    @Test
+    public void shouldBeAbleToCloseQuizByQuotingId() throws IllegalQuizException {
+        int id = 0;
+        quizmaker.closeQuiz(id);
+        verify(server).closeQuiz(anyInt());
     }
 }
