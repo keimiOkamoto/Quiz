@@ -4,6 +4,9 @@ import items.Answer;
 import items.Question;
 import items.Quiz;
 
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+
 public interface Server {
     /**
      * creates a quiz.

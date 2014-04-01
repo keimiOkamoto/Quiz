@@ -6,18 +6,18 @@ public class QuizBuilderImpl implements QuizBuilder {
 
     @Override
     public void launch() {
-        System.out.println("Welcome to the quiz creator. Would you like to create a quiz?\nPlease press Y to continue or N to exit.");
+        System.out.println("Welcome to the quiz creator. Would you like to create a quiz?\nPlease press 'Y' to continue or 'EXIT' to exit.");
 
         Scanner scanner = new Scanner(System.in);
-        if (scanner.hasNext()) {
-            String a = scanner.nextLine();
-            if (a.equals("Y")) {
+        String a = scanner.nextLine();
+        while (!((a.equals("EXIT")))){
+            if (scanner.hasNext() && a.equals("Y")) {
                 play();
             }
         }
     }
 
     private void play() {
-
+        System.out.println("Hi");
     }
 }
