@@ -1,3 +1,5 @@
+package items;
+
 public interface Quiz {
     /**
      * Getter for the title of a quiz

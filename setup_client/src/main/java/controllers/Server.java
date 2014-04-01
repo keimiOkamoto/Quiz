@@ -1,3 +1,9 @@
+package controllers;
+
+import items.Answer;
+import items.Question;
+import items.Quiz;
+
 public interface Server {
     /**
      * creates a quiz.
@@ -19,7 +25,7 @@ public interface Server {
      * Creates answers
      *
      * @param answer String
-     * @return Answer object
+     * @return items.Answer object
      */
     Answer createAnswer(String answer);
 

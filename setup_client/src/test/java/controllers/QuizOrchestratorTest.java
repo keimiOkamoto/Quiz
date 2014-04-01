@@ -1,3 +1,10 @@
+package controllers;
+
+import exceptions.IllegalQuestionException;
+import exceptions.IllegalQuizException;
+import items.Answer;
+import items.Question;
+import items.Quiz;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -11,7 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class QuizOrchestratorTest {
-    private QuizOrchestrator quizmaker;
+    private QuizOrchestrator quizOrchestrator;
     private Quiz quiz;
     private Server server;
     private Question question;
@@ -27,7 +34,7 @@ public class QuizOrchestratorTest {
         question = mock(Question.class);
         answer = mock(Answer.class);
 
-        quizmaker = new QuizOrchestratorImpl(server);
+        quizOrchestrator = new QuizOrchestratorImpl(server);
     }
 
     /*
@@ -38,37 +45,37 @@ public class QuizOrchestratorTest {
         String expected = "The colour quiz!";
         when(server.createQuiz(expected)).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
-        quizmaker.createQuiz(expected);
+        quizOrchestrator.createQuiz(expected);
 
         verify(server).createQuiz(expected);
 
         when(quiz.getTitle()).thenReturn(expected);
-        String actual = quizmaker.getTitle();
+        String actual = quizOrchestrator.getTitle();
 
         assertEquals(expected, actual);
 
         expected = "The animal quiz!";
         when(server.createQuiz(expected)).thenReturn(quiz);
-        quizmaker.createQuiz(expected);
+        quizOrchestrator.createQuiz(expected);
 
         verify(server).createQuiz(expected);
 
         when(quiz.getTitle()).thenReturn(expected);
-        actual = quizmaker.getTitle();
+        actual = quizOrchestrator.getTitle();
 
         assertEquals(expected, actual);
     }
 
     @Test
     public void shouldBeAbleToReturnIdWhenCreatingAQuiz() throws IllegalQuizException {
-        String title = "Animal Quiz";
+        String title = "Animal items.Quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
 
         int expected = 2;
         when(quiz.getId()).thenReturn(expected);
 
-        int actual = quizmaker.createQuiz(title);
+        int actual = quizOrchestrator.createQuiz(title);
         verify(quiz).getId();
 
         assertEquals(expected,actual);
@@ -79,7 +86,7 @@ public class QuizOrchestratorTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Title is empty. Please enter a title with at least one character.");
 
-        quizmaker.createQuiz(null);
+        quizOrchestrator.createQuiz(null);
     }
 
     @Test
@@ -87,7 +94,7 @@ public class QuizOrchestratorTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Title is empty. Please enter a title with at least one character.");
 
-        quizmaker.createQuiz("    ");
+        quizOrchestrator.createQuiz("    ");
     }
 
     @Test
@@ -98,7 +105,7 @@ public class QuizOrchestratorTest {
         thrown.expect(IllegalQuizException.class);
         thrown.expectMessage("A quiz with the same name already exists. Please try again with another name.");
 
-        quizmaker.createQuiz(title);
+        quizOrchestrator.createQuiz(title);
     }
 
     /*
@@ -109,23 +116,23 @@ public class QuizOrchestratorTest {
         String title = "A quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
-        quizmaker.createQuiz(title);
+        quizOrchestrator.createQuiz(title);
         verify(server).createQuiz(title);
 
         String question1 = "What is the biggest cat?";
         when(server.createQuestion(anyString())).thenReturn(question);
         when(quiz.valid(question1)).thenReturn(true);
-        quizmaker.addQuestion(question1);
+        quizOrchestrator.addQuestion(question1);
         verify(quiz).addQuestion(question);
     }
 
     @Test
     public void shouldThrowIllegalQuizExceptionIfQuizIsNull() throws IllegalQuizException {
         thrown.expect(IllegalQuizException.class);
-        thrown.expectMessage("Quiz does not exist. Please create a quiz and try again.");
+        thrown.expectMessage("items.Quiz does not exist. Please create a quiz and try again.");
 
         String question1 = "What is the biggest cat?";
-        quizmaker.addQuestion(question1);
+        quizOrchestrator.addQuestion(question1);
     }
 
     @Test
@@ -133,13 +140,13 @@ public class QuizOrchestratorTest {
         String title = "A quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
-        quizmaker.createQuiz(title);
+        quizOrchestrator.createQuiz(title);
         verify(server).createQuiz(title);
 
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Question entered is empty. Please try again.");
+        thrown.expectMessage("items.Question entered is empty. Please try again.");
 
-        quizmaker.addQuestion(null);
+        quizOrchestrator.addQuestion(null);
     }
 
     @Test
@@ -147,13 +154,13 @@ public class QuizOrchestratorTest {
         String title = "A quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
-        quizmaker.createQuiz(title);
+        quizOrchestrator.createQuiz(title);
         verify(server).createQuiz(title);
 
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Question entered is empty. Please try again.");
+        thrown.expectMessage("items.Question entered is empty. Please try again.");
 
-        quizmaker.addQuestion("    ");
+        quizOrchestrator.addQuestion("    ");
     }
 
     @Test
@@ -161,7 +168,7 @@ public class QuizOrchestratorTest {
         String title = "Animal quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
-        quizmaker.createQuiz(title);
+        quizOrchestrator.createQuiz(title);
         verify(server).createQuiz(title);
 
         when(server.createQuestion(anyString())).thenReturn(question);
@@ -172,7 +179,7 @@ public class QuizOrchestratorTest {
         thrown.expect(IllegalQuizException.class);
         thrown.expectMessage("You have already entered that question. Please enter a different one.");
 
-        quizmaker.addQuestion(stringAnswer);
+        quizOrchestrator.addQuestion(stringAnswer);
     }
 
     /*
@@ -183,74 +190,74 @@ public class QuizOrchestratorTest {
         String title = "Animal quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
-        quizmaker.createQuiz(title);
+        quizOrchestrator.createQuiz(title);
         verify(server).createQuiz(title);
 
         String question1 = "What is the biggest cat?";
         when(quiz.valid(question1)).thenReturn(true);
         when(server.createQuestion(anyString())).thenReturn(question);
-        quizmaker.addQuestion(question1);
+        quizOrchestrator.addQuestion(question1);
         verify(quiz).addQuestion(question);
 
         when(question.valid(anyString())).thenReturn(true);
 
         String stringAnswer = "Lion";
         when(server.createAnswer(stringAnswer)).thenReturn(answer);
-        quizmaker.addAnswer(stringAnswer);
+        quizOrchestrator.addAnswer(stringAnswer);
         verify(question).addAnswer(answer);
     }
 
     @Test
     public void shouldThrowIllegalArgumentExceptionIfStringIsNullForAddAnswer() throws IllegalQuestionException, IllegalQuizException {
-        String title = "A Quiz";
+        String title = "A items.Quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
-        quizmaker.createQuiz(title);
+        quizOrchestrator.createQuiz(title);
         verify(server).createQuiz(title);
 
         String questionString = "How many teeth does a lion have?";
         when(quiz.valid(questionString)).thenReturn(true);
         when(server.createQuestion(anyString())).thenReturn(question);
-        quizmaker.addQuestion(questionString);
+        quizOrchestrator.addQuestion(questionString);
         verify(quiz).addQuestion(question);
 
         when(question.valid(anyString())).thenReturn(true);
 
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Answer entered is empty. Please enter a valid answer.");
+        thrown.expectMessage("items.Answer entered is empty. Please enter a valid answer.");
 
-        quizmaker.addAnswer(null);
+        quizOrchestrator.addAnswer(null);
     }
 
     @Test
     public void shouldThrowIllegalArgumentExceptionIfStringIsEmptyForAddAnswer() throws IllegalQuestionException, IllegalQuizException {
-        String title = "A Quiz";
+        String title = "A items.Quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
-        quizmaker.createQuiz(title);
+        quizOrchestrator.createQuiz(title);
         verify(server).createQuiz(title);
 
         String questionString = "How many teeth does a lion have?";
         when(server.createQuestion(anyString())).thenReturn(question);
         when(quiz.valid(questionString)).thenReturn(true);
-        quizmaker.addQuestion(questionString);
+        quizOrchestrator.addQuestion(questionString);
         verify(quiz).addQuestion(question);
 
         when(question.valid(anyString())).thenReturn(true);
 
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Answer entered is empty. Please enter a valid answer.");
+        thrown.expectMessage("items.Answer entered is empty. Please enter a valid answer.");
 
-        quizmaker.addAnswer("       ");
+        quizOrchestrator.addAnswer("       ");
     }
 
     @Test
     public void shouldThrowIllegalQuestionExceptionIfQuestionDoesNotExist() throws IllegalQuestionException {
         thrown.expect(IllegalQuestionException.class);
-        thrown.expectMessage("Question doesn't exist. There must be a question to have an answer!");
+        thrown.expectMessage("items.Question doesn't exist. There must be a question to have an answer!");
 
         String answer = "lion";
-        quizmaker.addAnswer(answer);
+        quizOrchestrator.addAnswer(answer);
     }
 
     @Test
@@ -258,13 +265,13 @@ public class QuizOrchestratorTest {
         String title = "Animal quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
-        quizmaker.createQuiz(title);
+        quizOrchestrator.createQuiz(title);
         verify(server).createQuiz(title);
 
         String question1 = "What is the biggest cat?";
         when(quiz.valid(anyString())).thenReturn(true);
         when(server.createQuestion(anyString())).thenReturn(question);
-        quizmaker.addQuestion(question1);
+        quizOrchestrator.addQuestion(question1);
         verify(quiz).addQuestion(question);
 
         String stringAnswer = "Lion";
@@ -273,7 +280,7 @@ public class QuizOrchestratorTest {
         thrown.expect(IllegalQuestionException.class);
         thrown.expectMessage("You have already entered that answer. Please enter a different one.");
 
-        quizmaker.addAnswer(stringAnswer);
+        quizOrchestrator.addAnswer(stringAnswer);
     }
 
     /*
@@ -282,7 +289,7 @@ public class QuizOrchestratorTest {
     @Test
     public void shouldBeAbleToCloseQuizByQuotingId() throws IllegalQuizException {
         int id = 0;
-        quizmaker.closeQuiz(id);
+        quizOrchestrator.closeQuiz(id);
         verify(server).closeQuiz(anyInt());
     }
 }

@@ -1,5 +1,7 @@
+package exceptions;
+
 /**
- * IllegalQuizException class created. Exception for a quiz that does
+ * exceptions.IllegalQuizException class created. Exception for a quiz that does
  * not exist.
  */
 public class IllegalQuizException extends Exception {

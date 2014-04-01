@@ -1,3 +1,5 @@
+package items;
+
 public interface Question {
     /**
      * Adds an answer to the question.

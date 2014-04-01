@@ -1,3 +1,8 @@
+package controllers;
+
+import exceptions.IllegalQuestionException;
+import exceptions.IllegalQuizException;
+
 public interface QuizOrchestrator {
 
     /**
@@ -6,7 +11,7 @@ public interface QuizOrchestrator {
      * @param title a title for the quiz
      * @return a unique id
      * @throws IllegalArgumentException
-     * @throws IllegalQuizException if the name of the quiz already exists.
+     * @throws exceptions.IllegalQuizException if the name of the quiz already exists.
      */
     int createQuiz(String title) throws IllegalArgumentException, IllegalQuizException;
 
