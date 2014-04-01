@@ -1,4 +1,4 @@
-public interface QuizMaker {
+public interface QuizOrchestrator {
 
     /**
      * Creates a quiz and returns a unique id for

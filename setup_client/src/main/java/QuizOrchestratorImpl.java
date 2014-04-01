@@ -1,13 +1,13 @@
 /**
  * Controls the organization of the quiz.
  */
-public class QuizMakerImpl implements QuizMaker {
+public class QuizOrchestratorImpl implements QuizOrchestrator {
     private Server server;
     private Quiz quiz;
     private Question question;
 
 
-    public QuizMakerImpl(Server server) {
+    public QuizOrchestratorImpl(Server server) {
         this.server = server;
     }
 

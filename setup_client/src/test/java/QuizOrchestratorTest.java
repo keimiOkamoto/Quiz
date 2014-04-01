@@ -9,8 +9,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class QuizMakerTest {
-    private QuizMaker quizmaker;
+public class QuizOrchestratorTest {
+    private QuizOrchestrator quizmaker;
     private Quiz quiz;
     private Server server;
     private Question question;
@@ -26,7 +26,7 @@ public class QuizMakerTest {
         question = mock(Question.class);
         answer = mock(Answer.class);
 
-        quizmaker = new QuizMakerImpl(server);
+        quizmaker = new QuizOrchestratorImpl(server);
     }
 
     /*
