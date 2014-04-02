@@ -1,9 +1,5 @@
 package items;
 
-import items.Answer;
-import items.Question;
-import items.Quiz;
-
 /**
  * Factory for items to do with a quiz.
  */
