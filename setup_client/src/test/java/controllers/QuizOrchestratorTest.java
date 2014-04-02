@@ -289,6 +289,7 @@ public class QuizOrchestratorTest {
     @Test
     public void shouldBeAbleToCloseQuizByQuotingId() throws IllegalQuizException {
         int id = 0;
+        when(server.valid(anyInt())).thenReturn(true);
         quizOrchestrator.closeQuiz(id);
         verify(server).closeQuiz(anyInt());
     }
