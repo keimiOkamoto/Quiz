@@ -45,5 +45,5 @@ public interface QuizOrchestrator {
      *
      * @param id ID of a quiz.
      */
-    void closeQuiz(int id);
+    void closeQuiz(int id) throws IllegalQuizException;
 }

@@ -8,8 +8,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class ServerTest {
@@ -70,6 +72,16 @@ public class ServerTest {
 
     @Test
     public void shouldBeAbleToCloseQuiz() {
+        int id = 0;
+        server.closeQuiz(id);
+        verify(serverLink).endQuiz(anyInt());
+    }
 
+    @Test
+    public void shouldBeAbleToCheckForValidQuizId() {
+        int id = 5;
+
+        when(serverLink.iDIsValid(anyInt())).thenReturn(true);
+        assertTrue(server.valid(id));
     }
 }

@@ -4,10 +4,6 @@ import items.Answer;
 import items.Question;
 import items.Quiz;
 
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.rmi.registry.Registry;
-
 public class ServerImpl implements Server {
 
     private ItemsFactory itemsFactory;
@@ -41,6 +37,11 @@ public class ServerImpl implements Server {
 
     @Override
     public void closeQuiz(int id) {
+        serverLink.endQuiz(id);
+    }
 
+    @Override
+    public boolean valid(int id) {
+        return serverLink.iDIsValid(id);
     }
 }

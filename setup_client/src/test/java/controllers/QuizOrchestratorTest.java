@@ -292,4 +292,15 @@ public class QuizOrchestratorTest {
         quizOrchestrator.closeQuiz(id);
         verify(server).closeQuiz(anyInt());
     }
+
+    @Test
+    public void shouldThrowIllegalQuizExceptionIfQuizWithCorrespondingIdDoesNotExist() throws IllegalQuizException {
+        int id = 0;
+        when(server.valid(anyInt())).thenReturn(false);
+
+        thrown.expect(IllegalQuizException.class);
+        thrown.expectMessage("A quiz with that ID does not exist. Please enter a valid ID.");
+
+        quizOrchestrator.closeQuiz(id);
+    }
 }

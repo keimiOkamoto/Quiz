@@ -48,7 +48,8 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
     }
 
     @Override
-    public void closeQuiz(int id) {
+    public void closeQuiz(int id) throws IllegalQuizException {
+        if (!server.valid(id)) throw new IllegalQuizException("A quiz with that ID does not exist. Please enter a valid ID.");
         server.closeQuiz(id);
     }
 
