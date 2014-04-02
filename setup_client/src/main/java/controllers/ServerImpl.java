@@ -1,18 +1,19 @@
 package controllers;
 
-import items.Answer;
-import items.Question;
-import items.Quiz;
+import items.*;
+
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 public class ServerImpl implements Server {
 
     private ItemsFactory itemsFactory;
-    private ServerLink serverLink;
+    private QuizServer quizServer;
 
 
-    public ServerImpl(ServerLink serverLink) {
-        this.serverLink = serverLink;
-        this.itemsFactory = serverLink.getItemsFactory();
+    public ServerImpl(QuizServer quizServer) throws RemoteException, NotBoundException {
+        this.quizServer = quizServer;
+        this.itemsFactory = quizServer.getItemsFactory();
     }
 
     @Override
@@ -32,16 +33,16 @@ public class ServerImpl implements Server {
 
     @Override
     public boolean valid(String title) {
-        return serverLink.titleIsValid(title);
+        return quizServer.titleIsValid(title);
     }
 
     @Override
     public void closeQuiz(int id) {
-        serverLink.endQuiz(id);
+        quizServer.endQuiz(id);
     }
 
     @Override
     public boolean valid(int id) {
-        return serverLink.iDIsValid(id);
+        return quizServer.iDIsValid(id);
     }
 }

@@ -21,10 +21,10 @@ public interface Server {
     Quiz createQuiz(String title);
 
     /**
-     * Creates a question
+     * Creates a question.
      *
-     * @param question
-     * @return
+     * @param question A String question.
+     * @return A Question object.
      */
     Question createQuestion(String question);
 
@@ -47,7 +47,7 @@ public interface Server {
     /**
      * Closes a quiz with the corresponding id.
      *
-     * @param id
+     * @param id An ID of a quiz.
      */
     void closeQuiz(int id);
 

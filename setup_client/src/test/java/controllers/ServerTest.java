@@ -1,10 +1,11 @@
 package controllers;
 
-import items.Answer;
-import items.Question;
-import items.Quiz;
+import items.*;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -18,15 +19,15 @@ public class ServerTest {
 
     private Server server;
     private ItemsFactory itemsFactory;
-    private ServerLink serverLink;
+    private QuizServer quizServer;
 
     @Before
-    public void buildUp() {
+    public void buildUp() throws RemoteException, NotBoundException {
         itemsFactory = mock(ItemsFactory.class);
-        serverLink = mock(ServerLink.class);
+        quizServer = mock(QuizServer.class);
 
-        when(serverLink.getItemsFactory()).thenReturn(itemsFactory);
-        server = new ServerImpl(serverLink);
+        when(quizServer.getItemsFactory()).thenReturn(itemsFactory);
+        server = new ServerImpl(quizServer);
     }
 
     @Test
@@ -42,7 +43,7 @@ public class ServerTest {
 
     @Test
     public void shouldBeAbleToCreateQuestion() {
-        String question = "Where is the treasure berried?";
+        String question = "Where is the treasure buried?";
         Question expectedQuestion = mock(Question.class);
 
         when(itemsFactory.generateQuestion(anyString())).thenReturn(expectedQuestion);
@@ -66,7 +67,7 @@ public class ServerTest {
     public void shouldBeAbleToCheckForValidQuizTitle() {
         String title = "Quiz about noodles";
 
-        when(serverLink.titleIsValid(anyString())).thenReturn(true);
+        when(quizServer.titleIsValid(anyString())).thenReturn(true);
         assertTrue(server.valid(title));
     }
 
@@ -74,14 +75,14 @@ public class ServerTest {
     public void shouldBeAbleToCloseQuiz() {
         int id = 0;
         server.closeQuiz(id);
-        verify(serverLink).endQuiz(anyInt());
+        verify(quizServer).endQuiz(anyInt());
     }
 
     @Test
     public void shouldBeAbleToCheckForValidQuizId() {
         int id = 5;
 
-        when(serverLink.iDIsValid(anyInt())).thenReturn(true);
+        when(quizServer.iDIsValid(anyInt())).thenReturn(true);
         assertTrue(server.valid(id));
     }
 }
