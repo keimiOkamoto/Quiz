@@ -48,4 +48,11 @@ public class QuizServerTest {
         ItemsFactory actualItemsFactory = quizServer.getItemsFactory();
         assertEquals(itemsFactory, actualItemsFactory);
     }
+
+    @Test
+    public void shouldBeAbleToSaveQuizToContainer() {
+        Quiz quiz = mock(Quiz.class);
+        quizServer.save(quiz);
+        verify(quizContainer).save(quiz);
+    }
 }

@@ -31,6 +31,6 @@ public class QuizServerImpl implements QuizServer {
 
     @Override
     public void save(Quiz quiz) {
-
+        quizContainer.save(quiz);
     }
 }

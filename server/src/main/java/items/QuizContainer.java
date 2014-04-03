@@ -1,5 +1,8 @@
 package items;
 
+/**
+ * A container class that contains and validates Quizs.
+ */
 public interface QuizContainer {
     /**
      * Checks if a quiz with the same title exists.
@@ -23,4 +26,13 @@ public interface QuizContainer {
      * @param id ID of a quiz.
      */
     void closeQuizWith(int id);
+
+    /**
+     * Saves a quiz to a container.
+     *
+     * @param quiz A quiz object.
+     */
+    void save(Quiz quiz);
+
+    Quiz getQuizBy(int id);
 }
