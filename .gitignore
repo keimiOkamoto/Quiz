@@ -4,4 +4,6 @@
 .DS_Store
 *.class
 *.bin
-out/production/server/items/QuizContainerImpl.class
+out/
+build/
+.gradle
