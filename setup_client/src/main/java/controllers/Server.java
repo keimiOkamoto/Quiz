@@ -58,4 +58,11 @@ public interface Server {
      * @return false if the ID does not exist.
      */
     boolean valid(int id);
+
+    /**
+     * Saves quiz to server.
+     *
+     * @param quiz A quiz.
+     */
+    void save(Quiz quiz);
 }

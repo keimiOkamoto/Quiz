@@ -34,4 +34,11 @@ public interface QuizServer {
      * @return An ItemsFactory.
      */
     ItemsFactory getItemsFactory();
+
+    /**
+     * Saves a quiz to the server.
+     *
+     * @param quiz A quiz.
+     */
+    void save(Quiz quiz);
 }

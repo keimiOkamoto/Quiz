@@ -45,4 +45,9 @@ public class ServerImpl implements Server {
     public boolean valid(int id) {
         return quizServer.iDIsValid(id);
     }
+
+    @Override
+    public void save(Quiz quiz) {
+        quizServer.save(quiz);
+    }
 }

@@ -85,4 +85,12 @@ public class ServerTest {
         when(quizServer.iDIsValid(anyInt())).thenReturn(true);
         assertTrue(server.valid(id));
     }
+
+    @Test
+    public void shouldBeAbleToSaveQuizToServer() {
+        Quiz quiz = mock(Quiz.class);
+
+        server.save(quiz);
+        verify(quizServer).save(quiz);
+    }
 }

@@ -183,7 +183,7 @@ public class QuizOrchestratorTest {
     }
 
     /*
-     * Start of addAnswer()
+     * Start of addAnswer(question)
      */
     @Test
     public void shouldBeAbleToAddAnswer() throws IllegalQuizException, IllegalQuestionException {
@@ -284,7 +284,7 @@ public class QuizOrchestratorTest {
     }
 
     /*
-     * Start of closeQuiz()
+     * Start of closeQuiz(int id)
      */
     @Test
     public void shouldBeAbleToCloseQuizByQuotingId() throws IllegalQuizException {
@@ -303,5 +303,22 @@ public class QuizOrchestratorTest {
         thrown.expectMessage("A quiz with that ID does not exist. Please enter a valid ID.");
 
         quizOrchestrator.closeQuiz(id);
+    }
+
+    /*
+     * Starts of save(Quiz quiz)
+     */
+    @Test
+    public void shouldBeAbleToSaveToQuizToServer() throws IllegalQuizException {
+        quizOrchestrator.save(quiz);
+        verify(server).save(quiz);
+    }
+
+    @Test
+    public void shouldThrowIllegalQuizExceptionIfQuizDoesNotExist() throws IllegalQuizException {
+        thrown.expect(IllegalQuizException.class);
+        thrown.expectMessage("There is no quiz to save to server.");
+
+        quizOrchestrator.save(null);
     }
 }

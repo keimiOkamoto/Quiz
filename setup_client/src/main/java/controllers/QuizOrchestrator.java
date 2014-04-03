@@ -2,6 +2,7 @@ package controllers;
 
 import exceptions.IllegalQuestionException;
 import exceptions.IllegalQuizException;
+import items.Quiz;
 
 public interface QuizOrchestrator {
 
@@ -46,4 +47,11 @@ public interface QuizOrchestrator {
      * @param id ID of a quiz.
      */
     void closeQuiz(int id) throws IllegalQuizException;
+
+    /**
+     * Saves quiz to server.
+     *
+     * @param quiz A quiz.
+     */
+    void save(Quiz quiz)throws IllegalQuizException;
 }

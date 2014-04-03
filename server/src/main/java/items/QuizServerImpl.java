@@ -28,4 +28,9 @@ public class QuizServerImpl implements QuizServer {
     public ItemsFactory getItemsFactory() {
         return itemsFactory;
     }
+
+    @Override
+    public void save(Quiz quiz) {
+
+    }
 }

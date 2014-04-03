@@ -54,6 +54,12 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
     }
 
     @Override
+    public void save(Quiz quiz) throws IllegalQuizException {
+        if (quiz == null) throw new IllegalQuizException("There is no quiz to save to server.");
+        server.save(quiz);
+    }
+
+    @Override
     public String getTitle() {
         return quiz.getTitle();
     }
