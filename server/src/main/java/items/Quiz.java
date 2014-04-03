@@ -16,7 +16,7 @@ public interface Quiz {
     void addQuestion(Question question);
 
     /**
-     * Checks if the question is valid.
+     * Checks if the question is hasValid.
      *
      * @param question A question
      * @return false if the question already exists

@@ -2,28 +2,30 @@ package items;
 
 public class QuizServerImpl implements QuizServer {
     private ItemsFactory itemsFactory;
+    private QuizContainer quizContainer;
 
-    public QuizServerImpl(ItemsFactory itemsFactory) {
+    public QuizServerImpl(ItemsFactory itemsFactory, QuizContainer quizContainer) {
         this.itemsFactory = itemsFactory;
+        this.quizContainer = quizContainer;
+    }
+
+    @Override
+    public boolean titleIsValid(String title) {
+        return quizContainer.hasValid(title);
+    }
+
+    @Override
+    public boolean iDIsValid(int id) {
+        return quizContainer.hasValid(id);
+    }
+
+    @Override
+    public void endQuiz(int id) {
+        quizContainer.closeQuizWith(id);
     }
 
     @Override
     public ItemsFactory getItemsFactory() {
         return itemsFactory;
-    }
-
-    @Override
-    public boolean titleIsValid(String title) {
-        return false;
-    }
-
-    @Override
-    public void endQuiz(int id) {
-
-    }
-
-    @Override
-    public boolean iDIsValid(int id) {
-        return false;
     }
 }
