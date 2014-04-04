@@ -29,4 +29,11 @@ public interface Quiz {
      * @return Id of a quiz
      */
     int getId();
+
+    /**
+     * Getter for all questions within a quiz.
+     *
+     * @return A set containing all questions in a quiz.
+     */
+    Set<Question> getQuestions();
 }
