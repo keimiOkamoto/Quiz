@@ -26,13 +26,14 @@ public class QuizContainerImpl implements QuizContainer {
     }
 
     @Override
-    public boolean hasValid(int id) {
-        return false;
+    public boolean contains(int id) {
+        return quizTreeMap.containsKey(id);
     }
 
     @Override
     public void closeQuizWith(int id) {
-
+        Quiz closedQuiz = quizTreeMap.remove(id);
+        closedQuizContainer.add(closedQuiz);
     }
 
     @Override

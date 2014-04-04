@@ -3,24 +3,24 @@ package items;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.TreeMap;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class QuizContainerImplTest {
 
     private QuizContainer quizContainer;
     private Quiz quiz;
+    private ClosedQuizContainer closedQuizContainer;
 
     @Before
     public void buildUp() {
-        quizContainer = new QuizContainerImpl();
-
+        closedQuizContainer = mock(ClosedQuizContainer.class);
         quiz = mock(Quiz.class);
+        quizContainer = new QuizContainerImpl(closedQuizContainer);
     }
     
     @Test

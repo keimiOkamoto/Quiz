@@ -1,7 +1,7 @@
 package items;
 
 /**
- * A container class that contains and validates Quizs.
+ * A container class that contains and validates Quizzes.
  */
 public interface QuizContainer {
     /**
@@ -10,7 +10,7 @@ public interface QuizContainer {
      * @param title A title of a Quiz.
      * @return False if the same name exists.
      */
-    boolean hasValid(String title);
+    boolean contains(String title);
 
     /**
      * Checks if a quiz with the specified ID exists.
@@ -18,7 +18,7 @@ public interface QuizContainer {
      * @param id ID of a quiz.
      * @return False if the quiz does not exist.
      */
-    boolean hasValid(int id);
+    boolean contains(int id);
 
     /**
      * Finds the Quiz with the corresponding ID.
@@ -34,5 +34,11 @@ public interface QuizContainer {
      */
     void save(Quiz quiz);
 
+    /**
+     * Getter for a quiz by ID.
+     *
+     * @param id ID of a quiz.
+     * @return A Quiz object.
+     */
     Quiz getQuizBy(int id);
 }
