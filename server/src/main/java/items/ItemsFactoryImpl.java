@@ -22,6 +22,6 @@ public class ItemsFactoryImpl implements ItemsFactory {
 
     @Override
     public Answer generateAnswer(String answer, boolean answerType) {
-        return null;
+        return new AnswerImpl(answer, answerType);
     }
 }

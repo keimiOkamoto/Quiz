@@ -38,4 +38,15 @@ public class ItemsFactoryTest {
 
         assertEquals(questionStr, actualStr);
     }
+
+    @Test
+    public void shouldBeAbleToGenerateAnswer() {
+        String answerStr = "No one knows.";
+        itemsFactory.generateAnswer(answerStr, false);
+
+        Answer actual = itemsFactory.generateAnswer(answerStr, false);
+        String actualStr = actual.getAnswer();
+
+        assertEquals(answerStr, actualStr);
+    }
 }

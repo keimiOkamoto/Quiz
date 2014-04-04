@@ -1,7 +1,7 @@
 package items;
 
 /**
- * Factory for items to do with a quiz.
+ * Factory for items associated with a quiz.
  */
 
 public interface ItemsFactory {
