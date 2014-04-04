@@ -52,7 +52,7 @@ public interface Server {
     void closeQuiz(int id);
 
     /**
-     * Checks if the quiz is valid.
+     * Checks if the quiz is contains.
      *
      * @param id Id of a quiz.
      * @return false if the ID does not exist.

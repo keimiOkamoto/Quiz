@@ -121,7 +121,7 @@ public class QuizOrchestratorTest {
 
         String question1 = "What is the biggest cat?";
         when(server.createQuestion(anyString())).thenReturn(question);
-        when(quiz.valid(question1)).thenReturn(true);
+        when(quiz.contains(question1)).thenReturn(true);
         quizOrchestrator.addQuestion(question1);
         verify(quiz).addQuestion(question);
     }
@@ -174,7 +174,7 @@ public class QuizOrchestratorTest {
         when(server.createQuestion(anyString())).thenReturn(question);
 
         String stringAnswer = "Lion";
-        when(quiz.valid(stringAnswer)).thenReturn(false);
+        when(quiz.contains(stringAnswer)).thenReturn(false);
 
         thrown.expect(IllegalQuizException.class);
         thrown.expectMessage("You have already entered that question. Please enter a different one.");
@@ -194,7 +194,7 @@ public class QuizOrchestratorTest {
         verify(server).createQuiz(title);
 
         String question1 = "What is the biggest cat?";
-        when(quiz.valid(question1)).thenReturn(true);
+        when(quiz.contains(question1)).thenReturn(true);
         when(server.createQuestion(anyString())).thenReturn(question);
         quizOrchestrator.addQuestion(question1);
         verify(quiz).addQuestion(question);
@@ -216,7 +216,7 @@ public class QuizOrchestratorTest {
         verify(server).createQuiz(title);
 
         String questionString = "How many teeth does a lion have?";
-        when(quiz.valid(questionString)).thenReturn(true);
+        when(quiz.contains(questionString)).thenReturn(true);
         when(server.createQuestion(anyString())).thenReturn(question);
         quizOrchestrator.addQuestion(questionString);
         verify(quiz).addQuestion(question);
@@ -224,7 +224,7 @@ public class QuizOrchestratorTest {
         when(question.valid(anyString())).thenReturn(true);
 
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("items.Answer entered is empty. Please enter a valid answer.");
+        thrown.expectMessage("items.Answer entered is empty. Please enter a contains answer.");
 
         quizOrchestrator.addAnswer(null);
     }
@@ -239,14 +239,14 @@ public class QuizOrchestratorTest {
 
         String questionString = "How many teeth does a lion have?";
         when(server.createQuestion(anyString())).thenReturn(question);
-        when(quiz.valid(questionString)).thenReturn(true);
+        when(quiz.contains(questionString)).thenReturn(true);
         quizOrchestrator.addQuestion(questionString);
         verify(quiz).addQuestion(question);
 
         when(question.valid(anyString())).thenReturn(true);
 
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("items.Answer entered is empty. Please enter a valid answer.");
+        thrown.expectMessage("items.Answer entered is empty. Please enter a contains answer.");
 
         quizOrchestrator.addAnswer("       ");
     }
@@ -269,7 +269,7 @@ public class QuizOrchestratorTest {
         verify(server).createQuiz(title);
 
         String question1 = "What is the biggest cat?";
-        when(quiz.valid(anyString())).thenReturn(true);
+        when(quiz.contains(anyString())).thenReturn(true);
         when(server.createQuestion(anyString())).thenReturn(question);
         quizOrchestrator.addQuestion(question1);
         verify(quiz).addQuestion(question);
@@ -300,7 +300,7 @@ public class QuizOrchestratorTest {
         when(server.valid(anyInt())).thenReturn(false);
 
         thrown.expect(IllegalQuizException.class);
-        thrown.expectMessage("A quiz with that ID does not exist. Please enter a valid ID.");
+        thrown.expectMessage("A quiz with that ID does not exist. Please enter a contains ID.");
 
         quizOrchestrator.closeQuiz(id);
     }
