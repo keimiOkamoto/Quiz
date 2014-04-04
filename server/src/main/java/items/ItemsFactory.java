@@ -27,5 +27,5 @@ public interface ItemsFactory {
      * @param answer An answer to a question
      * @return Answer object
      */
-    Answer generateAnswer(String answer);
+    Answer generateAnswer(String answer, boolean answerType);
 }
