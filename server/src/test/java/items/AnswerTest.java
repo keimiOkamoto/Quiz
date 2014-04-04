@@ -18,10 +18,8 @@ public class AnswerTest {
 
     @Test
     public void shouldBeAbleToGetAnswerType() {
-        String answerStr = "tea, Rex?";
         boolean expectedAnswerType = true;
-        Answer answer = new AnswerImpl(answerStr, expectedAnswerType);
-
+        Answer answer = new AnswerImpl("tea, Rex?", expectedAnswerType);
         boolean actual = answer.getAnswerType();
 
         assertEquals(expectedAnswerType, actual);
