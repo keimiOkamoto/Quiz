@@ -1,12 +1,14 @@
 package items;
 
+import java.util.Set;
+
 public interface Question {
     /**
      * Adds an answer to the question.
      *
      * @param answer an answer to the question.
      */
-    void addAnswer(Answer answer);
+    void add(Answer answer);
 
     /**
      * Checks for duplicate answer
@@ -14,6 +16,19 @@ public interface Question {
      * @param answer an answer for a question
      * @return false if invalid
      */
-    boolean valid(String answer);
+    boolean contains(String answer);
 
+    /**
+     * Getter for question.
+     *
+     * @return A question String.
+     */
+    String getQuestion();
+
+    /**
+     * Getter for a set of answers belonging to the quiz.
+     *
+     * @return A set of answers.
+     */
+    Set<Answer> getAnswers();
 }

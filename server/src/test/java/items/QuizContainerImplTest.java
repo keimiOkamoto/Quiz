@@ -35,18 +35,35 @@ public class QuizContainerImplTest {
 
     @Test
     public void shouldBeAbleToValidateSavedQuizByTitle() {
-        int id = 6;
         String title = "Quiz about cookies?";
+        int id = 6;
 
         when(quiz.getId()).thenReturn(id);
         when(quiz.getTitle()).thenReturn(title);
         quizContainer.save(quiz);
 
-        assertFalse(quizContainer.hasValid(title));
+        assertFalse(quizContainer.contains(title));
     }
 
     @Test
     public void shouldBeAbleToValidateSavedQuizById() {
+        int id = 6;
+        when(quiz.getId()).thenReturn(id);
+        quizContainer.save(quiz);
 
+        assertTrue(quizContainer.contains(id));
+    }
+
+    @Test
+    public void shouldNotBeAbleToRetrieveClosedQuiz() {
+        int id = 12;
+        when(quiz.getId()).thenReturn(id);
+        quizContainer.save(quiz);
+        quizContainer.closeQuizWith(id);
+
+        Quiz actualQuiz = quizContainer.getQuizBy(id);
+        verify(closedQuizContainer).add(quiz);
+
+        assertEquals(null, actualQuiz);
     }
 }
