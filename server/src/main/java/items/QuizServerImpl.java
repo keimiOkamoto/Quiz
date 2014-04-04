@@ -11,12 +11,12 @@ public class QuizServerImpl implements QuizServer {
 
     @Override
     public boolean titleIsValid(String title) {
-        return quizContainer.hasValid(title);
+        return quizContainer.contains(title);
     }
 
     @Override
     public boolean iDIsValid(int id) {
-        return quizContainer.hasValid(id);
+        return quizContainer.contains(id);
     }
 
     @Override

@@ -26,14 +26,14 @@ public class QuizServerTest {
         String title = "Quiz about noodles.";
 
         quizServer.titleIsValid(title);
-        verify(quizContainer).hasValid(anyString());
+        verify(quizContainer).contains(anyString());
     }
 
     @Test
     public void shouldBeAbleToCheckIfIdForQuizIsValid() {
         int id = 5;
         quizServer.iDIsValid(id);
-        verify(quizContainer).hasValid(anyInt());
+        verify(quizContainer).contains(anyInt());
     }
 
     @Test
