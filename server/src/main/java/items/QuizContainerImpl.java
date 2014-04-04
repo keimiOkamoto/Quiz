@@ -1,13 +1,21 @@
 package items;
 
+import com.google.inject.Singleton;
+
 import java.util.Collection;
 import java.util.TreeMap;
 
+@Singleton
 public class QuizContainerImpl implements QuizContainer {
     private TreeMap<Integer, Quiz> quizTreeMap = new TreeMap<>();
+    private ClosedQuizContainer closedQuizContainer;
+
+    public QuizContainerImpl(ClosedQuizContainer closedQuizContainer) {
+        this.closedQuizContainer = closedQuizContainer;
+    }
 
     @Override
-    public boolean hasValid(String title) {
+    public boolean contains(String title) {
         Collection<Quiz> quizCollection = quizTreeMap.values();
         boolean result = false;
 
