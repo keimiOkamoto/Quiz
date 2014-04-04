@@ -37,5 +37,5 @@ public interface Quiz {
      *
      * @return A set containing all questions in a quiz.
      */
-    Set<Question> getAllQuestions();
+    Set<Question> getQuestions();
 }

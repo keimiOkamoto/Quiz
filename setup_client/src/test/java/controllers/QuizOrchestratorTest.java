@@ -68,7 +68,7 @@ public class QuizOrchestratorTest {
 
     @Test
     public void shouldBeAbleToReturnIdWhenCreatingAQuiz() throws IllegalQuizException {
-        String title = "Animal items.Quiz";
+        String title = "Animal Quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
 
@@ -129,7 +129,7 @@ public class QuizOrchestratorTest {
     @Test
     public void shouldThrowIllegalQuizExceptionIfQuizIsNull() throws IllegalQuizException {
         thrown.expect(IllegalQuizException.class);
-        thrown.expectMessage("items.Quiz does not exist. Please create a quiz and try again.");
+        thrown.expectMessage("Quiz does not exist. Please create a quiz and try again.");
 
         String question1 = "What is the biggest cat?";
         quizOrchestrator.addQuestion(question1);
@@ -144,7 +144,7 @@ public class QuizOrchestratorTest {
         verify(server).createQuiz(title);
 
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("items.Question entered is empty. Please try again.");
+        thrown.expectMessage("Question entered is empty. Please try again.");
 
         quizOrchestrator.addQuestion(null);
     }
@@ -158,7 +158,7 @@ public class QuizOrchestratorTest {
         verify(server).createQuiz(title);
 
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("items.Question entered is empty. Please try again.");
+        thrown.expectMessage("Question entered is empty. Please try again.");
 
         quizOrchestrator.addQuestion("    ");
     }
@@ -183,7 +183,7 @@ public class QuizOrchestratorTest {
     }
 
     /*
-     * Start of addAnswer(question)
+     * Start of add(question)
      */
     @Test
     public void shouldBeAbleToAddAnswer() throws IllegalQuizException, IllegalQuestionException {
@@ -204,12 +204,12 @@ public class QuizOrchestratorTest {
         String stringAnswer = "Lion";
         when(server.createAnswer(stringAnswer)).thenReturn(answer);
         quizOrchestrator.addAnswer(stringAnswer);
-        verify(question).addAnswer(answer);
+        verify(question).add(answer);
     }
 
     @Test
     public void shouldThrowIllegalArgumentExceptionIfStringIsNullForAddAnswer() throws IllegalQuestionException, IllegalQuizException {
-        String title = "A items.Quiz";
+        String title = "A Quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
         quizOrchestrator.createQuiz(title);
@@ -224,7 +224,7 @@ public class QuizOrchestratorTest {
         when(question.valid(anyString())).thenReturn(true);
 
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("items.Answer entered is empty. Please enter a contains answer.");
+        thrown.expectMessage("Answer entered is empty. Please enter a contains answer.");
 
         quizOrchestrator.addAnswer(null);
     }
@@ -246,7 +246,7 @@ public class QuizOrchestratorTest {
         when(question.valid(anyString())).thenReturn(true);
 
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("items.Answer entered is empty. Please enter a contains answer.");
+        thrown.expectMessage("Answer entered is empty. Please enter a contains answer.");
 
         quizOrchestrator.addAnswer("       ");
     }
@@ -254,7 +254,7 @@ public class QuizOrchestratorTest {
     @Test
     public void shouldThrowIllegalQuestionExceptionIfQuestionDoesNotExist() throws IllegalQuestionException {
         thrown.expect(IllegalQuestionException.class);
-        thrown.expectMessage("items.Question doesn't exist. There must be a question to have an answer!");
+        thrown.expectMessage("Question doesn't exist. There must be a question to have an answer!");
 
         String answer = "lion";
         quizOrchestrator.addAnswer(answer);

@@ -6,7 +6,7 @@ public interface Question {
      *
      * @param answer an answer to the question.
      */
-    void addAnswer(Answer answer);
+    void add(Answer answer);
 
     /**
      * Checks for duplicate answer
