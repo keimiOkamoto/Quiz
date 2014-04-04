@@ -29,16 +29,16 @@ public interface QuizServer {
     void endQuiz(int id);
 
     /**
-     * Gets a ItemsFactory object.
-     *
-     * @return An ItemsFactory.
-     */
-    ItemsFactory getItemsFactory();
-
-    /**
      * Saves a quiz to the server.
      *
      * @param quiz A quiz.
      */
     void save(Quiz quiz);
+
+    /**
+     * Gets a ItemsFactory object.
+     *
+     * @return An ItemsFactory.
+     */
+    ItemsFactory getItemsFactory();
 }

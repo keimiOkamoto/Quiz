@@ -15,5 +15,4 @@ public interface Question {
      * @return false if invalid
      */
     boolean contains(String answer);
-
 }

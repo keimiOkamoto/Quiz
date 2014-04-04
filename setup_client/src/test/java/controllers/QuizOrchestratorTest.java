@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -202,8 +203,8 @@ public class QuizOrchestratorTest {
         when(question.contains(anyString())).thenReturn(true);
 
         String stringAnswer = "Lion";
-        when(server.createAnswer(stringAnswer)).thenReturn(answer);
-        quizOrchestrator.addAnswer(stringAnswer);
+        when(server.createAnswer(stringAnswer, true)).thenReturn(answer);
+        quizOrchestrator.addAnswer(stringAnswer, true);
         verify(question).add(answer);
     }
 
@@ -226,7 +227,7 @@ public class QuizOrchestratorTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Answer entered is empty. Please enter a contains answer.");
 
-        quizOrchestrator.addAnswer(null);
+        quizOrchestrator.addAnswer(null, true);
     }
 
     @Test
@@ -248,7 +249,7 @@ public class QuizOrchestratorTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Answer entered is empty. Please enter a contains answer.");
 
-        quizOrchestrator.addAnswer("       ");
+        quizOrchestrator.addAnswer("       ", true);
     }
 
     @Test
@@ -257,7 +258,7 @@ public class QuizOrchestratorTest {
         thrown.expectMessage("Question doesn't exist. There must be a question to have an answer!");
 
         String answer = "lion";
-        quizOrchestrator.addAnswer(answer);
+        quizOrchestrator.addAnswer(answer, true);
     }
 
     @Test
@@ -280,7 +281,7 @@ public class QuizOrchestratorTest {
         thrown.expect(IllegalQuestionException.class);
         thrown.expectMessage("You have already entered that answer. Please enter a different one.");
 
-        quizOrchestrator.addAnswer(stringAnswer);
+        quizOrchestrator.addAnswer(stringAnswer, true);
     }
 
     /*

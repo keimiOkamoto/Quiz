@@ -36,11 +36,11 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
     }
 
     @Override
-    public void addAnswer(String answer) throws IllegalQuestionException, IllegalArgumentException {
+    public void addAnswer(String answer, boolean answerType) throws IllegalQuestionException, IllegalArgumentException {
         if (question == null) throw new IllegalQuestionException("Question doesn't exist. There must be a question to have an answer!");
         if (!question.contains(answer)) throw new IllegalQuestionException("You have already entered that answer. Please enter a different one.");
         if (answer == null || answer.trim().equals("")) throw new IllegalArgumentException("Answer entered is empty. Please enter a contains answer.");
-        Answer answer1 = server.createAnswer(answer);
+        Answer answer1 = server.createAnswer(answer, answerType);
         question.add(answer1);
     }
 

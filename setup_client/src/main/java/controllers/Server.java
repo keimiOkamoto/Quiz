@@ -34,7 +34,7 @@ public interface Server {
      * @param answer Answer to a quiz.
      * @return An Answer object.
      */
-    Answer createAnswer(String answer);
+    Answer createAnswer(String answer, boolean answerType);
 
     /**
      * Checks if the same quiz title already exists.

@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -57,8 +58,8 @@ public class ServerTest {
         String answer = "on the moon";
         Answer expectedAnswer = mock(Answer.class);
 
-        when(itemsFactory.generateAnswer(anyString())).thenReturn(expectedAnswer);
-        Answer actualQuestion = server.createAnswer(answer);
+        when(itemsFactory.generateAnswer(anyString(), anyBoolean())).thenReturn(expectedAnswer);
+        Answer actualQuestion = server.createAnswer(answer, true);
 
         assertEquals(expectedAnswer, actualQuestion);
     }

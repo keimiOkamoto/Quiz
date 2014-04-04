@@ -27,8 +27,8 @@ public class ServerImpl implements Server {
     }
 
     @Override
-    public Answer createAnswer(String answer) {
-        return itemsFactory.generateAnswer(answer);
+    public Answer createAnswer(String answer, boolean answerType) {
+        return itemsFactory.generateAnswer(answer, answerType);
     }
 
     @Override
