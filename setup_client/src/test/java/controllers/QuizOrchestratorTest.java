@@ -199,7 +199,7 @@ public class QuizOrchestratorTest {
         quizOrchestrator.addQuestion(question1);
         verify(quiz).addQuestion(question);
 
-        when(question.valid(anyString())).thenReturn(true);
+        when(question.contains(anyString())).thenReturn(true);
 
         String stringAnswer = "Lion";
         when(server.createAnswer(stringAnswer)).thenReturn(answer);
@@ -221,7 +221,7 @@ public class QuizOrchestratorTest {
         quizOrchestrator.addQuestion(questionString);
         verify(quiz).addQuestion(question);
 
-        when(question.valid(anyString())).thenReturn(true);
+        when(question.contains(anyString())).thenReturn(true);
 
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Answer entered is empty. Please enter a contains answer.");
@@ -243,7 +243,7 @@ public class QuizOrchestratorTest {
         quizOrchestrator.addQuestion(questionString);
         verify(quiz).addQuestion(question);
 
-        when(question.valid(anyString())).thenReturn(true);
+        when(question.contains(anyString())).thenReturn(true);
 
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Answer entered is empty. Please enter a contains answer.");
@@ -275,7 +275,7 @@ public class QuizOrchestratorTest {
         verify(quiz).addQuestion(question);
 
         String stringAnswer = "Lion";
-        when(question.valid(stringAnswer)).thenReturn(false);
+        when(question.contains(stringAnswer)).thenReturn(false);
 
         thrown.expect(IllegalQuestionException.class);
         thrown.expectMessage("You have already entered that answer. Please enter a different one.");

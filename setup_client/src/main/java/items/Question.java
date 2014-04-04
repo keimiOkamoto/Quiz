@@ -14,6 +14,6 @@ public interface Question {
      * @param answer an answer for a question
      * @return false if invalid
      */
-    boolean valid(String answer);
+    boolean contains(String answer);
 
 }
