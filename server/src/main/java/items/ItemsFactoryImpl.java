@@ -1,9 +1,18 @@
 package items;
 
+import com.google.inject.Singleton;
+
+@Singleton
 public class ItemsFactoryImpl implements ItemsFactory {
+    private UniqueNumberGeneratorUtils uniqueNumberGeneratorUtils;
+
+    public ItemsFactoryImpl(UniqueNumberGeneratorUtils uniqueNumberGeneratorUtils) {
+        this.uniqueNumberGeneratorUtils = uniqueNumberGeneratorUtils;
+    }
+
     @Override
     public Quiz generateQuiz(String title) {
-        return null;
+        return new QuizImpl(uniqueNumberGeneratorUtils.getUniqueNumber(), title);
     }
 
     @Override
