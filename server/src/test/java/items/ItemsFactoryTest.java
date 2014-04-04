@@ -27,4 +27,15 @@ public class ItemsFactoryTest {
 
         assertEquals(id, actualId);
     }
+
+    @Test
+    public void shouldBeAbleToGenerateQuestion() {
+        String questionStr = "When you choke a smurf, what color does it turn?";
+        itemsFactory.generateQuestion(questionStr);
+
+        Question actual = itemsFactory.generateQuestion(questionStr);
+        String actualStr = actual.getQuestion();
+
+        assertEquals(questionStr, actualStr);
+    }
 }

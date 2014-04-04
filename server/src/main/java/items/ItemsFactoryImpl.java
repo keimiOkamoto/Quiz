@@ -17,7 +17,7 @@ public class ItemsFactoryImpl implements ItemsFactory {
 
     @Override
     public Question generateQuestion(String question) {
-        return null;
+        return new QuestionImpl(question);
     }
 
     @Override
