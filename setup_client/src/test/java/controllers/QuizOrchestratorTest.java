@@ -321,4 +321,13 @@ public class QuizOrchestratorTest {
 
         quizOrchestrator.save(null);
     }
+
+    @Test
+    public void shouldThrowIllegalQuizExceptionIfQuizDoesNotContainAQuestion() throws IllegalQuizException {
+        thrown.expect(IllegalQuizException.class);
+        thrown.expectMessage("Cannot save a quiz without any questions. Please enter at lease one question.");
+
+        when(quiz.isEmpty()).thenReturn(true);
+        quizOrchestrator.save(quiz);
+    } //TODO
 }

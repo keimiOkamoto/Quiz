@@ -1,6 +1,7 @@
 package models;
 
 public interface Quiz {
+
     /**
      * Adds a question to the quiz.
      *
@@ -15,6 +16,13 @@ public interface Quiz {
      * @return false if the question already exists
      */
     boolean contains(String question);
+
+    /**
+     * Checks if the quiz contains and questions.
+     *
+     * @return false if it contains one or more questions.
+     */
+    boolean isEmpty();
 
     /**
      * Getter for the title of a quiz.

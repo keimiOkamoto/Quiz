@@ -31,6 +31,11 @@ public class QuizImpl implements Quiz {
     }
 
     @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
     public String getTitle() {
         return title;
     }

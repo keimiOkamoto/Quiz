@@ -53,6 +53,7 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
     @Override
     public void save(Quiz quiz) throws IllegalQuizException {
         if (quiz == null) throw new IllegalQuizException("There is no quiz to save to server.");
+        if (quiz.isEmpty()) throw new IllegalQuizException("Cannot save a quiz without any questions. Please enter at lease one question.");
         server.save(quiz);
     }
 

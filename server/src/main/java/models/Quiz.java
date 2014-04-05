@@ -19,6 +19,13 @@ public interface Quiz {
     boolean contains(String question);
 
     /**
+     * Checks if the quiz contains and questions.
+     *
+     * @return false if it contains one or more questions.
+     */
+    boolean isEmpty();
+
+    /**
      * Getter for the title of a quiz.
      *
      * @return Title of a quiz
