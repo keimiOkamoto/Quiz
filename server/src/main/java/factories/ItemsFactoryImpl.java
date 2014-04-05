@@ -1,5 +1,6 @@
 package factories;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import models.*;
 import utils.UniqueNumberGeneratorUtils;
@@ -8,6 +9,7 @@ import utils.UniqueNumberGeneratorUtils;
 public class ItemsFactoryImpl implements ItemsFactory {
     private UniqueNumberGeneratorUtils uniqueNumberGeneratorUtils;
 
+    @Inject
     public ItemsFactoryImpl(UniqueNumberGeneratorUtils uniqueNumberGeneratorUtils) {
         this.uniqueNumberGeneratorUtils = uniqueNumberGeneratorUtils;
     }

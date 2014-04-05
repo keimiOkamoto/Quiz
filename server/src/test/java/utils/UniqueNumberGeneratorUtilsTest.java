@@ -16,7 +16,7 @@ public class UniqueNumberGeneratorUtilsTest {
      */
     @Test
     public void shouldBeAbleToGenerateUniqueNumber() {
-        UniqueNumberGeneratorUtils aUniqueNumberGeneratorUtils = UniqueNumberGeneratorUtilsImpl.getInstance();
+        UniqueNumberGeneratorUtils aUniqueNumberGeneratorUtils = new UniqueNumberGeneratorUtilsImpl();
         int actual = aUniqueNumberGeneratorUtils.getUniqueNumber();
         int expected = 0;
 

@@ -1,5 +1,6 @@
 package controllers;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import models.Quiz;
 
@@ -11,6 +12,7 @@ public class QuizContainerImpl implements QuizContainer {
     private TreeMap<Integer, Quiz> quizTreeMap = new TreeMap<>();
     private ClosedQuizContainer closedQuizContainer;
 
+    @Inject
     public QuizContainerImpl(ClosedQuizContainer closedQuizContainer) {
         this.closedQuizContainer = closedQuizContainer;
     }

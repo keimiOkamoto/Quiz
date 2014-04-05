@@ -1,10 +1,12 @@
 package controllers;
 
+import com.google.inject.Singleton;
 import models.Quiz;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Singleton
 public class ClosedQuizContainerImpl implements ClosedQuizContainer {
     private Map<Integer, Quiz> closedQuizMap = new HashMap<>();
 

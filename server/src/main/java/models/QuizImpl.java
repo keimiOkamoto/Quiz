@@ -21,11 +21,8 @@ public class QuizImpl implements Quiz {
     @Override
     public boolean contains(String question) {
         boolean result = false;
-
         for (Question value : questionSet) {
-            if (!value.getQuestion().equals(question)) {
-                result = true;
-            }
+            if (!value.getQuestion().equals(question)) result = true;
         }
         return result;
     }

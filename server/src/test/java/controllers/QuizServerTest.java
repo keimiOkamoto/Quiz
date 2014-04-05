@@ -5,6 +5,8 @@ import models.Quiz;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.rmi.RemoteException;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
@@ -17,14 +19,14 @@ public class QuizServerTest {
     private QuizContainer quizContainer;
 
     @Before
-    public void buildUp() {
+    public void buildUp() throws RemoteException {
         itemsFactory = mock(ItemsFactory.class);
         quizContainer = mock(QuizContainer.class);
         quizServer = new QuizServerImpl(itemsFactory, quizContainer);
     }
 
     @Test
-    public void shouldBeAbleToCheckIfTitleForQuizIsValid() {
+    public void shouldBeAbleToCheckIfTitleForQuizIsValid() throws RemoteException {
         String title = "Quiz about noodles.";
 
         quizServer.titleIsValid(title);
@@ -32,27 +34,27 @@ public class QuizServerTest {
     }
 
     @Test
-    public void shouldBeAbleToCheckIfIdForQuizIsValid() {
+    public void shouldBeAbleToCheckIfIdForQuizIsValid() throws RemoteException {
         int id = 5;
         quizServer.iDIsValid(id);
         verify(quizContainer).contains(anyInt());
     }
 
     @Test
-    public void shouldBeAbleToCloseQuizById() {
+    public void shouldBeAbleToCloseQuizById() throws RemoteException {
         int id  = 0;
         quizServer.endQuiz(id);
         verify(quizContainer).closeQuizWith(id);
     }
 
     @Test
-    public void shouldBeAbleToGetItemsFactory() {
+    public void shouldBeAbleToGetItemsFactory() throws RemoteException {
         ItemsFactory actualItemsFactory = quizServer.getItemsFactory();
         assertEquals(itemsFactory, actualItemsFactory);
     }
 
     @Test
-    public void shouldBeAbleToSaveQuizToContainer() {
+    public void shouldBeAbleToSaveQuizToContainer() throws RemoteException {
         Quiz quiz = mock(Quiz.class);
         quizServer.save(quiz);
         verify(quizContainer).save(quiz);
