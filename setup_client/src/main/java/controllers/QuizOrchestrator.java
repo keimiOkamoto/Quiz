@@ -45,6 +45,8 @@ public interface QuizOrchestrator {
      * Closes a quiz with the corresponding ID.
      *
      * @param id ID of a quiz.
+     * @throws IllegalQuizException if quiz does not exist or id quiz without
+     * questions is attempted to be saved.
      */
     void closeQuiz(int id) throws IllegalQuizException;
 

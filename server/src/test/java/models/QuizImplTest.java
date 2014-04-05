@@ -23,14 +23,6 @@ public class QuizImplTest {
     }
 
     @Test
-    public void shouldBeAbleToGetQuizTitle() {
-        String expected = "Quiz about dinosaurs.";
-        String actual = quiz.getTitle();
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
     public void shouldBeAbleToAddAQuestion() {
         Question question = mock(Question.class);
         quiz.addQuestion(question);
@@ -44,14 +36,6 @@ public class QuizImplTest {
     }
 
     @Test
-    public void shouldBeAbleToGetQuizId() {
-        int expectedId = 5;
-        int actualId = quiz.getId();
-
-        assertEquals(expectedId, actualId);
-    }
-
-    @Test
     public void shouldBeAbleToCheckIfQuizContainsASpecificQuestion() {
         Question question = mock(Question.class);
         String question1 = "How do you ask a tyrannosaur out to lunch?";
@@ -61,5 +45,30 @@ public class QuizImplTest {
 
         assertFalse(quiz.contains(question1));
         assertTrue(quiz.contains("How do you ask a dolphin to lunch?"));
+    }
+
+    @Test
+    public void shouldBeAbleToCheckIfQuizIsEmpty() {
+        Question question = mock(Question.class);
+        quiz.addQuestion(question);
+        boolean actual = quiz.isEmpty();
+
+        assertFalse(actual);
+    }
+
+    @Test
+    public void shouldBeAbleToGetQuizTitle() {
+        String expected = "Quiz about dinosaurs.";
+        String actual = quiz.getTitle();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldBeAbleToGetQuizId() {
+        int expectedId = 5;
+        int actualId = quiz.getId();
+
+        assertEquals(expectedId, actualId);
     }
 }
