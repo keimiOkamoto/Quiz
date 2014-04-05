@@ -11,7 +11,11 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 public class ServerStart {
-
+    /**
+     * Main method to launch the sever.
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         QuizServer quizServer = Guice.createInjector(new QuizSeverModule()).getInstance(QuizServerImpl.class);
 
