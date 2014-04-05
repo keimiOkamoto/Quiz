@@ -1,6 +1,9 @@
 package controllers;
 
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.ArrayList;
 
@@ -10,11 +13,22 @@ import static org.mockito.Mockito.when;
 
 public class QuizPlayerOrchestratorImplTest {
 
-    @Test
-    public void shouldBeAbleToGetListOfQuizzes() {
-        Server server = mock(Server.class);
-        QuizPlayerOrchestratorImpl quizPlayerOrchestrator = new QuizPlayerOrchestratorImpl(server);
+    private QuizPlayerOrchestratorImpl quizPlayerOrchestrator;
+    private Server server;
 
+    @Before
+    public void buildUp() {
+        server = mock(Server.class);
+
+        quizPlayerOrchestrator = new QuizPlayerOrchestratorImpl(server);
+
+    }
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void shouldBeAbleToGetListOfQuizzes() throws IllegalGameException {
         Quiz quiz = mock(Quiz.class);
 
         ArrayList<Quiz> arrayList = new ArrayList<>();
@@ -24,5 +38,14 @@ public class QuizPlayerOrchestratorImplTest {
         ArrayList<Quiz> actual = quizPlayerOrchestrator.getQuizzes();
 
         assertEquals(arrayList, actual);
+    }
+
+    @Test
+    public void shouldThrowIllegalGameExceptionIfListIsNull() throws IllegalGameException {
+        thrown.expect(IllegalGameException.class);
+        thrown.expectMessage("There are no Quizzes available.");
+
+        when(server.getQuizzes()).thenReturn(null);
+        quizPlayerOrchestrator.getQuizzes();
     }
 }

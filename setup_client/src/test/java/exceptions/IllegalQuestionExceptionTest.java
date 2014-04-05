@@ -1,6 +1,5 @@
 package exceptions;
 
-import exceptions.IllegalQuestionException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

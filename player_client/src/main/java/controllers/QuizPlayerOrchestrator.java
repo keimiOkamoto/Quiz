@@ -7,5 +7,5 @@ public interface QuizPlayerOrchestrator {
      * Gets a list of available quizzes.
      *
      */
-    ArrayList<Quiz> getQuizzes();
+    ArrayList<Quiz> getQuizzes() throws IllegalGameException;
 }

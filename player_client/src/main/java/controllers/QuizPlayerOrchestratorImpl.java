@@ -9,7 +9,9 @@ public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
         this.server = server;
     }
 
-    public ArrayList<Quiz> getQuizzes() {
-        return server.getQuizzes();
+    public ArrayList<Quiz> getQuizzes() throws IllegalGameException {
+        if (server.getQuizzes() == null) throw new IllegalGameException("There are no Quizzes available.");
+        ArrayList<Quiz> result = server.getQuizzes();
+        return result;
     }
 }
