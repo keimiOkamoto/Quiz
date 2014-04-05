@@ -21,4 +21,12 @@ public interface QuizPlayerOrchestrator {
      * @return A quiz corresponding with the id.
      */
     Quiz getQuizBy(int id) throws IllegalQuizException;
+
+    /**
+     * Checks if the quiz is the highest score or not.
+     *
+     * @param score A score for the quiz.
+     * @return False if the score is not the highest.
+     */
+    boolean checkForHighScore(int score);
 }

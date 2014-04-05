@@ -18,4 +18,12 @@ public interface Server {
      * @return A quiz with the corresponding ID.
      */
     Quiz getQuiz(int id);
+
+    /**
+     * Checks if the score is the highest store.
+     *
+     * @param quiz
+     * @return False if the score is not the highest.
+     */
+    boolean checkForHighScore(int quiz);
 }

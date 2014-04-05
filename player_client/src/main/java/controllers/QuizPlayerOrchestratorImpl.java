@@ -23,4 +23,9 @@ public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
         if (result == null) throw new IllegalQuizException("Quiz with that particular ID does not exist.");
         return result;
     }
+
+    @Override
+    public boolean checkForHighScore(int score) {
+        return server.checkForHighScore(score);
+    }
 }

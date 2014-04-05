@@ -9,13 +9,14 @@ import org.junit.rules.ExpectedException;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class QuizPlayerOrchestratorImplTest {
-
     private QuizPlayerOrchestratorImpl quizPlayerOrchestrator;
     private Server server;
     private Quiz quiz;
@@ -71,5 +72,14 @@ public class QuizPlayerOrchestratorImplTest {
         thrown.expectMessage("Quiz with that particular ID does not exist.");
 
         quizPlayerOrchestrator.getQuizBy(5);
+    }
+
+    @Test
+    public void shouldBeAbleToCheckForHighScore() {
+        int score = 0;
+        when(server.checkForHighScore(anyInt())).thenReturn(false);
+
+        assertFalse(quizPlayerOrchestrator.checkForHighScore(score));
+        verify(server).checkForHighScore(anyInt());
     }
 }
