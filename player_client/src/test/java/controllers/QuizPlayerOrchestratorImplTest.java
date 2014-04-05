@@ -1,5 +1,6 @@
 package controllers;
 
+import exceptions.IllegalQuizException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,7 +55,7 @@ public class QuizPlayerOrchestratorImplTest {
     }
 
     @Test
-    public void shouldBeAbleToGetRequestedQuiz() {
+    public void shouldBeAbleToGetRequestedQuiz() throws IllegalQuizException {
         int id = 5;
 
         when(server.getQuiz(anyInt())).thenReturn(quiz);
@@ -65,7 +66,10 @@ public class QuizPlayerOrchestratorImplTest {
     }
 
     @Test
-    public void shouldThrowIllegalQuizExceptionIfQuizWithParticularIdDoesNotExist() {
+    public void shouldThrowIllegalQuizExceptionIfQuizWithParticularIdDoesNotExist() throws IllegalQuizException {
+        thrown.expect(IllegalQuizException.class);
+        thrown.expectMessage("Quiz with that particular ID does not exist.");
 
+        quizPlayerOrchestrator.getQuizBy(5);
     }
 }

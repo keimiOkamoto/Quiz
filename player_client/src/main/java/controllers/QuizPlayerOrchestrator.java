@@ -1,5 +1,7 @@
 package controllers;
 
+import exceptions.IllegalQuizException;
+
 import java.util.ArrayList;
 
 public interface QuizPlayerOrchestrator {
@@ -18,5 +20,5 @@ public interface QuizPlayerOrchestrator {
      * @param id The
      * @return A quiz corresponding with the id.
      */
-    Quiz getQuizBy(int id);
+    Quiz getQuizBy(int id) throws IllegalQuizException;
 }
