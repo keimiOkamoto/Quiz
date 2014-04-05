@@ -14,4 +14,9 @@ public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
         ArrayList<Quiz> result = server.getQuizzes();
         return result;
     }
+
+    @Override
+    public Quiz getQuizBy(int id) {
+        return server.getQuiz(id);
+    }
 }

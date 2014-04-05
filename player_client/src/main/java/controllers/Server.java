@@ -10,4 +10,12 @@ public interface Server {
      * @return An ArrayList of Quizzes.
      */
     ArrayList<Quiz> getQuizzes();
+
+    /**
+     * Getter for a quiz.
+     *
+     * @param id A id for the quiz.
+     * @return A quiz with the corresponding ID.
+     */
+    Quiz getQuiz(int id);
 }
