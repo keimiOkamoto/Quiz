@@ -1,6 +1,6 @@
 package controllers;
 
-import items.*;
+import models.*;
 import org.junit.Before;
 import org.junit.Test;
 

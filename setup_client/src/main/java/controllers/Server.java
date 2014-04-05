@@ -1,11 +1,8 @@
 package controllers;
 
-import items.Answer;
-import items.Question;
-import items.Quiz;
-
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
+import models.Answer;
+import models.Question;
+import models.Quiz;
 
 /**
  * This class is the connection between the setup client and the

@@ -2,9 +2,9 @@ package controllers;
 
 import exceptions.IllegalQuestionException;
 import exceptions.IllegalQuizException;
-import items.Answer;
-import items.Question;
-import items.Quiz;
+import models.Answer;
+import models.Question;
+import models.Quiz;
 
 /**
  * Controls the organization of the quiz.

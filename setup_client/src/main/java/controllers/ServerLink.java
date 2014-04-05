@@ -1,6 +1,6 @@
 package controllers;
 
-import items.QuizServer;
+import models.QuizServer;
 
 /**
  * This class links the setup client to the server.

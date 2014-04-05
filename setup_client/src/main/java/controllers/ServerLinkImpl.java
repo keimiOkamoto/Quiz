@@ -1,6 +1,6 @@
 package controllers;
 
-import items.QuizServer;
+import models.QuizServer;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;

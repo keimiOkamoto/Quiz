@@ -1,1 +1,1 @@
-[![Build Status](https://travis-ci.org/kokamo01/items.Quiz.svg?branch=master)](https://travis-ci.org/kokamo01/items.Quiz)
+[![Build Status](https://travis-ci.org/kokamo01/models.Quiz.svg?branch=master)](https://travis-ci.org/kokamo01/models.Quiz)

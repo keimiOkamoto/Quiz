@@ -2,16 +2,15 @@ package controllers;
 
 import exceptions.IllegalQuestionException;
 import exceptions.IllegalQuizException;
-import items.Answer;
-import items.Question;
-import items.Quiz;
+import models.Answer;
+import models.Question;
+import models.Quiz;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -232,7 +231,7 @@ public class QuizOrchestratorTest {
 
     @Test
     public void shouldThrowIllegalArgumentExceptionIfStringIsEmptyForAddAnswer() throws IllegalQuestionException, IllegalQuizException {
-        String title = "A items.Quiz";
+        String title = "A models.Quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
         quizOrchestrator.createQuiz(title);

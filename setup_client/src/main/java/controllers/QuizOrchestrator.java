@@ -2,7 +2,7 @@ package controllers;
 
 import exceptions.IllegalQuestionException;
 import exceptions.IllegalQuizException;
-import items.Quiz;
+import models.Quiz;
 
 public interface QuizOrchestrator {
 

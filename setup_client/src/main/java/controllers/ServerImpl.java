@@ -1,6 +1,6 @@
 package controllers;
 
-import items.*;
+import models.*;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
