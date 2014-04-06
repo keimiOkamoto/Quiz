@@ -78,10 +78,10 @@ public class QuizPlayerOrchestratorImplTest {
 
     @Test
     public void shouldBeAbleToSetThePlayerAsTheWinner() {
-        when(quiz.checkForHighScore()).thenReturn(true);
+        when(quiz.checkForHighScore(anyInt())).thenReturn(true);
         quizPlayerOrchestrator.setPlayerAsWinner(player, quiz);
 
-        verify(quiz).checkForHighScore();
+        verify(quiz).checkForHighScore(anyInt());
     }
 
     @Test

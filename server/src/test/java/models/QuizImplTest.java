@@ -9,7 +9,9 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class QuizImplTest {
@@ -70,5 +72,23 @@ public class QuizImplTest {
         int actualId = quiz.getId();
 
         assertEquals(expectedId, actualId);
+    }
+
+    @Test
+    public void shouldBeAbleToGetScore() {
+        int expectedScore = 0;
+        int actualScore = quiz.getScore();
+
+        assertEquals(expectedScore, actualScore);
+    }
+
+    @Test
+    public void shouldBeAbleToIncrementScore() {
+        int expectedScore = 2;
+        quiz.incrementScore();
+        quiz.incrementScore();
+
+        int actualScore = quiz.getScore();
+        assertEquals(expectedScore, actualScore);
     }
 }

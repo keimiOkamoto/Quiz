@@ -65,7 +65,8 @@ public class ServerTest {
     @Test
     public void shouldBeAbleSetPlayerAsWinner() {
         Player player = mock(Player.class);
-        server.setPlayerAsWinner(player, quiz);
+        int score = 5;
+        server.setPlayerAsWinner(player, quiz, score);
         verify(quizServer).setPlayerAsWinner(player, quiz);
     }
 }

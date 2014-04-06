@@ -45,4 +45,20 @@ public interface Quiz {
      * @return A set containing all questions in a quiz.
      */
     Set<Question> getQuestions();
+
+    /* player client methods
+     */
+
+    /**
+     * Getter for a Score.
+     *
+     * @return A Score for a player.
+     */
+    int getScore();
+
+    /**
+     * Increments the score if a correct
+     * answer is entered.
+     */
+    void incrementScore();
 }

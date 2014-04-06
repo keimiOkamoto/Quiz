@@ -36,7 +36,7 @@ public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
 
     @Override
     public void setPlayerAsWinner(Player player, Quiz quiz) {
-        if (quiz.checkForHighScore()) server.setPlayerAsWinner(player, quiz);
+        if (quiz.checkForHighScore(quiz.getScore())) server.setPlayerAsWinner(player, quiz, quiz.getScore());
     }
 
     @Override

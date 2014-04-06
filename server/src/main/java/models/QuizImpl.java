@@ -5,12 +5,15 @@ import java.util.Set;
 
 public class QuizImpl implements Quiz {
     private int id;
-    private String title;
     private Set<Question> questionSet = new HashSet<>();
+    private int score;
+
+    private String title;
 
     public QuizImpl(int id, String title) {
         this.id = id;
         this.title = title;
+        score = 0;
     }
 
     @Override
@@ -46,4 +49,16 @@ public class QuizImpl implements Quiz {
     public Set<Question> getQuestions() {
         return questionSet;
     }
+
+    @Override
+    public int getScore() {
+        return score;
+    }
+
+    @Override
+    public void incrementScore() {
+        score++;
+    }
+
+
 }

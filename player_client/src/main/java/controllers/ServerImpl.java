@@ -37,7 +37,7 @@ public class ServerImpl implements Server {
     }
 
     @Override
-    public void setPlayerAsWinner(Player player, Quiz quiz) {
+    public void setPlayerAsWinner(Player player, Quiz quiz, int score) {
         quizServer.setPlayerAsWinner(player, quiz);
     }
 }

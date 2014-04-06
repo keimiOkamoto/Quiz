@@ -7,4 +7,5 @@ public interface Player {
      * @return
      */
     int getId();
+
 }
