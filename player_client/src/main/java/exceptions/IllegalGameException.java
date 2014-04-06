@@ -1,7 +1,5 @@
 package exceptions;
 
-import controllers.exceptions;
-
 /**
  * Exception for an illegal game.
  * i.e If there are no games available.

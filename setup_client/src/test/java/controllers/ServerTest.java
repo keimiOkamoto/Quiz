@@ -26,9 +26,10 @@ public class ServerTest {
     public void buildUp() throws RemoteException, NotBoundException {
         itemsFactory = mock(ItemsFactory.class);
         quizServer = mock(QuizServer.class);
-
+        ServerLink serverLink = mock(ServerLink.class);
+        when(serverLink.getQuizServer()).thenReturn(quizServer);
         when(quizServer.getItemsFactory()).thenReturn(itemsFactory);
-        server = new ServerImpl(quizServer);
+        server = new ServerImpl(serverLink);
     }
 
     @Test

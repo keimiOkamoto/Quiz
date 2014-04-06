@@ -1,5 +1,6 @@
 package controllers;
 
+import constants.ExceptionMessages;
 import exceptions.IllegalQuizException;
 import org.junit.Before;
 import org.junit.Rule;
@@ -34,7 +35,7 @@ public class QuizPlayerOrchestratorImplTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void shouldBeAbleToGetListOfQuizzes() throws IllegalGameException {
+    public void shouldBeAbleToGetListOfQuizzes() throws exceptions.IllegalGameException {
         Quiz quiz = mock(Quiz.class);
 
         ArrayList<Quiz> arrayList = new ArrayList<>();
@@ -47,8 +48,8 @@ public class QuizPlayerOrchestratorImplTest {
     }
 
     @Test
-    public void shouldThrowIllegalGameExceptionIfListIsNull() throws IllegalGameException {
-        thrown.expect(IllegalGameException.class);
+    public void shouldThrowIllegalGameExceptionIfListIsNull() throws exceptions.IllegalGameException {
+        thrown.expect(exceptions.IllegalGameException.class);
         thrown.expectMessage(ExceptionMessages.NO_AVAILABLE_QUIZZES);
 
         when(server.getQuizzes()).thenReturn(null);

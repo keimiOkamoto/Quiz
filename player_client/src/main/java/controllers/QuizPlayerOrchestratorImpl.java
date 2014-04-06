@@ -1,5 +1,6 @@
 package controllers;
 
+import constants.ExceptionMessages;
 import exceptions.IllegalQuizException;
 
 import java.util.ArrayList;
@@ -11,9 +12,9 @@ public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
         this.server = server;
     }
 
-    public ArrayList<Quiz> getQuizzes() throws IllegalGameException {
+    public ArrayList<Quiz> getQuizzes() throws exceptions.IllegalGameException {
         ArrayList<Quiz> result = server.getQuizzes();
-        if (result == null) throw new IllegalGameException(ExceptionMessages.NO_AVAILABLE_QUIZZES);
+        if (result == null) throw new exceptions.IllegalGameException(ExceptionMessages.NO_AVAILABLE_QUIZZES);
         return result;
     }
 

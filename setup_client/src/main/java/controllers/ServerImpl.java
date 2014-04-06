@@ -11,8 +11,8 @@ public class ServerImpl implements Server {
     private QuizServer quizServer;
 
 
-    public ServerImpl(QuizServer quizServer) throws RemoteException, NotBoundException {
-        this.quizServer = quizServer;
+    public ServerImpl(ServerLink serverLink) throws RemoteException, NotBoundException {
+        this.quizServer = serverLink.getQuizServer();
         this.itemsFactory = quizServer.getItemsFactory();
     }
 

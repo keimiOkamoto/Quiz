@@ -10,9 +10,9 @@ public interface QuizPlayerOrchestrator {
      * Gets a list of available quizzes.
      *
      * @return A list of available quizzes.
-     * @throws IllegalGameException Throws illegal games exception if no games exit.
+     * @throws controllers.exceptions.IllegalGameException Throws illegal games exception if no games exit.
      */
-    ArrayList<Quiz> getQuizzes() throws IllegalGameException;
+    ArrayList<Quiz> getQuizzes() throws exceptions.IllegalGameException;
 
     /**
      * Gets a requested quiz by ID from the server.
