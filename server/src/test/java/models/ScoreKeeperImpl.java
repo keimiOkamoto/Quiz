@@ -31,4 +31,9 @@ public class ScoreKeeperImpl implements ScoreKeeper {
     public void setLeader(Player player, Quiz quiz) {
         highScoreBoard.setLeader(player, quiz);
     }
+
+    @Override
+    public Player getLeader(Quiz quiz) {
+        return null;
+    }
 }

@@ -49,4 +49,10 @@ public class ScoreKeeperTest {
         scoreKeeper.setLeader(player, quiz);
         verify(highScoreBoard).setLeader(player, quiz);
     }
+
+    @Test
+    public void shouldBeAbleToGetThePlayerWithTheHighestScore() {
+        scoreKeeper.getLeader(quiz);
+        verify(highScoreBoard).getLeader(quiz);
+    }
 }

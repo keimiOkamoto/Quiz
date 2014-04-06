@@ -42,4 +42,6 @@ public interface HighScoreBoard {
      * @param player A player of a quiz.
      */
     void setLeader(Player player, Quiz quiz);
+
+    Player getLeader(Quiz quiz);
 }

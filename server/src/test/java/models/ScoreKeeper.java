@@ -36,9 +36,18 @@ public interface ScoreKeeper {
     int getHighScore(Quiz quiz);
 
     /**
-     * Setter for the leading player of a quz.
+     * Setter for the leading player of a quiz.
      *
      * @param player A player.
+     * @param quiz A quiz.
      */
     void setLeader(Player player, Quiz quiz);
+
+    /**
+     * Getter for the leader of a quiz.
+     *
+     * @param quiz A quiz.
+     * @return The leader of the quiz.(player)
+     */
+    Player getLeader(Quiz quiz);
 }
