@@ -29,4 +29,7 @@ public interface QuizPlayerOrchestrator {
      * @return False if the score is not the highest.
      */
     boolean checkForHighScore(int score);
+
+
+    void addPlayer(String name, String country, int age) ;
 }

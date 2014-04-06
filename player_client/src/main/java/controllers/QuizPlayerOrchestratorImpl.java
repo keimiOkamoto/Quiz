@@ -28,4 +28,10 @@ public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
     public boolean checkForHighScore(int score) {
         return server.checkForHighScore(score);
     }
+
+    @Override
+    public void addPlayer(String name, String country, int age) throws IllegalArgumentException {
+        if (name == null) throw new IllegalArgumentException("Please enter your name.");
+        server.createPlayer(name, country, age);
+    }
 }

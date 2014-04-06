@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -81,5 +80,23 @@ public class QuizPlayerOrchestratorImplTest {
 
         assertFalse(quizPlayerOrchestrator.checkForHighScore(score));
         verify(server).checkForHighScore(anyInt());
+    }
+
+    @Test
+    public void shouldBeAbleToAddPlayer() {
+        String name = "KEI";
+        String country = "London";
+        int age = 27;
+
+        quizPlayerOrchestrator.addPlayer(name, country, age);
+        verify(server).createPlayer(name, country, age);
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionIfNoNameIsEntered() {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("Please enter your name.");
+
+        quizPlayerOrchestrator.addPlayer(null, "London", 27);
     }
 }

@@ -26,4 +26,6 @@ public interface Server {
      * @return False if the score is not the highest.
      */
     boolean checkForHighScore(int quiz);
+
+    void createPlayer(String name, String country, int age);
 }
