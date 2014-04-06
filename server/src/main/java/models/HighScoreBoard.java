@@ -35,4 +35,11 @@ public interface HighScoreBoard {
      * @return The highest score for that quiz.
      */
     int getHighScore(Quiz quiz);
+
+    /**
+     * Setter for the leading player of a quz.
+     *
+     * @param player A player of a quiz.
+     */
+    void setLeader(Player player, Quiz quiz);
 }

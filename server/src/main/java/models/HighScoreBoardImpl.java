@@ -29,4 +29,9 @@ public class HighScoreBoardImpl implements HighScoreBoard {
     public int getHighScore(Quiz quiz) {
         return 0;
     }
+
+    @Override
+    public void setLeader(Player player, Quiz quiz) {
+
+    }
 }

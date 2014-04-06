@@ -1,5 +1,8 @@
 package models;
 
+/**
+ * Score keeper class to keep scores organised.
+ */
 public interface ScoreKeeper {
 
     /**
@@ -31,4 +34,11 @@ public interface ScoreKeeper {
      * @return The highest score for that quiz.
      */
     int getHighScore(Quiz quiz);
+
+    /**
+     * Setter for the leading player of a quz.
+     *
+     * @param player A player.
+     */
+    void setLeader(Player player, Quiz quiz);
 }

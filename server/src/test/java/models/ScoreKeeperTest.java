@@ -7,14 +7,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 public class ScoreKeeperTest {
-
     private ScoreKeeper scoreKeeper;
     private Quiz quiz;
     private HighScoreBoard highScoreBoard;
+    private Player player;
 
     @Before
     public void buildUp() {
         highScoreBoard = mock(HighScoreBoard.class);
+        player = mock(Player.class);
         scoreKeeper = new ScoreKeeperImpl(highScoreBoard);
         quiz = mock(Quiz.class);
     }
@@ -41,5 +42,11 @@ public class ScoreKeeperTest {
     public void shouldBeAbleToGetHigScore() {
         scoreKeeper.getHighScore(quiz);
         verify(highScoreBoard).getHighScore(quiz);
+    }
+
+    @Test
+    public void shouldBeAbleToSetThePlayerWithTheHighestScore() {
+        scoreKeeper.setLeader(player, quiz);
+        verify(highScoreBoard).setLeader(player, quiz);
     }
 }
