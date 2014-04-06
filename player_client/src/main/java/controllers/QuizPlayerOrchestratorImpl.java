@@ -32,6 +32,7 @@ public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
     @Override
     public void addPlayer(String name, String country, int age) throws IllegalArgumentException {
         if (name == null) throw new IllegalArgumentException("Please enter your name.");
+        if (country == null) throw new IllegalArgumentException("Please enter your country of origin.");
         server.createPlayer(name, country, age);
     }
 }

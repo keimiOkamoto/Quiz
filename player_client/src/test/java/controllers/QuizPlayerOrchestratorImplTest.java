@@ -99,4 +99,12 @@ public class QuizPlayerOrchestratorImplTest {
 
         quizPlayerOrchestrator.addPlayer(null, "London", 27);
     }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionIfNoCountryIsEntered() {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("Please enter your country of origin.");
+
+        quizPlayerOrchestrator.addPlayer("Keimi", null, 27);
+    }
 }
