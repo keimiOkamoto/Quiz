@@ -23,7 +23,7 @@ public class ItemsFactoryTest {
     }
 
     @Test
-    public void shouldBeAbleToGenerateQuizWith() {
+    public void shouldBeAbleToGenerateQuizWithId() {
         int id = 5;
         when(uniqueNumberGeneratorUtils.getUniqueNumber()).thenReturn(id);
         Quiz actual = itemsFactory.generateQuiz("some quiz.");

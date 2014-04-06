@@ -1,4 +1,8 @@
-package controllers;
+package models;
+
+import models.Player;
+import models.PlayerFactory;
+import models.Quiz;
 
 import java.util.ArrayList;
 
@@ -45,5 +49,10 @@ public interface QuizServer {
      */
     Player getWinnerBy(int quizId);
 
+    /**
+     * Setter for setting a player as a winner.
+     *
+     * @param player A player of a quiz.
+     */
     void setPlayerAsWinner(Player player);
 }

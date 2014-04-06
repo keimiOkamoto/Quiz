@@ -1,4 +1,6 @@
-package controllers;
+package factories;
+
+import models.Player;
 
 public interface PlayerFactory {
     /**

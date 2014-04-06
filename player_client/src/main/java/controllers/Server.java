@@ -1,5 +1,8 @@
 package controllers;
 
+import models.Player;
+import models.Quiz;
+
 import java.util.ArrayList;
 
 public interface Server {

@@ -1,4 +1,4 @@
-package controllers;
+package constants;
 
 public class ExceptionMessages {
    public static final String EMPTY_TITLE = "Title is empty. Please enter a title with at least one character.";

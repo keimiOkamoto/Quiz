@@ -2,6 +2,8 @@ package controllers;
 
 import constants.ExceptionMessages;
 import exceptions.IllegalQuizException;
+import models.Player;
+import models.Quiz;
 
 import java.util.ArrayList;
 
