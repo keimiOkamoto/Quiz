@@ -5,10 +5,10 @@ import java.util.Set;
 
 public class QuizImpl implements Quiz {
     private int id;
-    private Set<Question> questionSet = new HashSet<>();
     private int score;
-
+    private Set<Question> questionSet = new HashSet<>();
     private String title;
+
 
     public QuizImpl(int id, String title) {
         this.id = id;
@@ -59,6 +59,4 @@ public class QuizImpl implements Quiz {
     public void incrementScore() {
         score++;
     }
-
-
 }

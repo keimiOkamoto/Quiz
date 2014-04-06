@@ -1,20 +1,32 @@
 package models;
 
+import com.google.inject.Singleton;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+@Singleton
 public class HighScoreBoardImpl implements HighScoreBoard {
-    private static HighScoreBoard highScoreBoard;
+    private Map<Integer, ArrayList<Object>> scoreBoardMap = new HashMap<>();
 
-    private HighScoreBoardImpl() {
-    }
-
-    public static HighScoreBoard getInstance() {
-        if (highScoreBoard == null) {
-            highScoreBoard = new HighScoreBoardImpl();
-        }
-        return highScoreBoard;
+    @Override
+    public boolean contains(Quiz quiz) {
+        return false;
     }
 
     @Override
-    public boolean checkHighScore(int score) {
-        return true;
+    public boolean scoreIsHighest(Quiz quiz) {
+        return false;
+    }
+
+    @Override
+    public void addHighScore(Quiz quiz) {
+
+    }
+
+    @Override
+    public int getHighScore(Quiz quiz) {
+        return 0;
     }
 }

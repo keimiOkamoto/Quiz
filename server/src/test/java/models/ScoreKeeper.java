@@ -1,16 +1,14 @@
 package models;
 
-public interface HighScoreBoard {
+public interface ScoreKeeper {
 
     /**
-     * Checks if the score is the highest.
-     * If it is, score is replaced with the
-     * current high-score.
+     * Checks if a previous high score exists.
      *
-     * @return false if score is not the highest.
      * @param quiz A quiz.
+     * @return false if score does not exist.
      */
-    boolean contains(Quiz quiz);
+    boolean highScoreContains(Quiz quiz);
 
     /**
      * Checks if the score is the highest.
@@ -22,8 +20,6 @@ public interface HighScoreBoard {
 
     /**
      * Adds high score.
-     *
-     * @param quiz A quiz containing the score.
      */
     void addHighScore(Quiz quiz);
 
