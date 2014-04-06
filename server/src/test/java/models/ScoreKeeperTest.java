@@ -3,8 +3,10 @@ package models;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class ScoreKeeperTest {
     private ScoreKeeper scoreKeeper;
@@ -22,8 +24,10 @@ public class ScoreKeeperTest {
 
     @Test
     public void shouldBeAbleToCheckIfItContainsHighScore() {
-        scoreKeeper.highScoreContains(quiz);
-        verify(highScoreBoard).contains(quiz);
+        when(quiz.getScore()).thenReturn(32);
+        scoreKeeper.addHighScore(quiz, player);
+
+        assertTrue(scoreKeeper.highScoreContains(quiz));
     }
 
     @Test
@@ -34,7 +38,7 @@ public class ScoreKeeperTest {
 
     @Test
     public void shouldBeAbleToAddHighScore() {
-        scoreKeeper.addHighScore(quiz);
+        scoreKeeper.addHighScore(quiz, player);
         verify(highScoreBoard).addHighScore(quiz);
     }
 

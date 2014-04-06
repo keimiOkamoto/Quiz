@@ -24,7 +24,7 @@ public interface ScoreKeeper {
     /**
      * Adds high score.
      */
-    void addHighScore(Quiz quiz);
+    void addHighScore(Quiz quiz, Player player);
 
     /**
      * Getter for the highest score corresponding

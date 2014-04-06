@@ -1,12 +1,9 @@
 package models;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ScoreKeeperImpl implements ScoreKeeper {
-    private Map<Integer, ArrayList<Object>> scoreBoardMap = new HashMap<>();
-
+    private Map<Integer, List<Object>> scoreBoardMap = new HashMap<>();
     private HighScoreBoard highScoreBoard;
 
     public ScoreKeeperImpl(HighScoreBoard highScoreBoard) {
@@ -15,7 +12,7 @@ public class ScoreKeeperImpl implements ScoreKeeper {
 
     @Override
     public boolean highScoreContains(Quiz quiz) {
-        return highScoreBoard.contains(quiz);
+        return scoreBoardMap.containsKey(quiz.getId());
     }
 
     @Override
@@ -24,8 +21,9 @@ public class ScoreKeeperImpl implements ScoreKeeper {
     }
 
     @Override
-    public void addHighScore(Quiz quiz) {
-        highScoreBoard.addHighScore(quiz);
+    public void addHighScore(Quiz quiz, Player player) {
+        List<Object> list = Arrays.asList(quiz, player);
+        scoreBoardMap.put(quiz.getId(), list);
     }
 
     @Override
