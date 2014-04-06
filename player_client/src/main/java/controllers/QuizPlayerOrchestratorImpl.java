@@ -20,13 +20,8 @@ public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
     @Override
     public Quiz getQuizBy(int id) throws IllegalQuizException {
         Quiz result = server.getQuiz(id);
-        if (result == null) throw new IllegalQuizException("Quiz with that particular ID does not exist.");
+        if (result == null) throw new IllegalQuizException(ExceptionMessages.QUIZ_DOES_NOT_EXIST);
         return result;
-    }
-
-    @Override
-    public boolean checkForHighScore(int score) {
-        return server.checkForHighScore(score);
     }
 
     @Override
@@ -34,5 +29,15 @@ public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
         if (name == null) throw new IllegalArgumentException("Please enter your name.");
         if (country == null) throw new IllegalArgumentException("Please enter your country of origin.");
         server.createPlayer(name, country, age);
+    }
+
+    @Override
+    public void setPlayerAsWinner(Player player) {
+        if (server.checkForHighScore(player)) server.setPlayerAsWinner(player);
+    }
+
+    @Override
+    public Player getWinner(int quizId) {
+        return server.getWinner(quizId);
     }
 }

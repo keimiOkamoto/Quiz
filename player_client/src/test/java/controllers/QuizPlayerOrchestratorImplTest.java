@@ -9,21 +9,22 @@ import org.junit.rules.ExpectedException;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class QuizPlayerOrchestratorImplTest {
-    private QuizPlayerOrchestratorImpl quizPlayerOrchestrator;
+    private QuizPlayerOrchestrator quizPlayerOrchestrator;
     private Server server;
     private Quiz quiz;
+    private Player player;
 
     @Before
     public void buildUp() {
         server = mock(Server.class);
-
+        player = mock(Player.class);
         quizPlayerOrchestrator = new QuizPlayerOrchestratorImpl(server);
         quiz = mock(Quiz.class);
 
@@ -68,18 +69,26 @@ public class QuizPlayerOrchestratorImplTest {
     @Test
     public void shouldThrowIllegalQuizExceptionIfQuizWithParticularIdDoesNotExist() throws IllegalQuizException {
         thrown.expect(IllegalQuizException.class);
-        thrown.expectMessage("Quiz with that particular ID does not exist.");
+        thrown.expectMessage(ExceptionMessages.QUIZ_DOES_NOT_EXIST);
 
         quizPlayerOrchestrator.getQuizBy(5);
     }
 
     @Test
-    public void shouldBeAbleToCheckForHighScore() {
-        int score = 0;
-        when(server.checkForHighScore(anyInt())).thenReturn(false);
+    public void shouldBeAbleToSetThePlayerAsTheWinner() {
+        when(server.checkForHighScore(eq(player))).thenReturn(true);
+        quizPlayerOrchestrator.setPlayerAsWinner(player);
 
-        assertFalse(quizPlayerOrchestrator.checkForHighScore(score));
-        verify(server).checkForHighScore(anyInt());
+        verify(server).checkForHighScore(eq(player));
+    }
+
+    @Test
+    public void shouldBeAbleToGetTheWinner() {
+        int id = 6;
+        when(server.getWinner(anyInt())).thenReturn(player);
+        Player actual = quizPlayerOrchestrator.getWinner(id);
+
+        assertEquals(player, actual);
     }
 
     @Test

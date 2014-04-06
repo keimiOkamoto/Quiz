@@ -22,10 +22,32 @@ public interface Server {
     /**
      * Checks if the score is the highest store.
      *
-     * @param quiz
+     * @param player
      * @return False if the score is not the highest.
      */
-    boolean checkForHighScore(int quiz);
+    boolean checkForHighScore(Player player);
 
+    /**
+     * Creates a player.
+     *
+     * @param name The name of a player.
+     * @param country The country of a player.
+     * @param age The age of the player.
+     */
     void createPlayer(String name, String country, int age);
+
+    /**
+     * Getter for the winner of the a quiz.
+     *
+     * @return Winner of a quiz.
+     * @param quizId
+     */
+    Player getWinner(int quizId);
+
+    /**
+     * Sets the player as the winner.
+     *
+     * @param player
+     */
+    void setPlayerAsWinner(Player player);
 }
