@@ -86,7 +86,7 @@ public class QuizPlayerOrchestratorImplTest {
     @Test
     public void shouldBeAbleToGetTheWinner() {
         int id = 6;
-        when(server.getWinner(anyInt())).thenReturn(player);
+        when(server.getWinnerBy(anyInt())).thenReturn(player);
         Player actual = quizPlayerOrchestrator.getWinner(id);
 
         assertEquals(player, actual);

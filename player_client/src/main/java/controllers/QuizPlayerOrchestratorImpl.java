@@ -39,6 +39,6 @@ public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
 
     @Override
     public Player getWinner(int quizId) {
-        return server.getWinner(quizId);
+        return server.getWinnerBy(quizId);
     }
 }

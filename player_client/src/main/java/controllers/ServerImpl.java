@@ -3,10 +3,12 @@ package controllers;
 import java.util.ArrayList;
 
 public class ServerImpl implements Server {
-    QuizServer quizServer;
+    private QuizServer quizServer;
+    private PlayerFactory playerFactory;
 
     public ServerImpl(ServerLink serverLink) {
-        this.quizServer = serverLink.getQuizServer();
+        quizServer = serverLink.getQuizServer();
+        playerFactory = quizServer.getPlayerFactory();
     }
 
     @Override
@@ -26,16 +28,16 @@ public class ServerImpl implements Server {
 
     @Override
     public void createPlayer(String name, String country, int age) {
-
+        playerFactory.generatePlayer(name, country, age);
     }
 
     @Override
-    public Player getWinner(int quizId) {
-        return null;
+    public Player getWinnerBy(int quizId) {
+        return quizServer.getWinnerBy(quizId);
     }
 
     @Override
     public void setPlayerAsWinner(Player player) {
-
+        quizServer.setPlayerAsWinner(player);
     }
 }

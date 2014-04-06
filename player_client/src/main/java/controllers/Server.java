@@ -42,7 +42,7 @@ public interface Server {
      * @return Winner of a quiz.
      * @param quizId
      */
-    Player getWinner(int quizId);
+    Player getWinnerBy(int quizId);
 
     /**
      * Sets the player as the winner.

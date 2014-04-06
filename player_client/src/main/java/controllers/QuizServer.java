@@ -29,4 +29,21 @@ public interface QuizServer {
      * @return False if the score is not the highest.
      */
     boolean checkForHighScore(Player player);
+
+    /**
+     * Getter for a player factory.
+     *
+     * @return Player object.
+     */
+    PlayerFactory getPlayerFactory();
+
+    /**
+     * Get winner by the quiz id.
+     *
+     * @param quizId The id of the quiz.
+     * @return The winner of the quiz.
+     */
+    Player getWinnerBy(int quizId);
+
+    void setPlayerAsWinner(Player player);
 }
