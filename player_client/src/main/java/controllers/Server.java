@@ -23,14 +23,6 @@ public interface Server {
     Quiz getQuiz(int id);
 
     /**
-     * Checks if the score is the highest store.
-     *
-     * @param player
-     * @return False if the score is not the highest.
-     */
-    boolean checkForHighScore(Player player);
-
-    /**
      * Creates a player.
      *
      * @param name The name of a player.
@@ -51,6 +43,7 @@ public interface Server {
      * Sets the player as the winner.
      *
      * @param player
+     * @param quiz
      */
-    void setPlayerAsWinner(Player player);
+    void setPlayerAsWinner(Player player, Quiz quiz);
 }

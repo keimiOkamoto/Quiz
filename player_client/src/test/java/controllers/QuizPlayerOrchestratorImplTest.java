@@ -30,7 +30,6 @@ public class QuizPlayerOrchestratorImplTest {
         player = mock(Player.class);
         quizPlayerOrchestrator = new QuizPlayerOrchestratorImpl(server);
         quiz = mock(Quiz.class);
-
     }
 
     @Rule
@@ -79,10 +78,10 @@ public class QuizPlayerOrchestratorImplTest {
 
     @Test
     public void shouldBeAbleToSetThePlayerAsTheWinner() {
-        when(server.checkForHighScore(eq(player))).thenReturn(true);
-        quizPlayerOrchestrator.setPlayerAsWinner(player);
+        when(quiz.checkForHighScore()).thenReturn(true);
+        quizPlayerOrchestrator.setPlayerAsWinner(player, quiz);
 
-        verify(server).checkForHighScore(eq(player));
+        verify(quiz).checkForHighScore();
     }
 
     @Test

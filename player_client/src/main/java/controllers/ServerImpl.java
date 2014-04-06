@@ -27,11 +27,6 @@ public class ServerImpl implements Server {
     }
 
     @Override
-    public boolean checkForHighScore(Player player) {
-        return quizServer.checkForHighScore(player);
-    }
-
-    @Override
     public void createPlayer(String name, String country, int age) {
         playerFactory.generatePlayer(name, country, age);
     }
@@ -42,7 +37,7 @@ public class ServerImpl implements Server {
     }
 
     @Override
-    public void setPlayerAsWinner(Player player) {
-        quizServer.setPlayerAsWinner(player);
+    public void setPlayerAsWinner(Player player, Quiz quiz) {
+        quizServer.setPlayerAsWinner(player, quiz);
     }
 }

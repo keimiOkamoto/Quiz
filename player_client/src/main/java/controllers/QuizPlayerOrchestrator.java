@@ -42,7 +42,7 @@ public interface QuizPlayerOrchestrator {
      *
      * @param player
      */
-    void setPlayerAsWinner(Player player);
+    void setPlayerAsWinner(Player player, Quiz quiz);
 
     /**
      * Getter for the winner player.

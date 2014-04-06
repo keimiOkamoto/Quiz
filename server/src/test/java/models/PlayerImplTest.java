@@ -40,4 +40,10 @@ public class PlayerImplTest {
         assertEquals(country, actualCountry);
     }
 
+    @Test
+    public void shouldBeAbleToGetThePlayerOfTheAge() {
+        int actualAge = player.getAge();
+        assertEquals(age, actualAge);
+    }
+
 }

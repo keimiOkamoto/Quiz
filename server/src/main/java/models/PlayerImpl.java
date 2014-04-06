@@ -28,4 +28,9 @@ public class PlayerImpl implements Player {
     public String getCountry() {
         return country;
     }
+
+    @Override
+    public int getAge() {
+        return age;
+    }
 }

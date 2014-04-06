@@ -2,6 +2,7 @@ package controllers;
 
 import models.Player;
 import models.PlayerFactory;
+import models.Quiz;
 import models.QuizServer;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,9 +19,11 @@ public class ServerTest {
     private QuizServer quizServer;
     private ServerLink serverLink;
     private PlayerFactory playerFactory;
+    private Quiz quiz;
 
     @Before
     public void buildUp() {
+        quiz = mock(Quiz.class);
         serverLink = mock(ServerLink.class);
         quizServer = mock(QuizServer.class);
         playerFactory = mock(PlayerFactory.class);
@@ -43,13 +46,6 @@ public class ServerTest {
     }
 
     @Test
-    public void shouldBeAbleToCheckForHighScore() {
-        Player player = mock(Player.class);
-        server.checkForHighScore(player);
-        verify(quizServer).checkForHighScore(player);
-    }
-
-    @Test
     public void shouldBeAbleToCreateNewPlayer() {
         int age = 5;
         String name = "Superman";
@@ -69,7 +65,7 @@ public class ServerTest {
     @Test
     public void shouldBeAbleSetPlayerAsWinner() {
         Player player = mock(Player.class);
-        server.setPlayerAsWinner(player);
-        verify(quizServer).setPlayerAsWinner(player);
+        server.setPlayerAsWinner(player, quiz);
+        verify(quizServer).setPlayerAsWinner(player, quiz);
     }
 }

@@ -22,4 +22,11 @@ public interface Player {
      * @return The country of the player.
      */
     String getCountry();
+
+    /**
+     * Getter for a players age.
+     *
+     * @return The age of the player.
+     */
+    int getAge();
 }
