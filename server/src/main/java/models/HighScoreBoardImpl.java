@@ -34,4 +34,9 @@ public class HighScoreBoardImpl implements HighScoreBoard {
     public void setLeader(Player player, Quiz quiz) {
 
     }
+
+    @Override
+    public Player getLeader(Quiz quiz) {
+        return null;
+    }
 }

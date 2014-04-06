@@ -1,6 +1,12 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 public class ScoreKeeperImpl implements ScoreKeeper {
+    private Map<Integer, ArrayList<Object>> scoreBoardMap = new HashMap<>();
+
     private HighScoreBoard highScoreBoard;
 
     public ScoreKeeperImpl(HighScoreBoard highScoreBoard) {
