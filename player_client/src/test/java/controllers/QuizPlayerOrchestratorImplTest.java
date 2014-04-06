@@ -49,7 +49,7 @@ public class QuizPlayerOrchestratorImplTest {
     @Test
     public void shouldThrowIllegalGameExceptionIfListIsNull() throws IllegalGameException {
         thrown.expect(IllegalGameException.class);
-        thrown.expectMessage("There are no Quizzes available.");
+        thrown.expectMessage(ExceptionMessages.NO_AVAILABLE_QUIZZES);
 
         when(server.getQuizzes()).thenReturn(null);
         quizPlayerOrchestrator.getQuizzes();
@@ -104,7 +104,7 @@ public class QuizPlayerOrchestratorImplTest {
     @Test
     public void shouldThrowIllegalArgumentExceptionIfNoNameIsEntered() {
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Please enter your name.");
+        thrown.expectMessage(ExceptionMessages.NO_NAME);
 
         quizPlayerOrchestrator.addPlayer(null, "London", 27);
     }
@@ -112,7 +112,7 @@ public class QuizPlayerOrchestratorImplTest {
     @Test
     public void shouldThrowIllegalArgumentExceptionIfNoCountryIsEntered() {
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Please enter your country of origin.");
+        thrown.expectMessage(ExceptionMessages.NO_COUNTRY);
 
         quizPlayerOrchestrator.addPlayer("Keimi", null, 27);
     }

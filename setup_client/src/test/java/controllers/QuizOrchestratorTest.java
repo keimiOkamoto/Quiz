@@ -84,7 +84,7 @@ public class QuizOrchestratorTest {
     @Test
     public void shouldHaveAppropriateMessageIfTitleIsNull() throws IllegalArgumentException, IllegalQuizException {
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Title is empty. Please enter a title with at least one character.");
+        thrown.expectMessage(ExceptionMessages.EMPTY_TITLE);
 
         quizOrchestrator.createQuiz(null);
     }
@@ -92,7 +92,7 @@ public class QuizOrchestratorTest {
     @Test
     public void shouldHaveAppropriateMessageIfTitleIsAnEmptyString() throws IllegalArgumentException, IllegalQuizException {
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Title is empty. Please enter a title with at least one character.");
+        thrown.expectMessage(ExceptionMessages.EMPTY_TITLE);
 
         quizOrchestrator.createQuiz("    ");
     }
@@ -103,7 +103,7 @@ public class QuizOrchestratorTest {
         when(server.valid(title)).thenReturn(false);
 
         thrown.expect(IllegalQuizException.class);
-        thrown.expectMessage("A quiz with the same name already exists. Please try again with another name.");
+        thrown.expectMessage(ExceptionMessages.DUPLICATE_QUIZ);
 
         quizOrchestrator.createQuiz(title);
     }
@@ -129,7 +129,7 @@ public class QuizOrchestratorTest {
     @Test
     public void shouldThrowIllegalQuizExceptionIfQuizIsNull() throws IllegalQuizException {
         thrown.expect(IllegalQuizException.class);
-        thrown.expectMessage("Quiz does not exist. Please create a quiz and try again.");
+        thrown.expectMessage(ExceptionMessages.NO_QUIZ_EXISTS);
 
         String question1 = "What is the biggest cat?";
         quizOrchestrator.addQuestion(question1);
@@ -144,7 +144,7 @@ public class QuizOrchestratorTest {
         verify(server).createQuiz(title);
 
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Question entered is empty. Please try again.");
+        thrown.expectMessage(ExceptionMessages.EMPTY_QUESTION);
 
         quizOrchestrator.addQuestion(null);
     }
@@ -177,7 +177,7 @@ public class QuizOrchestratorTest {
         when(quiz.contains(stringAnswer)).thenReturn(false);
 
         thrown.expect(IllegalQuizException.class);
-        thrown.expectMessage("You have already entered that question. Please enter a different one.");
+        thrown.expectMessage(ExceptionMessages.DUPLICATE_QUESTION);
 
         quizOrchestrator.addQuestion(stringAnswer);
     }
@@ -224,7 +224,7 @@ public class QuizOrchestratorTest {
         when(question.contains(anyString())).thenReturn(true);
 
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Answer entered is empty. Please enter a contains answer.");
+        thrown.expectMessage(ExceptionMessages.EMPTY_ANSWER);
 
         quizOrchestrator.addAnswer(null, true);
     }
@@ -246,7 +246,7 @@ public class QuizOrchestratorTest {
         when(question.contains(anyString())).thenReturn(true);
 
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Answer entered is empty. Please enter a contains answer.");
+        thrown.expectMessage(ExceptionMessages.EMPTY_ANSWER);
 
         quizOrchestrator.addAnswer("       ", true);
     }
@@ -254,7 +254,7 @@ public class QuizOrchestratorTest {
     @Test
     public void shouldThrowIllegalQuestionExceptionIfQuestionDoesNotExist() throws IllegalQuestionException {
         thrown.expect(IllegalQuestionException.class);
-        thrown.expectMessage("Question doesn't exist. There must be a question to have an answer!");
+        thrown.expectMessage(ExceptionMessages.NO_QUESTION_EXISTS);
 
         String answer = "lion";
         quizOrchestrator.addAnswer(answer, true);
@@ -278,7 +278,7 @@ public class QuizOrchestratorTest {
         when(question.contains(stringAnswer)).thenReturn(false);
 
         thrown.expect(IllegalQuestionException.class);
-        thrown.expectMessage("You have already entered that answer. Please enter a different one.");
+        thrown.expectMessage(ExceptionMessages.DUPLICATE_ANSWER);
 
         quizOrchestrator.addAnswer(stringAnswer, true);
     }
@@ -300,7 +300,7 @@ public class QuizOrchestratorTest {
         when(server.valid(anyInt())).thenReturn(false);
 
         thrown.expect(IllegalQuizException.class);
-        thrown.expectMessage("A quiz with that ID does not exist. Please enter a contains ID.");
+        thrown.expectMessage(ExceptionMessages.NO_QUIZ_WITH_ID_EXISTS);
 
         quizOrchestrator.closeQuiz(id);
     }
@@ -317,7 +317,7 @@ public class QuizOrchestratorTest {
     @Test
     public void shouldThrowIllegalQuizExceptionIfQuizDoesNotExist() throws IllegalQuizException {
         thrown.expect(IllegalQuizException.class);
-        thrown.expectMessage("There is no quiz to save to server.");
+        thrown.expectMessage(ExceptionMessages.NO_QUIZ_TO_SAVE);
 
         quizOrchestrator.save(null);
     }
@@ -325,7 +325,7 @@ public class QuizOrchestratorTest {
     @Test
     public void shouldThrowIllegalQuizExceptionIfQuizDoesNotContainAQuestion() throws IllegalQuizException {
         thrown.expect(IllegalQuizException.class);
-        thrown.expectMessage("Cannot save a quiz without any questions. Please enter at lease one question.");
+        thrown.expectMessage(ExceptionMessages.NO_QUESTIONS_CANNOT_SAVE);
 
         when(quiz.isEmpty()).thenReturn(true);
         quizOrchestrator.save(quiz);

@@ -13,7 +13,7 @@ public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
 
     public ArrayList<Quiz> getQuizzes() throws IllegalGameException {
         ArrayList<Quiz> result = server.getQuizzes();
-        if (result == null) throw new IllegalGameException("There are no Quizzes available.");
+        if (result == null) throw new IllegalGameException(ExceptionMessages.NO_AVAILABLE_QUIZZES);
         return result;
     }
 
@@ -26,7 +26,7 @@ public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
 
     @Override
     public void addPlayer(String name, String country, int age) throws IllegalArgumentException {
-        if (name == null) throw new IllegalArgumentException("Please enter your name.");
+        if (name == null) throw new IllegalArgumentException(ExceptionMessages.NO_NAME);
         if (country == null) throw new IllegalArgumentException("Please enter your country of origin.");
         server.createPlayer(name, country, age);
     }

@@ -20,40 +20,40 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
 
     @Override
     public int createQuiz(String title) throws IllegalArgumentException, IllegalQuizException {
-        if (title == null || title.trim().equals("")) throw new IllegalArgumentException("Title is empty. Please enter a title with at least one character.");
-        if (!server.valid(title)) throw new IllegalQuizException("A quiz with the same name already exists. Please try again with another name.");
+        if (title == null || title.trim().equals("")) throw new IllegalArgumentException(ExceptionMessages.EMPTY_TITLE);
+        if (!server.valid(title)) throw new IllegalQuizException(ExceptionMessages.DUPLICATE_QUIZ);
         quiz = server.createQuiz(title.trim());
         return quiz.getId();
     }
 
     @Override
-    public void addQuestion(String questionString) throws IllegalQuizException, IllegalArgumentException {
-        if (quiz == null) throw new IllegalQuizException("Quiz does not exist. Please create a quiz and try again.");
-        if (questionString == null || questionString.trim().equals("")) throw new IllegalArgumentException("Question entered is empty. Please try again.");
-        if (!quiz.contains(questionString)) throw new IllegalQuizException("You have already entered that question. Please enter a different one.");
-        question = server.createQuestion(questionString);
+    public void addQuestion(String questionStr) throws IllegalQuizException, IllegalArgumentException {
+        if (quiz == null) throw new IllegalQuizException(ExceptionMessages.NO_QUIZ_EXISTS);
+        if (questionStr == null || questionStr.trim().equals("")) throw new IllegalArgumentException(ExceptionMessages.EMPTY_QUESTION);
+        if (!quiz.contains(questionStr)) throw new IllegalQuizException(ExceptionMessages.DUPLICATE_QUESTION);
+        question = server.createQuestion(questionStr);
         quiz.addQuestion(question);
     }
 
     @Override
     public void addAnswer(String answer, boolean answerType) throws IllegalQuestionException, IllegalArgumentException {
-        if (question == null) throw new IllegalQuestionException("Question doesn't exist. There must be a question to have an answer!");
-        if (!question.contains(answer)) throw new IllegalQuestionException("You have already entered that answer. Please enter a different one.");
-        if (answer == null || answer.trim().equals("")) throw new IllegalArgumentException("Answer entered is empty. Please enter a contains answer.");
+        if (question == null) throw new IllegalQuestionException(ExceptionMessages.NO_QUESTION_EXISTS);
+        if (!question.contains(answer)) throw new IllegalQuestionException(ExceptionMessages.DUPLICATE_ANSWER);
+        if (answer == null || answer.trim().equals("")) throw new IllegalArgumentException(ExceptionMessages.EMPTY_ANSWER);
         Answer answer1 = server.createAnswer(answer, answerType);
         question.add(answer1);
     }
 
     @Override
     public void closeQuiz(int id) throws IllegalQuizException {
-        if (!server.valid(id)) throw new IllegalQuizException("A quiz with that ID does not exist. Please enter a contains ID.");
+        if (!server.valid(id)) throw new IllegalQuizException(ExceptionMessages.NO_QUIZ_WITH_ID_EXISTS);
         server.closeQuiz(id);
     }
 
     @Override
     public void save(Quiz quiz) throws IllegalQuizException {
-        if (quiz == null) throw new IllegalQuizException("There is no quiz to save to server.");
-        if (quiz.isEmpty()) throw new IllegalQuizException("Cannot save a quiz without any questions. Please enter at lease one question.");
+        if (quiz == null) throw new IllegalQuizException(ExceptionMessages.NO_QUIZ_TO_SAVE);
+        if (quiz.isEmpty()) throw new IllegalQuizException(ExceptionMessages.NO_QUESTIONS_CANNOT_SAVE);
         server.save(quiz);
     }
 
