@@ -3,8 +3,6 @@ package controllers;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -36,4 +34,12 @@ public class ServerTest {
         server.getQuiz(id);
         verify(quizServer).getQuiz(anyInt());
     }
+
+    @Test
+    public void shouldBeAbleToCheckForHighScore() {
+        Player player = mock(Player.class);
+        server.checkForHighScore(player);
+        verify(quizServer).checkForHighScore(player);
+    }
+
 }

@@ -21,7 +21,7 @@ public class ServerImpl implements Server {
 
     @Override
     public boolean checkForHighScore(Player player) {
-        return false;
+        return quizServer.checkForHighScore(player);
     }
 
     @Override
