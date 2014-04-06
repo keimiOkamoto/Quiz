@@ -1,4 +1,6 @@
-package controllers;
+package exceptions;
+
+import controllers.exceptions;
 
 /**
  * Exception for an illegal game.
