@@ -5,6 +5,7 @@ import factories.ItemsFactory;
 import factories.PlayerFactory;
 import models.Player;
 import models.Quiz;
+import models.ScoreKeeper;
 
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
@@ -16,11 +17,13 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
 
     private ItemsFactory itemsFactory;
     private QuizContainer quizContainer;
+    private ScoreKeeper scoreKeeper;
 
     @Inject
-    public QuizServerImpl(ItemsFactory itemsFactory, QuizContainer quizContainer) throws RemoteException {
+    public QuizServerImpl(ItemsFactory itemsFactory, QuizContainer quizContainer, ScoreKeeper scoreKeeper) throws RemoteException {
         this.itemsFactory = itemsFactory;
         this.quizContainer = quizContainer;
+        this.scoreKeeper = scoreKeeper;
     }
 
     @Override
@@ -62,7 +65,7 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     }
 
     @Override
-    public boolean checkForHighScore(Quiz quiz, Player player)throws RemoteException {
+    public boolean checkForHighScore(Quiz quiz)throws RemoteException {
         return false;
     }
 
@@ -78,7 +81,6 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
 
     @Override
     public void setPlayerAsWinner(Player player, Quiz quiz) throws RemoteException {
-
     }
 
 

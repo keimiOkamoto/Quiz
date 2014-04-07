@@ -82,10 +82,9 @@ public interface QuizServer extends Remote {
      *
      *
      * @param quiz A quiz.
-     * @param player A player of a quiz.
      * @return False if the score is not the highest.
      */
-    boolean checkForHighScore(Quiz quiz, Player player) throws RemoteException;
+    boolean checkForHighScore(Quiz quiz) throws RemoteException;
 
     /**
      * Getter for a player factory.

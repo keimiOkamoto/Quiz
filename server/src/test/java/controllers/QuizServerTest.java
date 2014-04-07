@@ -1,7 +1,9 @@
 package controllers;
 
 import factories.ItemsFactory;
+import models.Player;
 import models.Quiz;
+import models.ScoreKeeper;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,13 +22,17 @@ public class QuizServerTest {
     private ItemsFactory itemsFactory;
     private QuizContainer quizContainer;
     private Quiz quiz;
+    private ScoreKeeper scoreKeeper;
+    private Player player;
 
     @Before
     public void buildUp() throws RemoteException {
+        player = mock(Player.class);
+        scoreKeeper = mock(ScoreKeeper.class);
         quiz = mock(Quiz.class);
         itemsFactory = mock(ItemsFactory.class);
         quizContainer = mock(QuizContainer.class);
-        quizServer = new QuizServerImpl(itemsFactory, quizContainer);
+        quizServer = new QuizServerImpl(itemsFactory, quizContainer, scoreKeeper);
     }
 
     @Test
@@ -95,4 +101,9 @@ public class QuizServerTest {
         assertEquals(quiz, actual);
     }
 
+    @Test
+    public void shouldBeAbleToCheckForHighScoreOfAParticularQuiz() throws RemoteException {
+
+        quizServer.checkForHighScore(quiz, player);
+    }
 }
