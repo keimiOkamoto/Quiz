@@ -38,4 +38,16 @@ public class ScoreKeeperTest {
 
         assertEquals(32, actualHighScore);
     }
+
+    @Test
+    public void shouldBeAbleToGetLeader() {
+        String expected = "Batman";
+        when(player.getName()).thenReturn(expected);
+        scoreKeeper.addHighScore(quiz, player);
+
+        Player actualLeader  = scoreKeeper.getLeader(quiz);
+        String actual = actualLeader.getName();
+
+        assertEquals(expected, actual);
+    }
 }

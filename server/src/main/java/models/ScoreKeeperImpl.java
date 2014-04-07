@@ -24,8 +24,9 @@ public class ScoreKeeperImpl implements ScoreKeeper {
     }
 
     @Override
-    public Player getLeader(Quiz quiz, Player player) {
-        return null;
+    public Player getLeader(Quiz quiz) {
+        List<Object> list = scoreBoardMap.get(quiz.getId());
+        return (Player)list.get(1);
     }
 
     /*

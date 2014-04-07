@@ -33,5 +33,5 @@ public interface ScoreKeeper {
      * @param quiz A quiz.
      * @return The leader of the quiz.(player)
      */
-    Player getLeader(Quiz quiz, Player player);
+    Player getLeader(Quiz quiz);
 }
