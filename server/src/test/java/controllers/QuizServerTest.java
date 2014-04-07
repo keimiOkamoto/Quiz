@@ -104,6 +104,5 @@ public class QuizServerTest {
     @Test
     public void shouldBeAbleToCheckForHighScoreOfAParticularQuiz() throws RemoteException {
 
-        quizServer.checkForHighScore(quiz, player);
     }
 }

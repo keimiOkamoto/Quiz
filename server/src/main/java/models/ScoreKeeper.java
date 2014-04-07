@@ -34,4 +34,13 @@ public interface ScoreKeeper {
      * @return The leader of the quiz.(player)
      */
     Player getLeader(Quiz quiz);
+
+    /**
+     * Checks if the score is the highest for a
+     * particular quiz.
+     *
+     * @param quiz A quiz with the score.
+     * @return false if the score is not the highest.
+     */
+    public boolean scoreIsHighest(Quiz quiz);
 }

@@ -10,7 +10,7 @@ public class ScoreKeeperImpl implements ScoreKeeper {
         if (!highScoreContains(quiz) || scoreIsHighest(quiz)) {
             setLeader(quiz, player);
         }
-    }
+    } //TODO append player to list if score is equal.
 
     @Override
     public boolean highScoreContains(Quiz quiz) {
@@ -38,14 +38,13 @@ public class ScoreKeeperImpl implements ScoreKeeper {
         scoreBoardMap.put(quiz.getId(),list);
     }
 
-    /*
-     * Checks if the quiz score is the highest.
-     */
-    private boolean scoreIsHighest(Quiz quiz) {
+    @Override
+    public boolean scoreIsHighest(Quiz quiz) {
         boolean result = false;
         if (highScoreContains(quiz)) {
             List<Object> list = scoreBoardMap.get(quiz.getId());
-            if (quiz.getScore() > ((Quiz) list.get(0)).getScore()) {
+            int currentHighest = ((Quiz) list.get(0)).getScore();
+            if (quiz.getScore() >= currentHighest) {
                 result = true;
             }
         }
