@@ -59,4 +59,12 @@ public class QuizServerTest {
         quizServer.save(quiz);
         verify(quizContainer).save(quiz);
     }
+
+    /********** Player client methods ***********/
+
+    @Test
+    public void shouldBeAbleToGetListOfQuizzes() {
+
+    }
+
 }

@@ -6,6 +6,7 @@ import models.Quiz;
 import models.QuizServer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ServerImpl implements Server {
     private QuizServer quizServer;
@@ -17,7 +18,7 @@ public class ServerImpl implements Server {
     }
 
     @Override
-    public ArrayList<Quiz> getQuizzes() {
+    public List<Quiz> getQuizzes() {
         return quizServer.getQuizzes();
     }
 

@@ -2,11 +2,15 @@ package controllers;
 
 import com.google.inject.Inject;
 import factories.ItemsFactory;
+import factories.PlayerFactory;
+import models.Player;
 import models.Quiz;
 
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.List;
 
 public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
 
@@ -35,12 +39,47 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     }
 
     @Override
+    public void save(Quiz quiz) throws RemoteException {
+        quizContainer.save(quiz);
+    }
+
+    @Override
     public ItemsFactory getItemsFactory() throws RemoteException {
         return itemsFactory;
     }
 
+
+    /********** Player client methods ***********/
+
     @Override
-    public void save(Quiz quiz) throws RemoteException {
-        quizContainer.save(quiz);
+    public List<Quiz> getQuizzes() {
+        return null;
     }
+
+    @Override
+    public Quiz getQuiz(int id) {
+        return null;
+    }
+
+    @Override
+    public boolean checkForHighScore(Quiz quiz, Player player) {
+        return false;
+    }
+
+    @Override
+    public PlayerFactory getPlayerFactory() {
+        return null;
+    }
+
+    @Override
+    public Player getWinnerBy(int quizId) {
+        return null;
+    }
+
+    @Override
+    public void setPlayerAsWinner(Player player, Quiz quiz) {
+
+    }
+
+
 }

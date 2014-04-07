@@ -2,6 +2,9 @@ package controllers;
 
 import models.Quiz;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A container class that contains and validates Quizzes.
  */
@@ -43,4 +46,11 @@ public interface QuizContainer {
      * @return A Quiz object.
      */
     Quiz getQuizBy(int id);
+
+    /**
+     * Getter for a list of quizzes
+     *
+     * @return
+     */
+    List<Quiz> getQuizzes();
 }

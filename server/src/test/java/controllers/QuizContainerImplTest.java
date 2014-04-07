@@ -4,6 +4,9 @@ import models.Quiz;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -58,6 +61,7 @@ public class QuizContainerImplTest {
     @Test
     public void shouldNotBeAbleToRetrieveClosedQuiz() {
         int id = 12;
+
         when(quiz.getId()).thenReturn(id);
         quizContainer.save(quiz);
         quizContainer.closeQuizWith(id);
@@ -66,5 +70,23 @@ public class QuizContainerImplTest {
         verify(closedQuizContainer).add(quiz);
 
         assertEquals(null, actualQuiz);
+    }
+
+    @Test
+    public void shouldBeAbleToGetListOfQuizzes() {
+        Quiz quiz1 = mock(Quiz.class);
+        List<Quiz> expected = new ArrayList<>();
+        expected.add(quiz);
+        expected.add(quiz1);
+
+        when(quiz.getId()).thenReturn(5);
+        when(quiz1.getId()).thenReturn(6);
+
+        quizContainer.save(quiz);
+        quizContainer.save(quiz1);
+
+        List<Quiz> actualQuizzes = quizContainer.getQuizzes();
+
+        assertEquals(expected,actualQuizzes);
     }
 }

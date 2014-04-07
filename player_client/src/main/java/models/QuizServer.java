@@ -5,6 +5,7 @@ import models.PlayerFactory;
 import models.Quiz;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Interface for the quiz server.
@@ -16,7 +17,7 @@ public interface QuizServer {
      *
      * @return A list of available quizzes.
      */
-    ArrayList<Quiz> getQuizzes();
+    List<Quiz> getQuizzes();
 
     /**
      * Getter for a quiz.
@@ -57,7 +58,5 @@ public interface QuizServer {
      * @param player A player of a quiz.
      */
     void setPlayerAsWinner(Player player, Quiz quiz);
-
-    /////
 
 }

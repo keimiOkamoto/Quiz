@@ -4,7 +4,9 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import models.Quiz;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.TreeMap;
 
 @Singleton
@@ -47,5 +49,15 @@ public class QuizContainerImpl implements QuizContainer {
     @Override
     public Quiz getQuizBy(int id) {
         return quizTreeMap.get(id);
+    }
+
+    @Override
+    public List<Quiz> getQuizzes() {
+        Collection<Quiz> collection = quizTreeMap.values();
+        List<Quiz> list = new ArrayList<>();
+        for (Quiz quiz : collection) {
+            list.add(quiz);
+        }
+        return list;
     }
 }

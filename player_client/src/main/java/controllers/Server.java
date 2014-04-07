@@ -4,6 +4,7 @@ import models.Player;
 import models.Quiz;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface Server {
 
@@ -12,7 +13,7 @@ public interface Server {
      *
      * @return An ArrayList of Quizzes.
      */
-    ArrayList<Quiz> getQuizzes();
+    List<Quiz> getQuizzes();
 
     /**
      * Getter for a quiz.
