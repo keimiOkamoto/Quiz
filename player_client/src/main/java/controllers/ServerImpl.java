@@ -40,4 +40,9 @@ public class ServerImpl implements Server {
     public void setPlayerAsWinner(Player player, Quiz quiz, int score) {
         quizServer.setPlayerAsWinner(player, quiz);
     }
+
+    @Override
+    public boolean checkForHighScore(Quiz quiz, Player player) {
+        return quizServer.checkForHighScore(quiz, player);
+    }
 }

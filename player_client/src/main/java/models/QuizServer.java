@@ -29,10 +29,12 @@ public interface QuizServer {
     /**
      * Checks if the score is the highest store.
      *
-     * @param player
+     *
+     * @param quiz A quiz.
+     * @param player A player of a quiz.
      * @return False if the score is not the highest.
      */
-    boolean checkForHighScore(Player player);
+    boolean checkForHighScore(Quiz quiz, Player player);
 
     /**
      * Getter for a player factory.
@@ -55,4 +57,7 @@ public interface QuizServer {
      * @param player A player of a quiz.
      */
     void setPlayerAsWinner(Player player, Quiz quiz);
+
+    /////
+
 }

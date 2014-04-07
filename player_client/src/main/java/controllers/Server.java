@@ -46,4 +46,13 @@ public interface Server {
      * @param score
      */
     void setPlayerAsWinner(Player player, Quiz quiz, int score);
+
+    /**
+     * Checks for a if the quiz is the high score;
+     *
+     * @param player A quiz player.
+     * @param quiz A quiz.
+     * @return false if the quiz is not the highest.
+     */
+    public boolean checkForHighScore(Quiz quiz, Player player);
 }
