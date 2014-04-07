@@ -6,25 +6,17 @@ package models;
 public interface ScoreKeeper {
 
     /**
+     * Adds high score.
+     */
+    void addHighScore(Quiz quiz, Player player);
+
+    /**
      * Checks if a previous high score exists.
      *
      * @param quiz A quiz.
      * @return false if score does not exist.
      */
     boolean highScoreContains(Quiz quiz);
-
-    /**
-     * Checks if the score is the highest.
-     *
-     * @param quiz A quiz.
-     * @return false if the quizzes score is not the highest.
-     */
-    boolean scoreIsHighest(Quiz quiz);
-
-    /**
-     * Adds high score.
-     */
-    void addHighScore(Quiz quiz, Player player);
 
     /**
      * Getter for the highest score corresponding
@@ -36,18 +28,10 @@ public interface ScoreKeeper {
     int getHighScore(Quiz quiz);
 
     /**
-     * Setter for the leading player of a quiz.
-     *
-     * @param player A player.
-     * @param quiz A quiz.
-     */
-    void setLeader(Player player, Quiz quiz);
-
-    /**
      * Getter for the leader of a quiz.
      *
      * @param quiz A quiz.
      * @return The leader of the quiz.(player)
      */
-    Player getLeader(Quiz quiz);
+    Player getLeader(Quiz quiz, Player player);
 }
