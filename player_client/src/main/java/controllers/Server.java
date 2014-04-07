@@ -42,9 +42,10 @@ public interface Server {
 
     /**
      * Sets the player as the winner.
-     * @param player
-     * @param quiz
-     * @param score
+     *
+     * @param player The name of a player.
+     * @param quiz The quiz the player was making.
+     * @param score The score of the player.
      */
     void setPlayerAsWinner(Player player, Quiz quiz, int score);
 

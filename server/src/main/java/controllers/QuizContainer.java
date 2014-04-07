@@ -1,8 +1,6 @@
 package controllers;
 
 import models.Quiz;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,7 +48,7 @@ public interface QuizContainer {
     /**
      * Getter for a list of quizzes
      *
-     * @return
+     * @return A list of available quizzes.
      */
     List<Quiz> getQuizzes();
 }

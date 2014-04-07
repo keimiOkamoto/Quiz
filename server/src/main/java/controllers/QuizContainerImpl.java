@@ -55,6 +55,7 @@ public class QuizContainerImpl implements QuizContainer {
     public List<Quiz> getQuizzes() {
         Collection<Quiz> collection = quizTreeMap.values();
         List<Quiz> list = new ArrayList<>();
+
         for (Quiz quiz : collection) {
             list.add(quiz);
         }

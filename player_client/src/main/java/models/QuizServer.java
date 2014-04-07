@@ -58,5 +58,4 @@ public interface QuizServer {
      * @param player A player of a quiz.
      */
     void setPlayerAsWinner(Player player, Quiz quiz);
-
 }
