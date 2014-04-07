@@ -52,32 +52,32 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     /********** Player client methods ***********/
 
     @Override
-    public List<Quiz> getQuizzes() {
-        return null;
+    public List<Quiz> getQuizzes() throws RemoteException {
+        return quizContainer.getQuizzes();
     }
 
     @Override
-    public Quiz getQuiz(int id) {
-        return null;
+    public Quiz getQuiz(int id) throws RemoteException {
+        return quizContainer.getQuizBy(id);
     }
 
     @Override
-    public boolean checkForHighScore(Quiz quiz, Player player) {
+    public boolean checkForHighScore(Quiz quiz, Player player)throws RemoteException {
         return false;
     }
 
     @Override
-    public PlayerFactory getPlayerFactory() {
+    public PlayerFactory getPlayerFactory()throws RemoteException {
         return null;
     }
 
     @Override
-    public Player getWinnerBy(int quizId) {
+    public Player getWinnerBy(int quizId)throws RemoteException  {
         return null;
     }
 
     @Override
-    public void setPlayerAsWinner(Player player, Quiz quiz) {
+    public void setPlayerAsWinner(Player player, Quiz quiz) throws RemoteException {
 
     }
 

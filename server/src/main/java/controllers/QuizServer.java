@@ -67,7 +67,7 @@ public interface QuizServer extends Remote {
      *
      * @return A list of available quizzes.
      */
-    List<Quiz> getQuizzes();
+    List<Quiz> getQuizzes() throws RemoteException;
 
     /**
      * Getter for a quiz.
@@ -75,7 +75,7 @@ public interface QuizServer extends Remote {
      * @param id ID of a quiz.
      * @return A quiz with the corresponding ID.
      */
-    Quiz getQuiz(int id);
+    Quiz getQuiz(int id) throws RemoteException;
 
     /**
      * Checks if the score is the highest store.
@@ -85,14 +85,14 @@ public interface QuizServer extends Remote {
      * @param player A player of a quiz.
      * @return False if the score is not the highest.
      */
-    boolean checkForHighScore(Quiz quiz, Player player);
+    boolean checkForHighScore(Quiz quiz, Player player) throws RemoteException;
 
     /**
      * Getter for a player factory.
      *
      * @return Player object.
      */
-    PlayerFactory getPlayerFactory();
+    PlayerFactory getPlayerFactory() throws RemoteException;
 
     /**
      * Get winner by the quiz id.
@@ -100,12 +100,12 @@ public interface QuizServer extends Remote {
      * @param quizId The id of the quiz.
      * @return The winner of the quiz.
      */
-    Player getWinnerBy(int quizId);
+    Player getWinnerBy(int quizId) throws RemoteException;
 
     /**
      * Setter for setting a player as a winner.
      *
      * @param player A player of a quiz.
      */
-    void setPlayerAsWinner(Player player, Quiz quiz);
+    void setPlayerAsWinner(Player player, Quiz quiz) throws RemoteException;
 }
