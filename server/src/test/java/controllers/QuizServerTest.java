@@ -1,6 +1,7 @@
 package controllers;
 
 import factories.ItemsFactory;
+import factories.PlayerFactory;
 import models.Player;
 import models.Quiz;
 import models.ScoreKeeper;
@@ -25,15 +26,17 @@ public class QuizServerTest {
     private Quiz quiz;
     private ScoreKeeper scoreKeeper;
     private Player player;
+    private PlayerFactory playerFactory;
 
     @Before
     public void buildUp() throws RemoteException {
+        playerFactory = mock(PlayerFactory.class);
         player = mock(Player.class);
         scoreKeeper = mock(ScoreKeeper.class);
         quiz = mock(Quiz.class);
         itemsFactory = mock(ItemsFactory.class);
         quizContainer = mock(QuizContainer.class);
-        quizServer = new QuizServerImpl(itemsFactory, quizContainer, scoreKeeper);
+        quizServer = new QuizServerImpl(itemsFactory, playerFactory, quizContainer, scoreKeeper);
     }
 
     @Test
@@ -114,7 +117,9 @@ public class QuizServerTest {
     }
 
     @Test
-    public void shouldBeAbleToGetAPlayerFactory() {
+    public void shouldBeAbleToGetAPlayerFactory() throws RemoteException {
+        PlayerFactory actualPlayerFactory = quizServer.getPlayerFactory();
 
+        assertEquals(playerFactory, actualPlayerFactory);
     }
 }

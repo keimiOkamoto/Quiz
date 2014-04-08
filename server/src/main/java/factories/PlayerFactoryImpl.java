@@ -1,12 +1,16 @@
 package factories;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import models.Player;
 import models.PlayerImpl;
 import utils.UniqueNumberGeneratorUtils;
 
+@Singleton
 public class PlayerFactoryImpl implements PlayerFactory {
     private UniqueNumberGeneratorUtils uniqueNumberGeneratorUtils;
 
+    @Inject
     public PlayerFactoryImpl(UniqueNumberGeneratorUtils uniqueNumberGeneratorUtils) {
         this.uniqueNumberGeneratorUtils = uniqueNumberGeneratorUtils;
     }
