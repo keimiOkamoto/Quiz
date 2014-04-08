@@ -122,4 +122,20 @@ public class QuizServerTest {
 
         assertEquals(playerFactory, actualPlayerFactory);
     }
+
+    @Test
+    public void shouldBeAbleToSetWinner() throws RemoteException {
+        int quizId = 5;
+
+        when(quiz.getId()).thenReturn(quizId);
+        when(quiz.getScore()).thenReturn(50);
+        when(player.getName()).thenReturn("Green Goblin");
+        quizServer.setPlayerAsWinner(quiz, player);
+        verify(scoreKeeper).setLeader(quiz, player);
+
+        when(scoreKeeper.getLeader(quizId)).thenReturn(player);
+        Player actual = quizServer.getWinnerBy(quizId);
+
+        assertEquals(player, actual);
+    }
 }

@@ -1,7 +1,10 @@
 package models;
 
+import com.google.inject.Singleton;
+
 import java.util.*;
 
+@Singleton
 public class ScoreKeeperImpl implements ScoreKeeper {
     private Map<Integer, List<Object>> scoreBoardMap = new HashMap<>();
 
@@ -24,16 +27,13 @@ public class ScoreKeeperImpl implements ScoreKeeper {
     }
 
     @Override
-    public Player getLeader(Quiz quiz) {
-        List<Object> list = scoreBoardMap.get(quiz.getId());
+    public Player getLeader(int quizId) {
+        List<Object> list = scoreBoardMap.get(quizId);
         return (Player)list.get(1);
     }
 
-    /*
-     * Allow other methods to set the leader of a quiz.
-     * (Score and player)
-     */
-    private void setLeader(Quiz quiz, Player player) {
+    @Override
+    public void setLeader(Quiz quiz, Player player) {
         List<Object> list = Arrays.asList(quiz, player);
         scoreBoardMap.put(quiz.getId(),list);
     }

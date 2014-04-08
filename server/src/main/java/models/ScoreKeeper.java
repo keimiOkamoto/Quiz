@@ -30,10 +30,19 @@ public interface ScoreKeeper {
     /**
      * Getter for the leader of a quiz.
      *
-     * @param quiz A quiz.
+     * @param quizId A quiz's id.
      * @return The leader of the quiz.(player)
      */
-    Player getLeader(Quiz quiz);
+    Player getLeader(int quizId);
+
+    /**
+     * Sets the player of a particular quiz
+     * as a leader.
+     *
+     * @param quiz A quiz with the score.
+     * @param player A player of the quiz.
+     */
+    void setLeader(Quiz quiz, Player player);
 
     /**
      * Checks if the score is the highest for a

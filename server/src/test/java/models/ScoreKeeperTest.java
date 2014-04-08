@@ -40,11 +40,13 @@ public class ScoreKeeperTest {
 
     @Test
     public void shouldBeAbleToGetLeader() {
+        int id = 6;
         String expected = "Batman";
+        when(quiz.getId()).thenReturn(id);
         when(player.getName()).thenReturn(expected);
         scoreKeeper.addHighScore(quiz, player);
 
-        Player actualLeader  = scoreKeeper.getLeader(quiz);
+        Player actualLeader  = scoreKeeper.getLeader(id);
         String actual = actualLeader.getName();
 
         assertEquals(expected, actual);

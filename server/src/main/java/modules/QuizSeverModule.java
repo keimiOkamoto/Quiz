@@ -7,6 +7,8 @@ import factories.ItemsFactory;
 import factories.ItemsFactoryImpl;
 import factories.PlayerFactory;
 import factories.PlayerFactoryImpl;
+import models.ScoreKeeper;
+import models.ScoreKeeperImpl;
 
 public class QuizSeverModule extends AbstractModule {
     @Override
@@ -17,5 +19,6 @@ public class QuizSeverModule extends AbstractModule {
         bind(ItemsFactory.class).to(ItemsFactoryImpl.class);
         bind(PlayerFactory.class).to(PlayerFactoryImpl.class);
         bind(QuizContainer.class).to(QuizContainerImpl.class);
+        bind(ScoreKeeper.class).to(ScoreKeeperImpl.class);
     }
 }

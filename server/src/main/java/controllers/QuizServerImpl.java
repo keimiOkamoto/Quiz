@@ -75,11 +75,12 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     }
 
     @Override
-    public Player getWinnerBy(int quizId)throws RemoteException  {
-        return null;
+    public void setPlayerAsWinner(Quiz quiz, Player player) throws RemoteException {
+        scoreKeeper.setLeader(quiz, player);
     }
 
     @Override
-    public void setPlayerAsWinner(Player player, Quiz quiz) throws RemoteException {
+    public Player getWinnerBy(int quizId)throws RemoteException  {
+        return scoreKeeper.getLeader(quizId);
     }
 }

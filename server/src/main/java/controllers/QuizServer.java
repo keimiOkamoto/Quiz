@@ -94,17 +94,17 @@ public interface QuizServer extends Remote {
     PlayerFactory getPlayerFactory() throws RemoteException;
 
     /**
+     * Setter for setting a player as a winner.
+     *
+     * @param player A player of a quiz.
+     */
+    void setPlayerAsWinner(Quiz quiz, Player player) throws RemoteException;
+
+    /**
      * Get winner by the quiz id.
      *
      * @param quizId The id of the quiz.
      * @return The winner of the quiz.
      */
     Player getWinnerBy(int quizId) throws RemoteException;
-
-    /**
-     * Setter for setting a player as a winner.
-     *
-     * @param player A player of a quiz.
-     */
-    void setPlayerAsWinner(Player player, Quiz quiz) throws RemoteException;
 }
