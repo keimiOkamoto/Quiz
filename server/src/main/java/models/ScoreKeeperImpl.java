@@ -10,7 +10,7 @@ public class ScoreKeeperImpl implements ScoreKeeper {
         if (!highScoreContains(quiz) || scoreIsHighest(quiz)) {
             setLeader(quiz, player);
         }
-    } //TODO append player to list if score is equal.
+    }
 
     @Override
     public boolean highScoreContains(Quiz quiz) {

@@ -78,7 +78,7 @@ public interface QuizServer extends Remote {
     Quiz getQuiz(int id) throws RemoteException;
 
     /**
-     * Checks if the score is the highest store.
+     * Checks if the score is the highest score.
      *
      *
      * @param quiz A quiz.

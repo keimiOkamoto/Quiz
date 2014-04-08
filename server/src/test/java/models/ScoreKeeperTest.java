@@ -49,19 +49,4 @@ public class ScoreKeeperTest {
 
         assertEquals(expected, actual);
     }
-
-    @Test
-    public void shouldBeAbleToCheckIfTheScoreOfAParticularQuizIsTheHighest() {
-        int score = 52;
-        int id = 5;
-        String name = "Hulk";
-
-        when(player.getName()).thenReturn(name);
-        when(quiz.getId()).thenReturn(id);
-        when(quiz.getScore()).thenReturn(score);
-
-        scoreKeeper.addHighScore(quiz, player);
-
-        assertTrue(scoreKeeper.scoreIsHighest(quiz));
-    }
 }

@@ -7,10 +7,8 @@ import models.Player;
 import models.Quiz;
 import models.ScoreKeeper;
 
-import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 import java.util.List;
 
 public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
@@ -66,7 +64,7 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
 
     @Override
     public boolean checkForHighScore(Quiz quiz)throws RemoteException {
-        return false;
+        return scoreKeeper.scoreIsHighest(quiz);
     }
 
     @Override

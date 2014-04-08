@@ -13,6 +13,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -103,6 +104,17 @@ public class QuizServerTest {
 
     @Test
     public void shouldBeAbleToCheckForHighScoreOfAParticularQuiz() throws RemoteException {
+        quizServer.checkForHighScore(quiz);
+        verify(scoreKeeper).scoreIsHighest(quiz);
+
+        when(quiz.getScore()).thenReturn(50);
+        when(scoreKeeper.scoreIsHighest(quiz)).thenReturn(true);
+
+        assertTrue(quizServer.checkForHighScore(quiz));
+    }
+
+    @Test
+    public void shouldBeAbleToGetAPlayerFactory() {
 
     }
 }
