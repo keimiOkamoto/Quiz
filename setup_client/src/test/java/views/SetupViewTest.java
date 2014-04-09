@@ -1,12 +1,14 @@
 package views;
 
+import constants.ExceptionMessages;
+import exceptions.IllegalQuestionException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.StandardOutputStreamLog;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
+import org.junit.rules.ExpectedException;
 
-import static com.sun.javaws.JnlpxArgs.verify;
 import static org.junit.Assert.assertEquals;
 import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emptyStandardInputStream;
 
@@ -48,6 +50,9 @@ public class SetupViewTest {
     *
     */
     @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Rule
     public final StandardOutputStreamLog log = new StandardOutputStreamLog();
 
     @Rule
@@ -72,6 +77,36 @@ public class SetupViewTest {
         setupInterface.selectOption();
         Thread.sleep(100);
 
-        assertEquals("1\nW", log.getLog());
+        assertEquals("Please enter a question.\n", log.getLog());
+    }
+
+    @Test
+    public void shouldBeAbleToSelectOption2() throws InterruptedException {
+        systemInMock.provideText("2\n");
+
+        setupInterface.selectOption();
+        Thread.sleep(100);
+
+        assertEquals("Please enter the ID of the quiz you would like to close.\n", log.getLog());
+    }
+
+    @Test
+    public void shouldBeAbleToSelectOptionExit() throws InterruptedException {
+        systemInMock.provideText("EXIT\n");
+
+        setupInterface.selectOption();
+        Thread.sleep(100);
+
+        assertEquals("System exiting.", log.getLog());
+    }
+
+    @Test
+    public void shouldThroeIllegalArgumentExceptionIfInValidCommandIsEntered() {
+        systemInMock.provideText("asdc\n");
+
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage(ExceptionMessages.INVALID_INPUT);
+
+        setupInterface.selectOption();
     }
 }

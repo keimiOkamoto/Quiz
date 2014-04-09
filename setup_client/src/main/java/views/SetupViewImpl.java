@@ -21,7 +21,6 @@ public class SetupViewImpl implements SetupView {
 
         switch (message) {
             case "1":
-                System.out.println(message);
                 createQuizOption();
                 break;
             case "2":
@@ -37,13 +36,15 @@ public class SetupViewImpl implements SetupView {
 
 
     private void createQuizOption() {
-        System.out.print("W");
+        System.out.println("Please enter a question.");
     }
 
     private void closeAQuizOption() {
+        System.out.println("Please enter the ID of the quiz you would like to close.");
 
     }
 
     private void exit() {
+        System.out.print("System exiting.");
     }
 }
