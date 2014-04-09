@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.contrib.java.lang.system.StandardOutputStreamLog;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 
+import static com.sun.javaws.JnlpxArgs.verify;
 import static org.junit.Assert.assertEquals;
 import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emptyStandardInputStream;
 
@@ -61,7 +62,16 @@ public class SetupViewTest {
     @Test
     public void shouldBeAbleToSeeWelcomeMessageWithOptions() {
         setupInterface.startMessage();
-        assertEquals("❤ ☆ ★ ☆ ★ Welcome to the Quiz Game Setup! ★ ☆ ★ ☆ ❤\n\nWhat would you like to do?\n1.Create a quiz.          2.Close a quiz.      EXIT:To exit the program.\n", log.getLog());
+        assertEquals("❤ ☆ ★ ☆ ★ Welcome to the Quiz Game Setup! ★ ☆ ★ ☆ ❤\n\nWhat would you like to do?\n1.Create a quiz.          2.Close a quiz.      EXIT:To exit the program.\nEnter '1' to create a quiz or '2' to close a quiz and 'EXIT' to terminate the program at any point.\n", log.getLog());
     }
 
+    @Test
+    public void shouldBeAbleToSelectOption1() throws InterruptedException {
+        systemInMock.provideText("1\n");
+
+        setupInterface.selectOption();
+        Thread.sleep(100);
+
+        assertEquals("1\nW", log.getLog());
+    }
 }
