@@ -11,6 +11,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.rmi.RemoteException;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
@@ -42,7 +44,7 @@ public class QuizOrchestratorTest {
      * Start of createQuiz()
      */
     @Test
-    public void shouldBeAbleToCreateAQuiz() throws IllegalQuizException {
+    public void shouldBeAbleToCreateAQuiz() throws IllegalQuizException, RemoteException {
         String expected = "The colour quiz!";
         when(server.createQuiz(expected)).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
@@ -68,7 +70,7 @@ public class QuizOrchestratorTest {
     }
 
     @Test
-    public void shouldBeAbleToReturnIdWhenCreatingAQuiz() throws IllegalQuizException {
+    public void shouldBeAbleToReturnIdWhenCreatingAQuiz() throws IllegalQuizException, RemoteException {
         String title = "Animal Quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
@@ -83,7 +85,7 @@ public class QuizOrchestratorTest {
     }
 
     @Test
-    public void shouldHaveAppropriateMessageIfTitleIsNull() throws IllegalArgumentException, IllegalQuizException {
+    public void shouldHaveAppropriateMessageIfTitleIsNull() throws IllegalArgumentException, IllegalQuizException, RemoteException {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage(ExceptionMessages.EMPTY_TITLE);
 
@@ -91,7 +93,7 @@ public class QuizOrchestratorTest {
     }
 
     @Test
-    public void shouldHaveAppropriateMessageIfTitleIsAnEmptyString() throws IllegalArgumentException, IllegalQuizException {
+    public void shouldHaveAppropriateMessageIfTitleIsAnEmptyString() throws IllegalArgumentException, IllegalQuizException, RemoteException {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage(ExceptionMessages.EMPTY_TITLE);
 
@@ -99,7 +101,7 @@ public class QuizOrchestratorTest {
     }
 
     @Test
-    public void shouldThrowIllegalQuizExceptionIfDuplicateQuizNameExists() throws IllegalQuizException {
+    public void shouldThrowIllegalQuizExceptionIfDuplicateQuizNameExists() throws IllegalQuizException, RemoteException {
         String title = "A quiz about cat";
         when(server.valid(title)).thenReturn(false);
 
@@ -113,7 +115,7 @@ public class QuizOrchestratorTest {
      * Start of addQuestion()
      */
     @Test
-    public void shouldBeAbleToAddQuestionToQuizCreated() throws IllegalQuizException {
+    public void shouldBeAbleToAddQuestionToQuizCreated() throws IllegalQuizException, RemoteException {
         String title = "A quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
@@ -128,7 +130,7 @@ public class QuizOrchestratorTest {
     }
 
     @Test
-    public void shouldThrowIllegalQuizExceptionIfQuizIsNull() throws IllegalQuizException {
+    public void shouldThrowIllegalQuizExceptionIfQuizIsNull() throws IllegalQuizException, RemoteException {
         thrown.expect(IllegalQuizException.class);
         thrown.expectMessage(ExceptionMessages.NO_QUIZ_EXISTS);
 
@@ -137,7 +139,7 @@ public class QuizOrchestratorTest {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionIfStringIsNull() throws IllegalQuizException {
+    public void shouldThrowIllegalArgumentExceptionIfStringIsNull() throws IllegalQuizException, RemoteException {
         String title = "A quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
@@ -151,7 +153,7 @@ public class QuizOrchestratorTest {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionIfStringIsEmpty() throws IllegalQuizException {
+    public void shouldThrowIllegalArgumentExceptionIfStringIsEmpty() throws IllegalQuizException, RemoteException {
         String title = "A quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
@@ -165,7 +167,7 @@ public class QuizOrchestratorTest {
     }
 
     @Test
-    public void shouldThrowIllegalQuizExceptionIfQuestionAlreadyExists() throws IllegalQuizException {
+    public void shouldThrowIllegalQuizExceptionIfQuestionAlreadyExists() throws IllegalQuizException, RemoteException {
         String title = "Animal quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
@@ -187,7 +189,7 @@ public class QuizOrchestratorTest {
      * Start of add(question)
      */
     @Test
-    public void shouldBeAbleToAddAnswer() throws IllegalQuizException, IllegalQuestionException {
+    public void shouldBeAbleToAddAnswer() throws IllegalQuizException, IllegalQuestionException, RemoteException {
         String title = "Animal quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
@@ -209,7 +211,7 @@ public class QuizOrchestratorTest {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionIfStringIsNullForAddAnswer() throws IllegalQuestionException, IllegalQuizException {
+    public void shouldThrowIllegalArgumentExceptionIfStringIsNullForAddAnswer() throws IllegalQuestionException, IllegalQuizException, RemoteException {
         String title = "A Quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
@@ -231,7 +233,7 @@ public class QuizOrchestratorTest {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionIfStringIsEmptyForAddAnswer() throws IllegalQuestionException, IllegalQuizException {
+    public void shouldThrowIllegalArgumentExceptionIfStringIsEmptyForAddAnswer() throws IllegalQuestionException, IllegalQuizException, RemoteException {
         String title = "A models.Quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
@@ -262,7 +264,7 @@ public class QuizOrchestratorTest {
     }
 
     @Test
-    public void shouldThrowIllegalQuestionExceptionIfAnswerIsInvalid() throws IllegalQuizException, IllegalQuestionException {
+    public void shouldThrowIllegalQuestionExceptionIfAnswerIsInvalid() throws IllegalQuizException, IllegalQuestionException, RemoteException {
         String title = "Animal quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
@@ -288,7 +290,7 @@ public class QuizOrchestratorTest {
      * Start of closeQuiz(int id)
      */
     @Test
-    public void shouldBeAbleToCloseQuizByQuotingId() throws IllegalQuizException {
+    public void shouldBeAbleToCloseQuizByQuotingId() throws IllegalQuizException, RemoteException {
         int id = 0;
         when(server.valid(anyInt())).thenReturn(true);
         quizOrchestrator.closeQuiz(id);
@@ -296,7 +298,7 @@ public class QuizOrchestratorTest {
     }
 
     @Test
-    public void shouldThrowIllegalQuizExceptionIfQuizWithCorrespondingIdDoesNotExist() throws IllegalQuizException {
+    public void shouldThrowIllegalQuizExceptionIfQuizWithCorrespondingIdDoesNotExist() throws IllegalQuizException, RemoteException {
         int id = 0;
         when(server.valid(anyInt())).thenReturn(false);
 
@@ -310,13 +312,13 @@ public class QuizOrchestratorTest {
      * Starts of save(Quiz quiz)
      */
     @Test
-    public void shouldBeAbleToSaveToQuizToServer() throws IllegalQuizException {
+    public void shouldBeAbleToSaveToQuizToServer() throws IllegalQuizException, RemoteException {
         quizOrchestrator.save(quiz);
         verify(server).save(quiz);
     }
 
     @Test
-    public void shouldThrowIllegalQuizExceptionIfQuizDoesNotExist() throws IllegalQuizException {
+    public void shouldThrowIllegalQuizExceptionIfQuizDoesNotExist() throws IllegalQuizException, RemoteException {
         thrown.expect(IllegalQuizException.class);
         thrown.expectMessage(ExceptionMessages.NO_QUIZ_TO_SAVE);
 
@@ -324,7 +326,7 @@ public class QuizOrchestratorTest {
     }
 
     @Test
-    public void shouldThrowIllegalQuizExceptionIfQuizDoesNotContainAQuestion() throws IllegalQuizException {
+    public void shouldThrowIllegalQuizExceptionIfQuizDoesNotContainAQuestion() throws IllegalQuizException, RemoteException {
         thrown.expect(IllegalQuizException.class);
         thrown.expectMessage(ExceptionMessages.NO_QUESTIONS_CANNOT_SAVE);
 

@@ -19,9 +19,9 @@ public class ServerStart {
     public static void main(String[] args) {
         QuizServer quizServer = Guice.createInjector(new QuizSeverModule()).getInstance(QuizServerImpl.class);
 
-        if (System.getSecurityManager() == null) {
-            System.setSecurityManager(new RMISecurityManager());
-        }
+//        if (System.getSecurityManager() == null) {
+//            System.setSecurityManager(new RMISecurityManager());
+//        }
 
         try {
             Registry registry = LocateRegistry.createRegistry(1099);

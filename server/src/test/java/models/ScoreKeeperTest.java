@@ -3,6 +3,8 @@ package models;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.rmi.RemoteException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -14,14 +16,14 @@ public class ScoreKeeperTest {
     private Player player;
 
     @Before
-    public void buildUp() {
+    public void buildUp() throws RemoteException {
         player = mock(Player.class);
         scoreKeeper = new ScoreKeeperImpl();
         quiz = mock(Quiz.class);
     }
 
     @Test
-    public void shouldBeAbleToCheckIfItContainsHighScore() {
+    public void shouldBeAbleToCheckIfItContainsHighScore() throws RemoteException {
         when(quiz.getScore()).thenReturn(32);
         scoreKeeper.addHighScore(quiz, player);
 
@@ -29,7 +31,7 @@ public class ScoreKeeperTest {
     }
 
     @Test
-    public void shouldBeAbleToGetHighestScore() {
+    public void shouldBeAbleToGetHighestScore() throws RemoteException {
         int score = 32;
         when(quiz.getScore()).thenReturn(score);
         scoreKeeper.addHighScore(quiz, player);
@@ -39,7 +41,7 @@ public class ScoreKeeperTest {
     }
 
     @Test
-    public void shouldBeAbleToGetLeader() {
+    public void shouldBeAbleToGetLeader() throws RemoteException {
         int id = 6;
         String expected = "Batman";
         when(quiz.getId()).thenReturn(id);

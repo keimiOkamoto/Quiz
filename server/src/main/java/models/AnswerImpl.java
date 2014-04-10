@@ -1,10 +1,14 @@
 package models;
 
-public class AnswerImpl implements Answer {
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+public class AnswerImpl extends UnicastRemoteObject implements Answer {
     private String answerStr;
     private boolean answerType;
 
-    public AnswerImpl(String answerStr, boolean answerType) {
+    public AnswerImpl(String answerStr, boolean answerType) throws RemoteException {
+        super();
         this.answerStr = answerStr;
         this.answerType = answerType;
     }

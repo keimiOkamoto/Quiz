@@ -2,6 +2,8 @@ package controllers;
 
 import models.Quiz;
 
+import java.rmi.RemoteException;
+
 /**
  * A container that holds quizzes closed by the setup client.
  */
@@ -11,7 +13,7 @@ public interface ClosedQuizContainer {
      *
      * @param closedQuiz A Quiz that has been closed.
      */
-    void add(Quiz closedQuiz);
+    void add(Quiz closedQuiz) throws RemoteException;
 
     /**
      * Getter for a quiz that has been closed.

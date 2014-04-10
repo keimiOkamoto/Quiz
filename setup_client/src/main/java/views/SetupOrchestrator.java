@@ -12,9 +12,9 @@ public interface SetupOrchestrator {
 
     void selectOption() throws IllegalQuizException, IllegalQuestionException, IllegalOptionException;
 
-    void createQuizTitle() throws IllegalQuizException, IllegalQuestionException, IllegalOptionException;
+    String createQuizTitleMessage() throws IllegalQuizException, IllegalQuestionException, IllegalOptionException;
 
-    void getInput(String userAnswer);
+    void setInput(String userAnswer);
 
     String getMessage();
 }

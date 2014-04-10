@@ -4,6 +4,8 @@ import com.google.inject.Singleton;
 import models.Quiz;
 import org.junit.Test;
 
+import java.rmi.RemoteException;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -12,7 +14,7 @@ import static org.mockito.Mockito.when;
 public class ClosedQuizContainerTest {
 
     @Test
-    public void shouldBeAbleToAddQuizThatHasBeenClosed() {
+    public void shouldBeAbleToAddQuizThatHasBeenClosed() throws RemoteException {
         int id = 5;
         ClosedQuizContainer closedQuizContainer = new ClosedQuizContainerImpl();
 

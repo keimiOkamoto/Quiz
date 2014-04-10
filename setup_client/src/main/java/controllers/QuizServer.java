@@ -1,15 +1,10 @@
 package controllers;
 
-import factories.ItemsFactory;
 import factories.PlayerFactory;
-import models.Answer;
-import models.Player;
-import models.Question;
-import models.Quiz;
+import models.*;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -60,6 +55,14 @@ public interface QuizServer extends Remote {
     ItemsFactory getItemsFactory() throws RemoteException;
 
     /**
+     * Get winner by the quiz id.
+     *
+     * @param quizId The id of the quiz.
+     * @return The winner of the quiz.
+     */
+    Player getWinnerBy(int quizId) throws RemoteException;
+
+    /**
      * Generates a Quiz
      *
      * @param title Title of a quiz
@@ -82,7 +85,7 @@ public interface QuizServer extends Remote {
      * @param answerType False ig it is not the right answer, true if i is.
      * @return An answer
      */
-    Answer generateAnswer(String answer, boolean answerType) throws RemoteException;
+    Answer generateAnswer(String answer, boolean answerType) ;
 
 
     /********** Player client methods ***********/
@@ -125,11 +128,5 @@ public interface QuizServer extends Remote {
      */
     void setPlayerAsWinner(Quiz quiz, Player player) throws RemoteException;
 
-    /**
-     * Get winner by the quiz id.
-     *
-     * @param quizId The id of the quiz.
-     * @return The winner of the quiz.
-     */
-    Player getWinnerBy(int quizId) throws RemoteException;
+
 }

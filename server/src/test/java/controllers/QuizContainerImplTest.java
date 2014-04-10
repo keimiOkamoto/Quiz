@@ -4,6 +4,7 @@ import models.Quiz;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class QuizContainerImplTest {
     }
     
     @Test
-    public void shouldBeAbleToGetASavedQuiz() {
+    public void shouldBeAbleToGetASavedQuiz() throws RemoteException {
         int id = 5;
         when(quiz.getId()).thenReturn(id);
         quizContainer.save(quiz);
@@ -38,7 +39,7 @@ public class QuizContainerImplTest {
     }
 
     @Test
-    public void shouldBeAbleToValidateSavedQuizByTitle() {
+    public void shouldBeAbleToValidateSavedQuizByTitle() throws RemoteException {
         String title = "Quiz about cookies?";
         int id = 6;
 
@@ -50,7 +51,7 @@ public class QuizContainerImplTest {
     }
 
     @Test
-    public void shouldBeAbleToValidateSavedQuizById() {
+    public void shouldBeAbleToValidateSavedQuizById() throws RemoteException {
         int id = 6;
         when(quiz.getId()).thenReturn(id);
         quizContainer.save(quiz);
@@ -59,7 +60,7 @@ public class QuizContainerImplTest {
     }
 
     @Test
-    public void shouldNotBeAbleToRetrieveClosedQuiz() {
+    public void shouldNotBeAbleToRetrieveClosedQuiz() throws RemoteException {
         int id = 12;
 
         when(quiz.getId()).thenReturn(id);
@@ -73,7 +74,7 @@ public class QuizContainerImplTest {
     }
 
     @Test
-    public void shouldBeAbleToGetListOfQuizzes() {
+    public void shouldBeAbleToGetListOfQuizzes() throws RemoteException {
         Quiz quiz1 = mock(Quiz.class);
         List<Quiz> expected = new ArrayList<>();
         expected.add(quiz);

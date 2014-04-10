@@ -7,6 +7,8 @@ import utils.UniqueNumberGeneratorUtils;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.rmi.RemoteException;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -17,13 +19,13 @@ public class ItemsFactoryTest {
     private UniqueNumberGeneratorUtils uniqueNumberGeneratorUtils;
 
     @Before
-    public void buildUp() {
+    public void buildUp() throws RemoteException {
         uniqueNumberGeneratorUtils = mock(UniqueNumberGeneratorUtils.class);
         itemsFactory = new ItemsFactoryImpl(uniqueNumberGeneratorUtils);
     }
 
     @Test
-    public void shouldBeAbleToGenerateQuizWithId() {
+    public void shouldBeAbleToGenerateQuizWithId() throws RemoteException {
         int id = 5;
         when(uniqueNumberGeneratorUtils.getUniqueNumber()).thenReturn(id);
         Quiz actual = itemsFactory.generateQuiz("some quiz.");
@@ -33,7 +35,7 @@ public class ItemsFactoryTest {
     }
 
     @Test
-    public void shouldBeAbleToGenerateQuestion() {
+    public void shouldBeAbleToGenerateQuestion() throws RemoteException {
         String questionStr = "When you choke a smurf, what color does it turn?";
         itemsFactory.generateQuestion(questionStr);
 
@@ -44,7 +46,7 @@ public class ItemsFactoryTest {
     }
 
     @Test
-    public void shouldBeAbleToGenerateAnswer() {
+    public void shouldBeAbleToGenerateAnswer() throws RemoteException {
         String answerStr = "No one knows.";
         itemsFactory.generateAnswer(answerStr, false);
 

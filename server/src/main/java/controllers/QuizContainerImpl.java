@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import models.Quiz;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -20,7 +21,7 @@ public class QuizContainerImpl implements QuizContainer {
     }
 
     @Override
-    public boolean contains(String title) {
+    public boolean contains(String title) throws RemoteException {
         Collection<Quiz> quizCollection = quizTreeMap.values();
         boolean result = false;
 
@@ -36,13 +37,13 @@ public class QuizContainerImpl implements QuizContainer {
     }
 
     @Override
-    public void closeQuizWith(int id) {
+    public void closeQuizWith(int id) throws RemoteException {
         Quiz closedQuiz = quizTreeMap.remove(id);
         closedQuizContainer.add(closedQuiz);
     }
 
     @Override
-    public void save(Quiz quiz) {
+    public void save(Quiz quiz) throws RemoteException {
         quizTreeMap.put(quiz.getId(), quiz);
     }
 

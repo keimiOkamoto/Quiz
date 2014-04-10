@@ -4,6 +4,8 @@ import models.Player;
 import org.junit.Test;
 import utils.UniqueNumberGeneratorUtils;
 
+import java.rmi.RemoteException;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -11,7 +13,7 @@ import static org.mockito.Mockito.when;
 public class PlayerFactoryTest {
 
     @Test
-    public void shouldBeAbleToGeneratePlayer() {
+    public void shouldBeAbleToGeneratePlayer() throws RemoteException {
         UniqueNumberGeneratorUtils uniqueNumberGeneratorUtils = mock(UniqueNumberGeneratorUtils.class);
         PlayerFactory playerFactory = new PlayerFactoryImpl(uniqueNumberGeneratorUtils);
 

@@ -7,6 +7,8 @@ import models.Answer;
 import models.Question;
 import models.Quiz;
 
+import java.rmi.RemoteException;
+
 /**
  * Controls the organization of the quiz.
  */
@@ -20,7 +22,7 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
     }
 
     @Override
-    public int createQuiz(String title) throws IllegalArgumentException, IllegalQuizException {
+    public int createQuiz(String title) throws IllegalArgumentException, IllegalQuizException, RemoteException {
         if (title == null || title.trim().equals("")) throw new IllegalArgumentException(ExceptionMessages.EMPTY_TITLE);
         if (!server.valid(title)) throw new IllegalQuizException(ExceptionMessages.DUPLICATE_QUIZ);
         quiz = server.createQuiz(title.trim());
@@ -28,7 +30,7 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
     }
 
     @Override
-    public void addQuestion(String questionStr) throws IllegalQuizException, IllegalArgumentException {
+    public void addQuestion(String questionStr) throws IllegalQuizException, IllegalArgumentException, RemoteException {
         if (quiz == null) throw new IllegalQuizException(ExceptionMessages.NO_QUIZ_EXISTS);
         if (questionStr == null || questionStr.trim().equals("")) throw new IllegalArgumentException(ExceptionMessages.EMPTY_QUESTION);
         if (!quiz.contains(questionStr)) throw new IllegalQuizException(ExceptionMessages.DUPLICATE_QUESTION);
@@ -46,13 +48,13 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
     }
 
     @Override
-    public void closeQuiz(int id) throws IllegalQuizException {
+    public void closeQuiz(int id) throws IllegalQuizException, RemoteException {
         if (!server.valid(id)) throw new IllegalQuizException(ExceptionMessages.NO_QUIZ_WITH_ID_EXISTS);
         server.closeQuiz(id);
     }
 
     @Override
-    public void save(Quiz quiz) throws IllegalQuizException {
+    public void save(Quiz quiz) throws IllegalQuizException, RemoteException {
         if (quiz == null) throw new IllegalQuizException(ExceptionMessages.NO_QUIZ_TO_SAVE);
         if (quiz.isEmpty()) throw new IllegalQuizException(ExceptionMessages.NO_QUESTIONS_CANNOT_SAVE);
         server.save(quiz);

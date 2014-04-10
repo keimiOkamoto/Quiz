@@ -2,7 +2,10 @@ package factories;
 
 import models.Player;
 
-public interface PlayerFactory {
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface PlayerFactory extends Remote {
     /**
      * Generates a player.
      *
@@ -11,5 +14,5 @@ public interface PlayerFactory {
      * @param age The age of the player.
      * @return A player.
      */
-    Player generatePlayer(String name, String country, int age);
+    Player generatePlayer(String name, String country, int age) throws RemoteException;
 }

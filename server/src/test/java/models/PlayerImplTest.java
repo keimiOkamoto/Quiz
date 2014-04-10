@@ -3,6 +3,8 @@ package models;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.rmi.RemoteException;
+
 import static org.junit.Assert.assertEquals;
 
 public class PlayerImplTest {
@@ -14,7 +16,7 @@ public class PlayerImplTest {
     private String name;
 
     @Before
-    public void buildUp() {
+    public void buildUp() throws RemoteException {
         name = "Spiderman";
         country = "America";
         age = 25;
@@ -23,25 +25,25 @@ public class PlayerImplTest {
     }
 
     @Test
-    public void shouldBeAbleToGetId() {
+    public void shouldBeAbleToGetId() throws RemoteException {
         int actualId = player.getId();
         assertEquals(id, actualId);
     }
 
     @Test
-    public void shouldBeAbleToGetName() {
+    public void shouldBeAbleToGetName() throws RemoteException {
         String actualName = player.getName();
         assertEquals(name, actualName);
     }
 
     @Test
-    public void shouldBeAbleToGetTheCountryOfThePlayer() {
+    public void shouldBeAbleToGetTheCountryOfThePlayer() throws RemoteException {
         String actualCountry = player.getCountry();
         assertEquals(country, actualCountry);
     }
 
     @Test
-    public void shouldBeAbleToGetThePlayerOfTheAge() {
+    public void shouldBeAbleToGetThePlayerOfTheAge() throws RemoteException {
         int actualAge = player.getAge();
         assertEquals(age, actualAge);
     }

@@ -3,6 +3,7 @@ package models;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.rmi.RemoteException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,13 +18,13 @@ public class QuestionTest {
     private Question question;
 
     @Before
-    public void buildUp() {
+    public void buildUp() throws RemoteException {
         String questionString = "How do you ask a tyrannosaur out to lunch?";
         question = new QuestionImpl(questionString);
     }
 
     @Test
-    public void shouldBeAbleToGetQuestion() {
+    public void shouldBeAbleToGetQuestion() throws RemoteException {
         String expected = "How do you ask a tyrannosaur out to lunch?";
         String actual = question.getQuestion();
 
@@ -31,7 +32,7 @@ public class QuestionTest {
     }
 
     @Test
-    public void shouldBeAbleToAddToTheListOfAnswers() {
+    public void shouldBeAbleToAddToTheListOfAnswers() throws RemoteException {
         Answer answer1 = mock(Answer.class);
         Set<Answer> expectedAnswersSet = new HashSet<>();
         expectedAnswersSet.add(answer1);
@@ -43,7 +44,7 @@ public class QuestionTest {
     }
 
     @Test
-    public void shouldBeAbleToCheckIfAnswerAlreadyExists() {
+    public void shouldBeAbleToCheckIfAnswerAlreadyExists() throws RemoteException {
         String answerString = "Tea, Rex?";
         Answer answer1 = mock(Answer.class);
 

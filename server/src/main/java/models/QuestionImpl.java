@@ -1,13 +1,15 @@
 package models;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.HashSet;
 import java.util.Set;
 
-public class QuestionImpl implements Question {
+public class QuestionImpl extends UnicastRemoteObject implements Question {
     private Set<Answer> answerSet = new HashSet<>();
     private String question;
 
-    public QuestionImpl(String question) {
+    public QuestionImpl(String question) throws RemoteException {
         this.question = question;
     }
 
@@ -17,7 +19,7 @@ public class QuestionImpl implements Question {
     }
 
     @Override
-    public boolean contains(String answer) {
+    public boolean contains(String answer) throws RemoteException {
         boolean result = false;
         for (Answer value : answerSet) {
             if (!value.getAnswer().equals(answer)) {

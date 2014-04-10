@@ -1,14 +1,17 @@
 package models;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 /**
  * Score keeper class to keep scores organised.
  */
-public interface ScoreKeeper {
+public interface ScoreKeeper extends Remote {
 
     /**
      * Adds high score.
      */
-    void addHighScore(Quiz quiz, Player player);
+    void addHighScore(Quiz quiz, Player player) throws RemoteException;
 
     /**
      * Checks if a previous high score exists.
@@ -16,7 +19,7 @@ public interface ScoreKeeper {
      * @param quiz A quiz.
      * @return false if score does not exist.
      */
-    boolean highScoreContains(Quiz quiz);
+    boolean highScoreContains(Quiz quiz) throws RemoteException;
 
     /**
      * Getter for the highest score corresponding
@@ -25,7 +28,7 @@ public interface ScoreKeeper {
      * @param quiz A quiz.
      * @return The highest score for that quiz.
      */
-    int getHighScore(Quiz quiz);
+    int getHighScore(Quiz quiz) throws RemoteException;
 
     /**
      * Getter for the leader of a quiz.
@@ -33,7 +36,7 @@ public interface ScoreKeeper {
      * @param quizId A quiz's id.
      * @return The leader of the quiz.(player)
      */
-    Player getLeader(int quizId);
+    Player getLeader(int quizId) throws RemoteException;
 
     /**
      * Sets the player of a particular quiz
@@ -42,7 +45,7 @@ public interface ScoreKeeper {
      * @param quiz A quiz with the score.
      * @param player A player of the quiz.
      */
-    void setLeader(Quiz quiz, Player player);
+    void setLeader(Quiz quiz, Player player) throws RemoteException;
 
     /**
      * Checks if the score is the highest for a
@@ -51,5 +54,5 @@ public interface ScoreKeeper {
      * @param quiz A quiz with the score.
      * @return false if the score is not the highest.
      */
-    public boolean scoreIsHighest(Quiz quiz);
+    public boolean scoreIsHighest(Quiz quiz) throws RemoteException;
 }

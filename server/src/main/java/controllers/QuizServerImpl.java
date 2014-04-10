@@ -3,9 +3,7 @@ package controllers;
 import com.google.inject.Inject;
 import factories.ItemsFactory;
 import factories.PlayerFactory;
-import models.Player;
-import models.Quiz;
-import models.ScoreKeeper;
+import models.*;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -51,6 +49,20 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
         return itemsFactory;
     }
 
+    @Override
+    public Quiz generateQuiz(String title) throws RemoteException {
+        return itemsFactory.generateQuiz(title);
+    }
+
+    @Override
+    public Question generateQuestion(String question) throws RemoteException {
+        return itemsFactory.generateQuestion(question);
+    }
+
+    @Override
+    public Answer generateAnswer(String answer, boolean answerType) throws RemoteException {
+        return itemsFactory.generateAnswer(answer, answerType);
+    }
 
     /********** Player client methods ***********/
 

@@ -4,6 +4,8 @@ import exceptions.IllegalQuestionException;
 import exceptions.IllegalQuizException;
 import models.Quiz;
 
+import java.rmi.RemoteException;
+
 public interface QuizOrchestrator {
 
     /**
@@ -14,7 +16,7 @@ public interface QuizOrchestrator {
      * @throws IllegalArgumentException
      * @throws exceptions.IllegalQuizException if the name of the quiz already exists.
      */
-    int createQuiz(String title) throws IllegalArgumentException, IllegalQuizException;
+    int createQuiz(String title) throws IllegalArgumentException, IllegalQuizException, RemoteException;
 
     /**
      * Getter for a title of a quiz
@@ -30,7 +32,7 @@ public interface QuizOrchestrator {
      * @throws IllegalQuizException if quiz does not exist.
      * @throws IllegalArgumentException if question is null or empty.
      */
-    void addQuestion(String question) throws IllegalQuizException, IllegalArgumentException;
+    void addQuestion(String question) throws IllegalQuizException, IllegalArgumentException, RemoteException;
 
     /**
      * Add answer to a question.
@@ -48,12 +50,12 @@ public interface QuizOrchestrator {
      * @throws IllegalQuizException if quiz does not exist or id quiz without
      * questions is attempted to be saved.
      */
-    void closeQuiz(int id) throws IllegalQuizException;
+    void closeQuiz(int id) throws IllegalQuizException, RemoteException;
 
     /**
      * Saves quiz to server.
      *
      * @param quiz A quiz.
      */
-    void save(Quiz quiz)throws IllegalQuizException;
+    void save(Quiz quiz) throws IllegalQuizException, RemoteException;
 }

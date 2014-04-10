@@ -6,48 +6,44 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 public class ServerImpl implements Server {
-
-    private ItemsFactory itemsFactory;
     private QuizServer quizServer;
-
 
     public ServerImpl(ServerLink serverLink) throws RemoteException, NotBoundException {
         this.quizServer = serverLink.getQuizServer();
-        this.itemsFactory = quizServer.getItemsFactory();
     }
 
     @Override
-    public Quiz createQuiz(String title) {
-        return itemsFactory.generateQuiz(title);
+    public Quiz createQuiz(String title) throws RemoteException {
+        return quizServer.generateQuiz(title);
     }
 
     @Override
-    public Question createQuestion(String question) {
-        return itemsFactory.generateQuestion(question);
+    public Question createQuestion(String question) throws RemoteException {
+        return quizServer.generateQuestion(question);
     }
 
     @Override
     public Answer createAnswer(String answer, boolean answerType) {
-        return itemsFactory.generateAnswer(answer, answerType);
+        return quizServer.generateAnswer(answer, answerType);
     }
 
     @Override
-    public boolean valid(String title) {
+    public boolean valid(String title) throws RemoteException {
         return quizServer.titleIsValid(title);
     }
 
     @Override
-    public void closeQuiz(int id) {
+    public void closeQuiz(int id) throws RemoteException {
         quizServer.endQuiz(id);
     }
 
     @Override
-    public boolean valid(int id) {
+    public boolean valid(int id) throws RemoteException {
         return quizServer.iDIsValid(id);
     }
 
     @Override
-    public void save(Quiz quiz) {
+    public void save(Quiz quiz) throws RemoteException {
         quizServer.save(quiz);
     }
 }
