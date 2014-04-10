@@ -1,7 +1,9 @@
 package views;
 
+import com.sun.tools.internal.ws.wsdl.document.soap.SOAPUse;
 import constants.ExceptionMessages;
-import exceptions.IllegalQuestionException;
+import controllers.QuizOrchestrator;
+import exceptions.IllegalQuizException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -11,6 +13,11 @@ import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emptyStandardInputStream;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class SetupViewTest {
     /*
@@ -57,56 +64,67 @@ public class SetupViewTest {
 
     @Rule
     public final TextFromStandardInputStream systemInMock = emptyStandardInputStream();
-    private SetupView setupInterface;
+    private SetupView setupView;
+    private UserInput userInput;
+    private QuizOrchestrator quizOrchestrator;
 
     @Before
     public void buildUp() {
-        setupInterface = new SetupViewImpl();
+        quizOrchestrator = mock(QuizOrchestrator.class);
+        userInput = mock(UserInput.class);
+        setupView = new SetupViewImpl(quizOrchestrator, userInput);
     }
 
     @Test
     public void shouldBeAbleToSeeWelcomeMessageWithOptions() {
-        setupInterface.startMessage();
+        setupView.startMessage();
         assertEquals("❤ ☆ ★ ☆ ★ Welcome to the Quiz Game Setup! ★ ☆ ★ ☆ ❤\n\nWhat would you like to do?\n1.Create a quiz.          2.Close a quiz.      EXIT:To exit the program.\nEnter '1' to create a quiz or '2' to close a quiz and 'EXIT' to terminate the program at any point.\n", log.getLog());
     }
 
     @Test
     public void shouldBeAbleToSelectOption1() throws InterruptedException {
-        systemInMock.provideText("1\n");
+        when(userInput.type()).thenReturn("1");
+        setupView.selectOption();
 
-        setupInterface.selectOption();
-        Thread.sleep(100);
-
-        assertEquals("Please enter a question.\n", log.getLog());
+        assertEquals("Please enter the title of your quiz: \n", log.getLog());
     }
 
     @Test
     public void shouldBeAbleToSelectOption2() throws InterruptedException {
-        systemInMock.provideText("2\n");
-
-        setupInterface.selectOption();
-        Thread.sleep(100);
+        when(userInput.type()).thenReturn("2");
+        setupView.selectOption();
 
         assertEquals("Please enter the ID of the quiz you would like to close.\n", log.getLog());
     }
 
     @Test
     public void shouldBeAbleToSelectOptionExit() throws InterruptedException {
-        systemInMock.provideText("EXIT\n");
+        when(userInput.type()).thenReturn("EXIT");
 
-        setupInterface.selectOption();
+        setupView.selectOption();
         Thread.sleep(100);
 
-        assertEquals("System exiting.", log.getLog());
+        assertEquals("System exiting.\n", log.getLog());
     }
 
     @Test
-    public void shouldThroeIllegalArgumentExceptionIfInValidCommandIsEntered() {
-        systemInMock.provideText("asdc\n");
+    public void shouldThrowIllegalArgumentExceptionIfInValidCommandIsEntered() {
+        when(userInput.type()).thenReturn("asdasdsa");
 
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage(ExceptionMessages.INVALID_INPUT);
 
-        setupInterface.selectOption();
+        setupView.selectOption();
+    }
+
+    @Test
+    public void shouldBeAbleToCreateATitleForAQuiz() throws InterruptedException, IllegalQuizException {
+        String quiz = "Quiz";
+        when(userInput.type()).thenReturn("1", quiz);
+        setupView.selectOption();
+
+        assertEquals("Please enter the title of your quiz: \n", log.getLog());
+
+        verify(quizOrchestrator).createQuiz(quiz);
     }
 }

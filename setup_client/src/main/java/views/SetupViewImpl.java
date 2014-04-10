@@ -1,11 +1,19 @@
 package views;
 
 import constants.ExceptionMessages;
+import controllers.QuizOrchestrator;
+import exceptions.IllegalQuizException;
 
 import java.util.Scanner;
 
 public class SetupViewImpl implements SetupView {
+    private final UserInput userInput;
+    private QuizOrchestrator quizOrchestrator;
 
+    public SetupViewImpl (QuizOrchestrator quizOrchestrator, UserInput userInput) {
+        this.quizOrchestrator = quizOrchestrator;
+        this.userInput = userInput;
+    }
     @Override
     public void startMessage() {
         System.out.println("❤ ☆ ★ ☆ ★ Welcome to the Quiz Game Setup! ★ ☆ ★ ☆ ❤\n");
@@ -16,12 +24,11 @@ public class SetupViewImpl implements SetupView {
 
     @Override
     public void selectOption() throws IllegalArgumentException {
-        Scanner scanner = new Scanner(System.in);
-        String message = scanner.nextLine();
+        String message = userInput.type();
 
         switch (message) {
             case "1":
-                createQuizOption();
+                createQuizTitle();
                 break;
             case "2":
                 closeAQuizOption();
@@ -34,9 +41,18 @@ public class SetupViewImpl implements SetupView {
         }
     }
 
+    private void createQuizTitle() {
+        System.out.println("Please enter the title of your quiz: ");
+        String title = userInput.type();
+        enterTitle(title);
+    }
 
-    private void createQuizOption() {
-        System.out.println("Please enter a question.");
+    private void enterTitle(String title) {
+        try {
+            quizOrchestrator.createQuiz(title);
+        } catch (IllegalQuizException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void closeAQuizOption() {
@@ -45,6 +61,7 @@ public class SetupViewImpl implements SetupView {
     }
 
     private void exit() {
-        System.out.print("System exiting.");
+        System.out.println("System exiting.");
     }
+
 }
