@@ -26,7 +26,7 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
 
     @Override
     public boolean titleIsValid(String title) throws RemoteException {
-        return quizContainer.contains(title);
+        return !quizContainer.contains(title);
     }
 
     @Override

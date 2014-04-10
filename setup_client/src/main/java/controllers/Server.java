@@ -4,13 +4,14 @@ import models.Answer;
 import models.Question;
 import models.Quiz;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
  * This class is the connection between the setup client and the
  * server.
  */
-public interface Server {
+public interface Server extends Remote{
     /**
      * creates a quiz.
      *
@@ -33,7 +34,7 @@ public interface Server {
      * @param answer Answer to a quiz.
      * @return An Answer object.
      */
-    Answer createAnswer(String answer, boolean answerType);
+    Answer createAnswer(String answer, boolean answerType)throws RemoteException;
 
     /**
      * Checks if the same quiz title already exists.

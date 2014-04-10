@@ -2,13 +2,14 @@ package controllers;
 
 import models.Quiz;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
 /**
  * A container class that contains and validates Quizzes.
  */
-public interface QuizContainer {
+public interface QuizContainer extends Remote {
     /**
      * Checks if a quiz with the same title exists.
      *
@@ -23,7 +24,7 @@ public interface QuizContainer {
      * @param id ID of a quiz.
      * @return False if the quiz does not exist.
      */
-    boolean contains(int id);
+    boolean contains(int id) throws RemoteException;
 
     /**
      * Finds the Quiz with the corresponding ID.
@@ -45,12 +46,12 @@ public interface QuizContainer {
      * @param id ID of a quiz.
      * @return A Quiz object.
      */
-    Quiz getQuizBy(int id);
+    Quiz getQuizBy(int id) throws RemoteException;
 
     /**
      * Getter for a list of quizzes
      *
      * @return A list of available quizzes.
      */
-    List<Quiz> getQuizzes();
+    List<Quiz> getQuizzes() throws RemoteException;
 }

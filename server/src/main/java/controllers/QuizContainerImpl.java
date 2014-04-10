@@ -5,18 +5,19 @@ import com.google.inject.Singleton;
 import models.Quiz;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.TreeMap;
 
 @Singleton
-public class QuizContainerImpl implements QuizContainer {
+public class QuizContainerImpl extends UnicastRemoteObject implements QuizContainer {
     private TreeMap<Integer, Quiz> quizTreeMap = new TreeMap<>();
     private ClosedQuizContainer closedQuizContainer;
 
     @Inject
-    public QuizContainerImpl(ClosedQuizContainer closedQuizContainer) {
+    public QuizContainerImpl(ClosedQuizContainer closedQuizContainer) throws RemoteException {
         this.closedQuizContainer = closedQuizContainer;
     }
 
@@ -24,15 +25,14 @@ public class QuizContainerImpl implements QuizContainer {
     public boolean contains(String title) throws RemoteException {
         Collection<Quiz> quizCollection = quizTreeMap.values();
         boolean result = false;
-
         for (Quiz quiz : quizCollection) {
-            if (!quiz.getTitle().equals(title)) result = true;
+            if (quiz.getTitle().equals(title)) result = true;
         }
         return result;
     }
 
     @Override
-    public boolean contains(int id) {
+    public boolean contains(int id) throws RemoteException {
         return quizTreeMap.containsKey(id);
     }
 
@@ -48,12 +48,12 @@ public class QuizContainerImpl implements QuizContainer {
     }
 
     @Override
-    public Quiz getQuizBy(int id) {
+    public Quiz getQuizBy(int id) throws RemoteException {
         return quizTreeMap.get(id);
     }
 
     @Override
-    public List<Quiz> getQuizzes() {
+    public List<Quiz> getQuizzes() throws RemoteException {
         Collection<Quiz> collection = quizTreeMap.values();
         List<Quiz> list = new ArrayList<>();
 

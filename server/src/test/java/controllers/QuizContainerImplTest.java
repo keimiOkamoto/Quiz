@@ -22,7 +22,7 @@ public class QuizContainerImplTest {
     private ClosedQuizContainer closedQuizContainer;
 
     @Before
-    public void buildUp() {
+    public void buildUp() throws RemoteException {
         closedQuizContainer = mock(ClosedQuizContainer.class);
         quiz = mock(Quiz.class);
         quizContainer = new QuizContainerImpl(closedQuizContainer);
@@ -39,7 +39,7 @@ public class QuizContainerImplTest {
     }
 
     @Test
-    public void shouldBeAbleToValidateSavedQuizByTitle() throws RemoteException {
+    public void shouldBeAbleToCheckIfTitleExists() throws RemoteException {
         String title = "Quiz about cookies?";
         int id = 6;
 
@@ -47,7 +47,8 @@ public class QuizContainerImplTest {
         when(quiz.getTitle()).thenReturn(title);
         quizContainer.save(quiz);
 
-        assertFalse(quizContainer.contains(title));
+        assertTrue(quizContainer.contains(title));
+        assertFalse(quizContainer.contains("Smurfs your mum"));
     }
 
     @Test

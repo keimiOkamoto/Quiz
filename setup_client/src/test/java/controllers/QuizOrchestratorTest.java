@@ -255,7 +255,7 @@ public class QuizOrchestratorTest {
     }
 
     @Test
-    public void shouldThrowIllegalQuestionExceptionIfQuestionDoesNotExist() throws IllegalQuestionException {
+    public void shouldThrowIllegalQuestionExceptionIfQuestionDoesNotExist() throws IllegalQuestionException, RemoteException {
         thrown.expect(IllegalQuestionException.class);
         thrown.expectMessage(ExceptionMessages.NO_QUESTION_EXISTS);
 

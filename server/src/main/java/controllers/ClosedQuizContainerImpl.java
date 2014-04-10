@@ -4,12 +4,16 @@ import com.google.inject.Singleton;
 import models.Quiz;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Map;
 
 @Singleton
-public class ClosedQuizContainerImpl implements ClosedQuizContainer {
+public class ClosedQuizContainerImpl extends UnicastRemoteObject implements ClosedQuizContainer {
     private Map<Integer, Quiz> closedQuizMap = new HashMap<>();
+
+    protected ClosedQuizContainerImpl() throws RemoteException {
+    }
 
     @Override
     public void add(Quiz closedQuiz) throws RemoteException {
@@ -17,7 +21,7 @@ public class ClosedQuizContainerImpl implements ClosedQuizContainer {
     }
 
     @Override
-    public Quiz getQuiz(int id) {
+    public Quiz getQuiz(int id) throws RemoteException {
         return closedQuizMap.get(id);
     }
 }

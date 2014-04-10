@@ -39,7 +39,7 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
     }
 
     @Override
-    public void addAnswer(String answer, boolean answerType) throws IllegalQuestionException, IllegalArgumentException {
+    public void addAnswer(String answer, boolean answerType) throws IllegalQuestionException, IllegalArgumentException, RemoteException {
         if (question == null) throw new IllegalQuestionException(ExceptionMessages.NO_QUESTION_EXISTS);
         if (!question.contains(answer)) throw new IllegalQuestionException(ExceptionMessages.DUPLICATE_ANSWER);
         if (answer == null || answer.trim().equals("")) throw new IllegalArgumentException(ExceptionMessages.EMPTY_ANSWER);

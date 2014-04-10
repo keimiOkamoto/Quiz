@@ -33,7 +33,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
     }
 
     @Override
-    public String getMessage() {
+    public String getMessage() throws RemoteException {
         if (userAnswer == null) {
             message = startMessage();
         } else if (userAnswer.equals("1")) {
@@ -59,7 +59,8 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
 
     private void createQuizTitle(String userAnswer) {
         try {
-            quizOrchestrator.createQuiz(userAnswer);
+            int id = quizOrchestrator.createQuiz(userAnswer);
+            System.out.println("ID: " +  id);
         } catch (IllegalQuizException e) {
             System.out.println(e.getMessage());
         } catch (RemoteException e) {
@@ -77,7 +78,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         }
     }
 
-    private String addAnswer(String userAnswer) {
+    private String addAnswer(String userAnswer) throws RemoteException {
         try {
             quizOrchestrator.addAnswer(userAnswer, true);
         } catch (IllegalQuestionException e) {
@@ -95,10 +96,12 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
 
 
         String userAnswer = null;
-        while (userAnswer != "EXIT") {
+        while (userAnswer == null || !userAnswer.equals("EXIT")) {
             setupOrchestrator.setInput(userAnswer);
             System.out.println(setupOrchestrator.getMessage());
             userAnswer = scanner.nextLine();
+            System.out.println(userAnswer);
         }
+        System.exit(0);
     }
 }

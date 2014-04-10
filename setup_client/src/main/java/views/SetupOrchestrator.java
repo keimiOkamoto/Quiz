@@ -3,6 +3,8 @@ package views;
 import exceptions.IllegalQuestionException;
 import exceptions.IllegalQuizException;
 
+import java.rmi.RemoteException;
+
 public interface SetupOrchestrator {
 
     /**
@@ -16,5 +18,5 @@ public interface SetupOrchestrator {
 
     void setInput(String userAnswer);
 
-    String getMessage();
+    String getMessage() throws RemoteException;
 }
