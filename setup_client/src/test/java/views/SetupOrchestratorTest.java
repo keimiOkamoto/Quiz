@@ -1,8 +1,8 @@
 package views;
 
-import com.sun.tools.internal.ws.wsdl.document.soap.SOAPUse;
 import constants.ExceptionMessages;
 import controllers.QuizOrchestrator;
+import exceptions.IllegalQuestionException;
 import exceptions.IllegalQuizException;
 import org.junit.Before;
 import org.junit.Rule;
@@ -13,13 +13,11 @@ import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emptyStandardInputStream;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class SetupViewTest {
+public class SetupOrchestratorTest {
     /*
     * set up person sees welcome message and menu.
     *
@@ -64,7 +62,7 @@ public class SetupViewTest {
 
     @Rule
     public final TextFromStandardInputStream systemInMock = emptyStandardInputStream();
-    private SetupView setupView;
+    private SetupOrchestrator setupView;
     private UserInput userInput;
     private QuizOrchestrator quizOrchestrator;
 
@@ -72,7 +70,7 @@ public class SetupViewTest {
     public void buildUp() {
         quizOrchestrator = mock(QuizOrchestrator.class);
         userInput = mock(UserInput.class);
-        setupView = new SetupViewImpl(quizOrchestrator, userInput);
+        setupView = new SetupOrchestratorImpl(userInput);
     }
 
     @Test
@@ -82,7 +80,7 @@ public class SetupViewTest {
     }
 
     @Test
-    public void shouldBeAbleToSelectOption1() throws InterruptedException {
+    public void shouldBeAbleToSelectOption1() throws InterruptedException, IllegalQuizException, IllegalQuestionException, IllegalOptionException {
         when(userInput.type()).thenReturn("1");
         setupView.selectOption();
 
@@ -90,7 +88,7 @@ public class SetupViewTest {
     }
 
     @Test
-    public void shouldBeAbleToSelectOption2() throws InterruptedException {
+    public void shouldBeAbleToSelectOption2() throws InterruptedException, IllegalQuizException, IllegalQuestionException, IllegalOptionException {
         when(userInput.type()).thenReturn("2");
         setupView.selectOption();
 
@@ -98,7 +96,7 @@ public class SetupViewTest {
     }
 
     @Test
-    public void shouldBeAbleToSelectOptionExit() throws InterruptedException {
+    public void shouldBeAbleToSelectOptionExit() throws InterruptedException, IllegalQuizException, IllegalQuestionException, IllegalOptionException {
         when(userInput.type()).thenReturn("EXIT");
 
         setupView.selectOption();
@@ -108,17 +106,17 @@ public class SetupViewTest {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionIfInValidCommandIsEntered() {
+    public void shouldThrowIllegalArgumentExceptionIfInValidCommandIsEntered() throws IllegalQuizException, IllegalQuestionException, IllegalOptionException {
         when(userInput.type()).thenReturn("asdasdsa");
 
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage(ExceptionMessages.INVALID_INPUT);
+        thrown.expectMessage(ExceptionMessages.INVALID_USER_INPUT);
 
         setupView.selectOption();
     }
 
     @Test
-    public void shouldBeAbleToCreateATitleForAQuiz() throws InterruptedException, IllegalQuizException {
+    public void shouldBeAbleToCreateATitleForAQuiz() throws InterruptedException, IllegalQuizException, IllegalQuestionException, IllegalOptionException {
         String quiz = "Quiz";
         when(userInput.type()).thenReturn("1", quiz);
         setupView.selectOption();

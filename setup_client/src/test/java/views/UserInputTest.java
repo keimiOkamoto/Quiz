@@ -17,21 +17,21 @@ public class UserInputTest {
     public final TextFromStandardInputStream systemInMock = emptyStandardInputStream();
     private UserInput userInput;
 
-    @Before
-    public void buildUp() {
-        userInput = new UserInputImpl();
-    }
-
-    @Test
-    public void shouldBeAbleToGetUserInput() throws InterruptedException {
-        systemInMock.provideText("Hello");
-
-        String input = userInput.type();
-        System.out.print("Hello");
-
-        Thread.sleep(100);
-
-        assertEquals(input, log.getLog());
-    }
+//    @Before
+//    public void buildUp() {
+//        userInput = new UserInputImpl();
+//    }
+//
+//    @Test
+//    public void shouldBeAbleToGetUserInput() throws InterruptedException {
+//        systemInMock.provideText("Hello");
+//
+//        String input = userInput.type();
+//        System.out.print("Hello");
+//
+//        Thread.sleep(100);
+//
+//        assertEquals(input, log.getLog());
+//    }
 
 }

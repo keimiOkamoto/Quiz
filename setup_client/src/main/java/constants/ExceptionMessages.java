@@ -16,5 +16,5 @@ public class ExceptionMessages {
    public static final String NO_QUIZ_WITH_ID_EXISTS = "A quiz with that ID does not exist. Please enter a contains ID.";
    public static final String NO_QUIZ_TO_SAVE = "There is no quiz to save to server.";
    public static final String NO_QUESTIONS_CANNOT_SAVE =  "Cannot save a quiz without any questions. Please enter at lease one question.";
-   public static final String INVALID_INPUT = "Invalid input. Please try again.";
+   public static final String INVALID_USER_INPUT = "That's not a valid input please enter again!";
 }
