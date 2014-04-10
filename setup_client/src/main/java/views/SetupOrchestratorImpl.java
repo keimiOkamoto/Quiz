@@ -1,6 +1,8 @@
 package views;
 
 import controllers.*;
+import exceptions.IllegalQuestionException;
+import exceptions.IllegalQuizException;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -35,36 +37,53 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         if (userAnswer == null) {
             message = startMessage();
         } else if (userAnswer.equals("1")) {
-            message = createQuizTitleMessage();
-        } else if (message.equals(createQuizTitleMessage())) {
+            message = printQuizTitleMessage();
+        } else if (message.equals(printQuizTitleMessage())) {
             createQuizTitle(userAnswer);
-            message = addQuestionMessage();
-        } else if (message.equals(addQuestionMessage())) {
-            createQuestion(userAnswer);
+            message = printAddQuestionMessage();
+        } else if (message.equals(printAddQuestionMessage())) {
+            addQuestion(userAnswer);
             message = addAnswer(userAnswer);
         }
         return message;
     }
 
     @Override
-    public String createQuizTitleMessage() {
+    public String printQuizTitleMessage() {
         return "Please enter the title of your quiz: ";
     }
 
-    private void createQuizTitle(String userAnswer) {
+    private String printAddQuestionMessage() {
+        return "Please enter a question: ";
+    }
 
+    private void createQuizTitle(String userAnswer) {
+        try {
+            quizOrchestrator.createQuiz(userAnswer);
+        } catch (IllegalQuizException e) {
+            System.out.println(e.getMessage());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addQuestion(String userAnswer) {
+        try {
+            quizOrchestrator.addQuestion(userAnswer);
+        } catch (IllegalQuizException e) {
+            System.out.println(e.getMessage());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     private String addAnswer(String userAnswer) {
-        return null;
-    }
-
-    private void createQuestion(String userAnswer) {
-
-    }
-
-    private String addQuestionMessage() {
-        return null;
+        try {
+            quizOrchestrator.addAnswer(userAnswer, true);
+        } catch (IllegalQuestionException e) {
+            System.out.println(e.getMessage());
+        }
+        return userAnswer;
     }
 
     public static void main(String[] args) throws RemoteException, NotBoundException {
