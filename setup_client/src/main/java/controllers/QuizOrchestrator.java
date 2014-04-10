@@ -32,7 +32,7 @@ public interface QuizOrchestrator {
      * @throws IllegalQuizException if quiz does not exist.
      * @throws IllegalArgumentException if question is null or empty.
      */
-    void addQuestion(String question) throws IllegalQuizException, IllegalArgumentException, RemoteException;
+    void addQuestion(String question) throws  IllegalArgumentException, IllegalQuizException, RemoteException;
 
     /**
      * Add answer to a question.

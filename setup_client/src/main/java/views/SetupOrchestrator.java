@@ -14,9 +14,21 @@ public interface SetupOrchestrator {
 
     void selectOption() throws IllegalQuizException, IllegalQuestionException, IllegalOptionException;
 
+    String printAddQuestionMessage();
+
+    String printAddAnswerMessage();
+
+    String getMessageForQuestion(String userInput) throws RemoteException, IllegalQuizException;
+
+    String getMessageForAnswer(String userInput) throws RemoteException;
+
     String printQuizTitleMessage() throws IllegalQuizException, IllegalQuestionException, IllegalOptionException;
 
     void setInput(String userAnswer);
 
-    String getMessage() throws RemoteException;
+    String getMessageForQuizTitle() throws RemoteException;
+
+    void createQuizTitle(String userAnswer);
+
+    void addQuestion(String userAnswer) throws RemoteException, IllegalQuizException;
 }

@@ -46,8 +46,8 @@ public class QuizImplTest {
         when(question.getQuestion()).thenReturn(question1);
         quiz.addQuestion(question);
 
-        assertFalse(quiz.contains(question1));
-        assertTrue(quiz.contains("How do you ask a dolphin to lunch?"));
+        assertTrue(quiz.contains(question1));
+        assertFalse(quiz.contains("How do you ask a dolphin to lunch?"));
     }
 
     @Test
