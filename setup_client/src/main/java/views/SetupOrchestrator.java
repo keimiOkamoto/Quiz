@@ -20,7 +20,7 @@ public interface SetupOrchestrator {
 
     String getMessageForQuestion(String userInput) throws RemoteException, IllegalQuizException;
 
-    String getMessageForAnswer(String userInput) throws RemoteException;
+    String getMessageForAnswer(String userInput, boolean value) throws RemoteException;
 
     String printQuizTitleMessage() throws IllegalQuizException, IllegalQuestionException, IllegalOptionException;
 
@@ -28,7 +28,7 @@ public interface SetupOrchestrator {
 
     String getMessageForQuizTitle() throws RemoteException;
 
-    void createQuizTitle(String userAnswer);
+    void createQuizTitle(String userAnswer) throws RemoteException, IllegalQuizException;
 
-    void addQuestion(String userAnswer) throws RemoteException, IllegalQuizException;
+    void addQuestion(String userAnswer) throws RemoteException, IllegalQuizException, IllegalQuestionException;
 }

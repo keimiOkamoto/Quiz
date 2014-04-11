@@ -49,7 +49,7 @@ public class QuizServerTest {
         when(quiz.getTitle()).thenReturn(title);
         quizContainer.save(quiz);
 
-        when(quizContainer.contains(anyString())).thenReturn(true);
+        when(quizContainer.contains(anyString())).thenReturn(false);
         assertTrue(quizServer.titleIsValid(title));
     }
 

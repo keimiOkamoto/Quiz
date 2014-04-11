@@ -12,8 +12,8 @@ public class IllegalQuestionExceptionTest {
     @Test
     public void shouldThrowIllegalQuestionException() throws IllegalQuestionException {
         thrown.expect(IllegalQuestionException.class);
-        thrown.expectMessage("models.Quiz does not exist. Please create a quiz and try again.");
+        thrown.expectMessage("Question does not exist. Please create a quiz and try again.");
 
-        throw new IllegalQuestionException("models.Quiz does not exist. Please create a quiz and try again.");
+        throw new IllegalQuestionException("Question does not exist. Please create a quiz and try again.");
     }
 }

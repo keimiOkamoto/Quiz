@@ -115,7 +115,7 @@ public class QuizOrchestratorTest {
      * Start of addQuestion()
      */
     @Test
-    public void shouldBeAbleToAddQuestionToQuizCreated() throws IllegalQuizException, RemoteException {
+    public void shouldBeAbleToAddQuestionToQuizCreated() throws IllegalQuizException, RemoteException, IllegalQuestionException {
         String title = "A quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
@@ -124,13 +124,13 @@ public class QuizOrchestratorTest {
 
         String question1 = "What is the biggest cat?";
         when(server.createQuestion(anyString())).thenReturn(question);
-        when(quiz.contains(question1)).thenReturn(true);
+        when(quiz.contains(question1)).thenReturn(false);
         quizOrchestrator.addQuestion(question1);
         verify(quiz).addQuestion(question);
     }
 
     @Test
-    public void shouldThrowIllegalQuizExceptionIfQuizIsNull() throws IllegalQuizException, RemoteException {
+    public void shouldThrowIllegalQuizExceptionIfQuizIsNull() throws IllegalQuizException, RemoteException, IllegalQuestionException {
         thrown.expect(IllegalQuizException.class);
         thrown.expectMessage(ExceptionMessages.NO_QUIZ_EXISTS);
 
@@ -139,7 +139,7 @@ public class QuizOrchestratorTest {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionIfStringIsNull() throws IllegalQuizException, RemoteException {
+    public void shouldThrowIllegalArgumentExceptionIfStringIsNull() throws IllegalQuizException, RemoteException, IllegalQuestionException {
         String title = "A quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
@@ -153,7 +153,7 @@ public class QuizOrchestratorTest {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionIfStringIsEmpty() throws IllegalQuizException, RemoteException {
+    public void shouldThrowIllegalArgumentExceptionIfStringIsEmpty() throws IllegalQuizException, RemoteException, IllegalQuestionException {
         String title = "A quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
@@ -167,7 +167,7 @@ public class QuizOrchestratorTest {
     }
 
     @Test
-    public void shouldThrowIllegalQuizExceptionIfQuestionAlreadyExists() throws IllegalQuizException, RemoteException {
+    public void shouldThrowIllegalQuizExceptionIfQuestionAlreadyExists() throws IllegalQuizException, RemoteException, IllegalQuestionException {
         String title = "Animal quiz";
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
@@ -177,7 +177,7 @@ public class QuizOrchestratorTest {
         when(server.createQuestion(anyString())).thenReturn(question);
 
         String stringAnswer = "Lion";
-        when(quiz.contains(stringAnswer)).thenReturn(false);
+        when(quiz.contains(stringAnswer)).thenReturn(true);
 
         thrown.expect(IllegalQuizException.class);
         thrown.expectMessage(ExceptionMessages.DUPLICATE_QUESTION);
@@ -191,18 +191,16 @@ public class QuizOrchestratorTest {
     @Test
     public void shouldBeAbleToAddAnswer() throws IllegalQuizException, IllegalQuestionException, RemoteException {
         String title = "Animal quiz";
+        when(quiz.contains(anyString())).thenReturn(false);
         when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
         quizOrchestrator.createQuiz(title);
         verify(server).createQuiz(title);
 
         String question1 = "What is the biggest cat?";
-        when(quiz.contains(question1)).thenReturn(true);
         when(server.createQuestion(anyString())).thenReturn(question);
         quizOrchestrator.addQuestion(question1);
         verify(quiz).addQuestion(question);
-
-        when(question.contains(anyString())).thenReturn(true);
 
         String stringAnswer = "Lion";
         when(server.createAnswer(stringAnswer, true)).thenReturn(answer);
@@ -219,7 +217,7 @@ public class QuizOrchestratorTest {
         verify(server).createQuiz(title);
 
         String questionString = "How many teeth does a lion have?";
-        when(quiz.contains(questionString)).thenReturn(true);
+        when(quiz.contains(questionString)).thenReturn(false);
         when(server.createQuestion(anyString())).thenReturn(question);
         quizOrchestrator.addQuestion(questionString);
         verify(quiz).addQuestion(question);
@@ -242,7 +240,7 @@ public class QuizOrchestratorTest {
 
         String questionString = "How many teeth does a lion have?";
         when(server.createQuestion(anyString())).thenReturn(question);
-        when(quiz.contains(questionString)).thenReturn(true);
+        when(quiz.contains(questionString)).thenReturn(false);
         quizOrchestrator.addQuestion(questionString);
         verify(quiz).addQuestion(question);
 
@@ -264,21 +262,21 @@ public class QuizOrchestratorTest {
     }
 
     @Test
-    public void shouldThrowIllegalQuestionExceptionIfAnswerIsInvalid() throws IllegalQuizException, IllegalQuestionException, RemoteException {
+    public void shouldThrowIllegalQuestionExceptionIfDuplicateAnswerIsEntered() throws IllegalQuizException, IllegalQuestionException, RemoteException {
         String title = "Animal quiz";
-        when(server.createQuiz(anyString())).thenReturn(quiz);
         when(server.valid(anyString())).thenReturn(true);
+        when(server.createQuiz(anyString())).thenReturn(quiz);
         quizOrchestrator.createQuiz(title);
         verify(server).createQuiz(title);
 
         String question1 = "What is the biggest cat?";
-        when(quiz.contains(anyString())).thenReturn(true);
+        when(quiz.contains(anyString())).thenReturn(false);
         when(server.createQuestion(anyString())).thenReturn(question);
         quizOrchestrator.addQuestion(question1);
         verify(quiz).addQuestion(question);
 
         String stringAnswer = "Lion";
-        when(question.contains(stringAnswer)).thenReturn(false);
+        when(question.contains(stringAnswer)).thenReturn(true);
 
         thrown.expect(IllegalQuestionException.class);
         thrown.expectMessage(ExceptionMessages.DUPLICATE_ANSWER);

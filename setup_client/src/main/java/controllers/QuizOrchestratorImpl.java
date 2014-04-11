@@ -23,7 +23,7 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
 
     @Override
     public int createQuiz(String title) throws IllegalArgumentException, IllegalQuizException, RemoteException {
-        if (title == null || title.length() == 0) throw new IllegalArgumentException(ExceptionMessages.EMPTY_TITLE);
+        if (invalid(title)) throw new IllegalArgumentException(ExceptionMessages.EMPTY_TITLE);
         if (!server.valid(title)) throw new IllegalQuizException(ExceptionMessages.DUPLICATE_QUIZ);
         quiz = server.createQuiz(title.trim());
         return quiz.getId();
@@ -31,7 +31,7 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
 
     @Override
     public void addQuestion(String questionStr) throws IllegalArgumentException, IllegalQuizException, RemoteException {
-        if (questionStr == null || questionStr.length() == 0) throw new IllegalArgumentException(ExceptionMessages.EMPTY_QUESTION);
+        if (invalid(questionStr)) throw new IllegalArgumentException(ExceptionMessages.EMPTY_QUESTION);
         if (quiz == null) throw new IllegalQuizException(ExceptionMessages.NO_QUIZ_EXISTS);
         if (quiz.contains(questionStr)) throw new IllegalQuizException(ExceptionMessages.DUPLICATE_QUESTION);
         question = server.createQuestion(questionStr);
@@ -40,7 +40,7 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
 
     @Override
     public void addAnswer(String answer, boolean answerType) throws IllegalQuestionException, IllegalArgumentException, RemoteException {
-        if (answer == null || answer.length() == 0) throw new IllegalArgumentException(ExceptionMessages.EMPTY_ANSWER);
+        if (invalid(answer)) throw new IllegalArgumentException(ExceptionMessages.EMPTY_ANSWER);
         if (question == null) throw new IllegalQuestionException(ExceptionMessages.NO_QUESTION_EXISTS);
         if (question.contains(answer)) throw new IllegalQuestionException(ExceptionMessages.DUPLICATE_ANSWER);
         Answer answer1 = server.createAnswer(answer, answerType);
@@ -63,5 +63,12 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
     @Override
     public String getTitle() {
         return quiz.getTitle();
+    }
+
+    /*
+     * Validates if the input is valid.
+     */
+    private boolean invalid(String questionStr) {
+        return questionStr == null || questionStr.trim().isEmpty();
     }
 }
