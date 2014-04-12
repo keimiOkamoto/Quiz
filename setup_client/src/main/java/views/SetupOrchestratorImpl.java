@@ -13,19 +13,15 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
     private QuizOrchestrator quizOrchestrator;
     private String userInput;
     private String message = null;
+    private String answer;
 
     public SetupOrchestratorImpl(QuizOrchestrator quizOrchestrator) {
         this.quizOrchestrator = quizOrchestrator;
     }
 
     @Override
-    public String startMessage() {
-       return "\t\t\t❤ ☆ ★ ☆ ★ Welcome to the Quiz Game Setup! ★ ☆ ★ ☆ ❤\n\nWhat would you like to do?\n1.Create a quiz.          2.Close a quiz.      EXIT:To exit the program.";
-    }
-
-    @Override
-    public void selectOption() {
-        System.out.println("Enter '1' to create a quiz or '2' to close a quiz and 'EXIT' to terminate the program at any point.");
+    public String printStartMessage() {
+        return "\t\t\t❤ ☆ ★ ☆ ★ Welcome to the Quiz Game Setup! ★ ☆ ★ ☆ ❤\n\nWhat would you like to do?\n1.Create a quiz.          2.Close a quiz.      EXIT:To exit the program.\nEnter '1' to create a quiz or '2' to close a quiz and 'EXIT' to terminate the program at any point.";
     }
 
     @Override
@@ -48,13 +44,19 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         this.userInput = userAnswer;
     }
 
+    @Override
+    public String printCorrectQuestionMessage() {
+        return "Is this answer the correct one? Press 'Y' for yes and 'N' for no.";
+
+    }
+
     /*
      * Gets the messages
      */
     @Override
     public String getMessageForQuizTitle() throws RemoteException {
         if (userInput == null) {
-            message = startMessage();
+            message = printStartMessage();
 
         } else if (userInput.equals("1")) {
             message = printQuizTitleMessage();
@@ -82,34 +84,70 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
     }
 
     @Override
-    public String getMessageForAnswer(String userInput, boolean value) throws RemoteException {
-        try {
-            addAnswer(userInput, value);
-            message = printAddQuestionMessage();
-        } catch (IllegalQuestionException | IllegalArgumentException e ) {
-            System.out.println(e.getMessage());
+    public String getMessageForAnswer(String userInput) throws RemoteException, IllegalArgumentException {
+        if (userInput == null || userInput.trim().isEmpty()) {
+            message = printAddAnswerMessage();
+            System.out.println(ExceptionMessages.EMPTY_ANSWER);
+        } else {
+            message = printCorrectQuestionMessage();
         }
         return message;
     }
 
+    @Override
+    public String getMessageForYesOrNo(boolean yesOrNo) throws RemoteException, IllegalQuestionException {
+        if (userInput == null || userInput.trim().isEmpty()) {
+            message = printCorrectQuestionMessage();
+            System.out.println(ExceptionMessages.INVALID_USER_INPUT);
+        } else {
+            addAnswer(yesOrNo);
+            message = printAddQuestionMessage();
+        }
+        return message;
+    }
+
+    @Override
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    @Override
+    public String getAnswer() {
+        return answer;
+    }
 
     /*
     * Quiz orchestrator
     */
     @Override
-    public void createQuizTitle(String userAnswer) throws RemoteException, IllegalQuizException, IllegalArgumentException{
-            int id = quizOrchestrator.createQuiz(userAnswer);
-            System.out.println("ID: " +  id);
+    public void createQuizTitle(String userAnswer) throws
+            RemoteException, IllegalQuizException, IllegalArgumentException {
+        int id = quizOrchestrator.createQuiz(userAnswer);
+        System.out.println("ID: " + id);
     }
 
     @Override
-    public void addQuestion(String userInput) throws RemoteException, IllegalQuizException, IllegalArgumentException, IllegalQuestionException {
-            quizOrchestrator.addQuestion(userInput);
+    public void addQuestion(String userInput) throws
+            RemoteException, IllegalQuizException, IllegalArgumentException, IllegalQuestionException {
+        quizOrchestrator.addQuestion(userInput);
     }
 
-    private String addAnswer(String userAnswer, boolean value) throws RemoteException, IllegalQuestionException {
-            quizOrchestrator.addAnswer(userAnswer, value);
-        return userAnswer;
+    private void addAnswer(boolean yesOrNo) throws RemoteException, IllegalQuestionException, IllegalArgumentException {
+        quizOrchestrator.addAnswer(getAnswer(), yesOrNo);
+    }
+
+    @Override
+    public boolean correct(String userInput) {
+        boolean value = false;
+
+        if (userInput.trim().equals("Y")) {
+            value = true;
+        } else if (userInput.trim().equals("N")) {
+            value = false;
+        } else {
+            System.out.println("Invalid input please try again.");
+        }
+        return value;
     }
 
     /*
@@ -139,25 +177,22 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
                 message = setupOrchestrator.getMessageForQuestion(userInput);
                 System.out.println(message);
 
-                while (message.equals(setupOrchestrator.printAddAnswerMessage())){
+
+                while (message.equals(setupOrchestrator.printAddAnswerMessage())) {
                     userInput = scanner.nextLine();
-                    String answerStr = userInput;
-
-                    boolean value;
-                    System.out.println("Is this answer the correct one? Press 'Y' for yes and 'N' for no.");
-                    userInput = scanner.nextLine();
-
-                    if (userInput.trim().equals("Y")) {
-                        value = true;
-                    } else if (userInput.trim().equals("N")) {
-                        value = false;
-                    } else {
-                        throw new IllegalArgumentException(ExceptionMessages.INVALID_USER_INPUT)
-                    }
-
-                    setupOrchestrator.getMessageForAnswer(userInput, value);
-                    message = setupOrchestrator.printAddQuestionMessage();
+                    setupOrchestrator.setAnswer(userInput);
+                    message = setupOrchestrator.getMessageForAnswer(userInput);
                     System.out.println(message);
+                }
+
+                while (message.equals(setupOrchestrator.printCorrectQuestionMessage())) {
+                    userInput = scanner.nextLine();
+                    boolean value = setupOrchestrator.correct(userInput);
+                    try {
+                        message = setupOrchestrator.getMessageForYesOrNo(value);
+                    } catch (IllegalQuestionException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
             }
         }
