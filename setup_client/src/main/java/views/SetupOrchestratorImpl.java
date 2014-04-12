@@ -36,7 +36,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
 
     @Override
     public String printAddAnswerMessage() {
-        return "Please enter an Answer, you can have multiple correct answers: ";
+        return "Please enter a possible answer, you can have multiple correct answers: ";
     }
 
     @Override
@@ -46,11 +46,16 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
 
     @Override
     public String printCorrectQuestionMessage() {
-        return "Is this answer the correct one? Press 'Y' for yes and 'N' for no.";
+        return "Is this answer correct? Press 'Y' for yes and 'N' for no.";
     }
 
     public String printSaveOption() {
         return "Would you like to add more question or save the quiz? Press 'Y' to add more and 'N' to save.";
+    }
+
+    @Override
+    public String printAddMoreAnswerMessage() {
+        return "Add more answers for your question to distract the player!";
     }
 
     /*
@@ -102,7 +107,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         if (yesOrNo.equals("Y") || yesOrNo.equals("N")) {
             boolean value = correct(yesOrNo);
             addAnswer(value);
-            message = printSaveOption();
+            message = printAddAnswerMessage();
         } else {
             System.out.println(ExceptionMessages.INVALID_USER_INPUT);
             message = printCorrectQuestionMessage();
@@ -160,7 +165,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         } catch (IllegalQuizException e) {
             System.out.println(e.getMessage());
         } catch (RemoteException e) {
-            System.out.println(ExceptionMessages.SERVER_ERROR);;
+            System.out.println(ExceptionMessages.SERVER_ERROR);
         }
     }
 
@@ -176,7 +181,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
     }
 
     /*
-     * MAIN
+     * Event loop for setting up the quiz.
      */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -216,25 +221,30 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
 
                 while (message.equals(setupOrchestrator.printCorrectQuestionMessage())) {
                     userInput = scanner.nextLine();
-                    message = getMessageForYesOrNo(quizOrchestrator, setupOrchestrator, userInput, message);
+                    message = getMessageForYesOrNo(setupOrchestrator, userInput, message);
                     System.out.println(message);
+
+                    if (message.equals(setupOrchestrator.printAddAnswerMessage()))
+                        message = setupOrchestrator.printAddQuestionMessage();
                 }
 
-                while (message.equals(setupOrchestrator.printSaveOption())) {
-                    userInput = scanner.nextLine();
-                    message = setupOrchestrator.getMessageForSave(userInput);
-                    System.out.println(message);
-                }
+//                while (message.equals(setupOrchestrator.printSaveOption())) {
+//                    userInput = scanner.nextLine();
+//                    message = setupOrchestrator.getMessageForSave(userInput);
+//                    System.out.println(message);
+//                }
             }
         }
         System.exit(0);
     }
 
-    private static String getMessageForYesOrNo(QuizOrchestrator quizOrchestrator, SetupOrchestrator setupOrchestrator, String userInput, String message) {
+    private static String getMessageForYesOrNo(SetupOrchestrator setupOrchestrator, String userInput, String message) {
         try {
             message = setupOrchestrator.getMessageForYesOrNo(userInput);
-        } catch (IllegalQuestionException | RemoteException e) {
+        } catch (IllegalQuestionException e) {
             System.out.println(e.getMessage());
+        } catch (RemoteException e) {
+            System.out.println(ExceptionMessages.SERVER_ERROR);
         }
         return message;
     }
@@ -243,7 +253,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         try {
             message = setupOrchestrator.getMessageForAnswer(userInput);
         } catch (RemoteException e) {
-            System.out.println(e.getMessage());
+            System.out.println(ExceptionMessages.SERVER_ERROR);
         }
         return message;
     }

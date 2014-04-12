@@ -27,6 +27,8 @@ public interface SetupOrchestrator {
 
     String printCorrectQuestionMessage();
 
+    String printAddMoreAnswerMessage();
+
     String getMessageForQuizTitle() throws RemoteException;
 
     String getAnswer();
