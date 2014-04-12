@@ -95,12 +95,13 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
     }
 
     @Override
-    public String getMessageForYesOrNo(boolean yesOrNo) throws RemoteException, IllegalQuestionException {
-        if (userInput == null || userInput.trim().isEmpty()) {
-            message = printCorrectQuestionMessage();
+    public String getMessageForYesOrNo(String yesOrNo) throws RemoteException, IllegalQuestionException {
+        if (yesOrNo == null || yesOrNo.trim().isEmpty()) {
             System.out.println(ExceptionMessages.INVALID_USER_INPUT);
+            message = printCorrectQuestionMessage();
         } else {
-            addAnswer(yesOrNo);
+            boolean value = correct(yesOrNo);
+            addAnswer(value);
             message = printAddQuestionMessage();
         }
         return message;
@@ -144,8 +145,6 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
             value = true;
         } else if (userInput.trim().equals("N")) {
             value = false;
-        } else {
-            System.out.println("Invalid input please try again.");
         }
         return value;
     }
@@ -187,12 +186,13 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
 
                 while (message.equals(setupOrchestrator.printCorrectQuestionMessage())) {
                     userInput = scanner.nextLine();
-                    boolean value = setupOrchestrator.correct(userInput);
                     try {
-                        message = setupOrchestrator.getMessageForYesOrNo(value);
+                        message = setupOrchestrator.getMessageForYesOrNo(userInput);
+                        quizOrchestrator.save(quizOrchestrator.getQuiz());
                     } catch (IllegalQuestionException e) {
                         System.out.println(e.getMessage());
                     }
+                    System.out.println(message);
                 }
             }
         }

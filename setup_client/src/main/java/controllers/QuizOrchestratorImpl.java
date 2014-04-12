@@ -65,6 +65,11 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
         return quiz.getTitle();
     }
 
+    @Override
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
     /*
      * Validates if the input is valid.
      */

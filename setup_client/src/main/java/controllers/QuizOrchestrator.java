@@ -58,4 +58,11 @@ public interface QuizOrchestrator {
      * @param quiz A quiz.
      */
     void save(Quiz quiz) throws IllegalQuizException, RemoteException;
+
+    /**
+     * Getter for the quiz.
+     *
+     * @return A quiz.
+     */
+    Quiz getQuiz();
 }

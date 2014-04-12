@@ -37,7 +37,7 @@ public interface SetupOrchestrator {
 
     boolean correct(String userInput);
 
-    String getMessageForYesOrNo(boolean yesOrNo) throws RemoteException, IllegalQuestionException;
+    String getMessageForYesOrNo(String yesOrNo) throws RemoteException, IllegalQuestionException;
 
     void setAnswer(String userInput);
 }
