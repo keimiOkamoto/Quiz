@@ -17,5 +17,6 @@ public class ExceptionMessages {
    public static final String NO_QUIZ_TO_SAVE = "There is no quiz to save to server.";
    public static final String NO_QUESTIONS_CANNOT_SAVE =  "Cannot save a quiz without any questions. Please enter at lease one question.";
    public static final String INVALID_USER_INPUT = "That's not a valid input please enter again!";
+   public static final String SERVER_ERROR = "Problem with server. Please check connection.";
 
 }

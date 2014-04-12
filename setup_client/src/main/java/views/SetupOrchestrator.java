@@ -40,4 +40,8 @@ public interface SetupOrchestrator {
     String getMessageForYesOrNo(String yesOrNo) throws RemoteException, IllegalQuestionException;
 
     void setAnswer(String userInput);
+
+    String printSaveOption();
+
+    String getMessageForSave(String userInput);
 }
