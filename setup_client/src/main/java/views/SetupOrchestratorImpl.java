@@ -1,6 +1,7 @@
 package views;
 
 import constants.ExceptionMessages;
+import constants.SetUpMessages;
 import controllers.*;
 import exceptions.IllegalQuestionException;
 import exceptions.IllegalQuizException;
@@ -19,10 +20,6 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         this.quizOrchestrator = quizOrchestrator;
     }
 
-    @Override
-    public String printStartMessage() {
-        return "\t\t\t❤ ☆ ★ ☆ ★ Welcome to the Quiz Game Setup! ★ ☆ ★ ☆ ❤\n\n♡ What would you like to do? ♡\n1.Create a quiz.          2.Close a quiz.      EXIT:To exit the program.\nEnter '1' to create a quiz or '2' to close a quiz and 'EXIT' to terminate the program at any point.";
-    }
 
     @Override
     public String printQuizTitleMessage() {
@@ -40,17 +37,33 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
     }
 
     @Override
-    public void setInput(String userAnswer) {
-        this.userInput = userAnswer;
-    }
-
-    @Override
     public String printCorrectQuestionMessage() {
         return "♡ Is this answer correct? Press 'Y' for yes and 'N' for no. ♡";
     }
 
+    @Override
+    public String printSaveSuccess() {
+        return "Your quiz has been saved!";
+    }
+
+    @Override
     public String printSaveOption() {
-        return "Would you like to add more question or save the quiz? Press 'Y' to add more and 'SAVE' to save.";
+        return "♡ Would you like to add more question or save the quiz? Press 'Y' to add more and 'SAVE' to save. ♡";
+    }
+
+    @Override
+    public String printOptionTwoMessage() {
+        return "♡ Enter the ID of the Quiz you would like to close! ♡";
+    }
+
+    @Override
+    public String printCloseSuccessMessage() {
+        return "♡ Quiz has been closed. ♡";
+    }
+
+    @Override
+    public void setInput(String userAnswer) {
+        this.userInput = userAnswer;
     }
 
     /*
@@ -59,13 +72,16 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
     @Override
     public String getMessageForQuizTitle() throws RemoteException {
         if (userInput == null){
-            message = printStartMessage();
+            message = SetUpMessages.START_MESSAGE;
 
         } else if (userInput.trim().isEmpty()) {
             System.out.println(ExceptionMessages.INVALID_USER_INPUT + "\n");
 
         } else if (userInput.equals("1")) {
             message = printQuizTitleMessage();
+
+        } else if (userInput.equals("2")) {
+            message = printOptionTwoMessage();
 
         } else if (message.equals(printQuizTitleMessage())) {
             try {
@@ -123,11 +139,36 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
             message = printSaveOption();
         } else if (userInput.equals("SAVE")) {
             save();
-            message = printStartMessage();
+            message = printSaveSuccess();
         } else if (userInput.equals(("Y"))) {
             message = printAddQuestionMessage();
         }
         return message;
+    }
+
+    @Override
+    public String getMessageForCloseQuiz(String userInput) {
+        if (userInput == null || userInput.trim().isEmpty()) {
+            System.out.println(ExceptionMessages.INVALID_USER_INPUT);
+            message = printOptionTwoMessage();
+        } else {
+            try {
+                close(userInput);
+                message = printCloseSuccessMessage();
+
+            } catch (RemoteException e) {
+                System.out.println(ExceptionMessages.SERVER_ERROR);
+            } catch (IllegalQuizException e) {
+                System.out.println(e.getMessage());
+                message = printOptionTwoMessage();
+            }
+        }
+        return message;
+    }
+
+    private void close(String userInput) throws RemoteException, IllegalQuizException {
+        int id = Integer.parseInt(userInput);
+        quizOrchestrator.closeQuiz(id);
     }
 
     @Override
@@ -204,6 +245,21 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
             message = getMessageForQuizTitle(setupOrchestrator, message);
             System.out.println(message);
 
+            if (message.equals(setupOrchestrator.printOptionTwoMessage())) {
+
+                while (message.equals(setupOrchestrator.printOptionTwoMessage())) {
+                    userInput = scanner.nextLine();
+                    if (userInput.equals("EXIT")) System.exit(0);
+                    message = setupOrchestrator.getMessageForCloseQuiz(userInput);
+                    System.out.println(message);
+
+                    while (message.equals(setupOrchestrator.printCloseSuccessMessage())) {
+                        message = SetUpMessages.START_MESSAGE;
+                        System.out.println(message);
+                    }
+                }
+            }
+
             if (!message.equals(setupOrchestrator.printAddQuestionMessage())) {
                 userInput = scanner.nextLine();
             }
@@ -224,18 +280,23 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
 
                     while (message.equals(setupOrchestrator.printCorrectQuestionMessage())) {
                         userInput = scanner.nextLine();
+                        if (userInput.equals("EXIT")) System.exit(0);
                         message = getMessageForYesOrNo(setupOrchestrator, userInput, message);
                         System.out.println(message);
                     }
                 }
+
+                while (message.equals(setupOrchestrator.printSaveOption())) {
+                    userInput = scanner.nextLine();
+                    message = setupOrchestrator.getMessageForSave(userInput);
+                    System.out.println(message);
+                }
+
+                while (message.equals(setupOrchestrator.printSaveSuccess())) {
+                    message = SetUpMessages.START_MESSAGE;
+                    System.out.println(message);
+                }
             }
-
-
-            while (message.equals(setupOrchestrator.printSaveOption())) {
-                userInput = scanner.nextLine();
-                message = setupOrchestrator.getMessageForSave(userInput);
-            }
-
         }
         System.exit(0);
     }
@@ -265,8 +326,6 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
             message = setupOrchestrator.getMessageForQuestion(userInput);
         } catch (RemoteException e) {
             System.out.println(ExceptionMessages.SERVER_ERROR);
-        } catch (IllegalQuizException e) {
-            System.out.println(e.getMessage());
         }
         return message;
     }

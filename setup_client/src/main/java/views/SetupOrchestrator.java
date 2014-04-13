@@ -4,44 +4,46 @@ import exceptions.IllegalQuestionException;
 import exceptions.IllegalQuizException;
 
 import java.rmi.RemoteException;
-import java.util.Scanner;
 
 public interface SetupOrchestrator {
 
-    /**
-     * prints a welcome message.
-     */
-    String printStartMessage();
+    String printQuizTitleMessage();
 
     String printAddQuestionMessage();
 
     String printAddAnswerMessage();
 
-    String getMessageForQuestion(String userInput) throws RemoteException, IllegalQuizException;
-
-    String getMessageForAnswer(String userInput) throws RemoteException;
-
-    String printQuizTitleMessage() throws IllegalQuizException, IllegalQuestionException, IllegalOptionException;
-
-    void setInput(String userAnswer);
-
     String printCorrectQuestionMessage();
 
-    String getMessageForQuizTitle() throws RemoteException;
-
-    String getAnswer();
-
-    void createQuizTitle(String userAnswer) throws RemoteException, IllegalQuizException;
-
-    void addQuestion(String userAnswer) throws RemoteException, IllegalQuizException, IllegalQuestionException;
-
-    boolean correct(String userInput);
-
-    String getMessageForYesOrNo(String yesOrNo) throws RemoteException, IllegalQuestionException;
-
-    void setAnswer(String userInput);
+    String printSaveSuccess();
 
     String printSaveOption();
 
+    String printOptionTwoMessage();
+
+    String printCloseSuccessMessage();
+
+    void setInput(String userAnswer);
+
+    String getMessageForQuizTitle() throws RemoteException;
+
+    String getMessageForQuestion(String userInput) throws RemoteException;
+
+    String getMessageForAnswer(String userInput) throws RemoteException, IllegalArgumentException;
+
+    String getMessageForYesOrNo(String yesOrNo) throws RemoteException, IllegalQuestionException;
+
     String getMessageForSave(String userInput);
+
+    String getMessageForCloseQuiz(String userInput);
+
+    void setAnswer(String answer);
+
+    String getAnswer();
+
+    void createQuizTitle(String userAnswer) throws RemoteException, IllegalQuizException, IllegalArgumentException;
+
+    void addQuestion(String userInput) throws RemoteException, IllegalQuizException, IllegalArgumentException, IllegalQuestionException;
+
+    boolean correct(String userInput);
 }
