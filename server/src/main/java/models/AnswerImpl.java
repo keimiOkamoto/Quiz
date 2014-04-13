@@ -8,7 +8,6 @@ public class AnswerImpl extends UnicastRemoteObject implements Answer {
     private boolean answerType;
 
     public AnswerImpl(String answerStr, boolean answerType) throws RemoteException {
-        super();
         this.answerStr = answerStr;
         this.answerType = answerType;
     }
