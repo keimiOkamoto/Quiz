@@ -7,7 +7,7 @@ import java.rmi.RemoteException;
 
 public interface SetupOrchestrator {
 
-    String printQuizTitleMessage();
+   // String printQuizTitleMessage();
 
     String printAddQuestionMessage();
 

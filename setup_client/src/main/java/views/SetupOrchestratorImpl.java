@@ -20,12 +20,6 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         this.quizOrchestrator = quizOrchestrator;
     }
 
-
-    @Override
-    public String printQuizTitleMessage() {
-        return "♡ Please enter the title of your quiz. ♡";
-    }
-
     @Override
     public String printAddQuestionMessage() {
         return "♡ Please enter a question for your quiz. ♡";
@@ -78,12 +72,12 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
             System.out.println(ExceptionMessages.INVALID_USER_INPUT + "\n");
 
         } else if (userInput.equals("1")) {
-            message = printQuizTitleMessage();
+            message = SetUpMessages.ENTER_QUIZ_TITLE;
 
         } else if (userInput.equals("2")) {
             message = printOptionTwoMessage();
 
-        } else if (message.equals(printQuizTitleMessage())) {
+        } else if (message.equals(SetUpMessages.ENTER_QUIZ_TITLE)) {
             try {
                 createQuizTitle(userInput);
                 message = printAddQuestionMessage();
@@ -160,7 +154,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
                 System.out.println(ExceptionMessages.SERVER_ERROR);
             } catch (IllegalQuizException e) {
                 System.out.println(e.getMessage());
-                message = printOptionTwoMessage();
+                message = SetUpMessages.START_MESSAGE;
             }
         }
         return message;
