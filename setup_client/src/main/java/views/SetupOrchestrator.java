@@ -7,8 +7,6 @@ import java.rmi.RemoteException;
 
 public interface SetupOrchestrator {
 
-    void setInput(String userAnswer);
-
     String getMessageForQuizTitle() throws RemoteException;
 
     String getMessageForQuestion(String userInput) throws RemoteException;
@@ -21,13 +19,19 @@ public interface SetupOrchestrator {
 
     String getMessageForCloseQuiz(String userInput);
 
+    /**
+     * Setter for the user input.
+     *
+     * @param userAnswer An answer for a question.
+     */
+    void setInput(String userAnswer);
+
+    /**
+     * Setter for an A
+     *
+     * @param answer
+     */
     void setAnswer(String answer);
 
     String getAnswer();
-
-    void createQuizTitle(String userAnswer) throws RemoteException, IllegalQuizException, IllegalArgumentException;
-
-    void addQuestion(String userInput) throws RemoteException, IllegalQuizException, IllegalArgumentException, IllegalQuestionException;
-
-    boolean correct(String userInput);
 }

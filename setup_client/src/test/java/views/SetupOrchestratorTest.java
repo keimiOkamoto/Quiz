@@ -1,8 +1,7 @@
 package views;
 
-import constants.ExceptionMessages;
+import constants.SetUpMessages;
 import controllers.QuizOrchestrator;
-import exceptions.IllegalQuestionException;
 import exceptions.IllegalQuizException;
 import org.junit.Before;
 import org.junit.Rule;
@@ -11,47 +10,17 @@ import org.junit.contrib.java.lang.system.StandardOutputStreamLog;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 import org.junit.rules.ExpectedException;
 
+import java.rmi.RemoteException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emptyStandardInputStream;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class SetupOrchestratorTest {
-    /*
-    * set up person sees welcome message and menu.
-    *
-    * CONSOLE: "WELCOME TO THE QUIZ SETUP"
-    * CONSOLE: "What would you like to do?"
-    * CONSOLE: "1.Create a quiz"          "2.Close a quiz.      EXIT: To exit the program."
-    * CONSOLE: "Enter 1 to create a quiz or 2 to close a quiz
-    *           and 'EXIT' to terminate the program at any point."
-    *
-    * USER INPUTS: "1"
-    *
-    * CONSOLE: "Would you like to create a quiz?
-    * Press 'Y' or 'EXIT' to end the setup process at any point. "
-    *
-    * Y:
-    * CONSOLE: "Please enter the title of your quiz: "
-    * USER INPUTS: ""
-    *
-    * CONSOLE: "Please enter a question."
-    * USER INPUTS: ""
-    * CONSOLE: "Please enter the correct answer."
-    * USER INPUTS: ""
-    * CONSOLE: "Please enter a distraction answer."
-    * USER INPUTS: ""
-    * CONSOLE: "Would you like to enter another distraction answer? 'Y' for yes 'N' for no."
-    * USER INPUTS: "N"
-    *
-    * CONSOLE: "Please enter a question."
-    * USER INPUTS: "EXIT"
-    *
-    * CONSOLE: "Quiz has been saved."
-    *
-    * CONSOLE: "What would you like to do?"
-    * CONSOLE: "1.Create a quiz"          "2.Close a quiz.      EXIT: To exit the program."
-    *
-    */
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -69,4 +38,87 @@ public class SetupOrchestratorTest {
         setupView = new SetupOrchestratorImpl(quizOrchestrator);
     }
 
+    @Test
+    public void shouldReturnStartMessageIfUserInPutIsNull() throws RemoteException {
+        setupView.setInput(null);
+        String actual = setupView.getMessageForQuizTitle();
+
+        assertEquals(SetUpMessages.START_MESSAGE, actual);
+    }
+
+    @Test
+    public void shouldReturnEnterQuizTitleMessageIfUserEntersOne() throws RemoteException {
+        setupView.setInput(SetUpMessages.ONE);
+        String actual = setupView.getMessageForQuizTitle();
+
+        assertEquals(SetUpMessages.ENTER_QUIZ_TITLE, actual);
+    }
+
+    @Test
+    public void shouldReturnEnterQuizIdRequestMessageIfUserEntersTwo() throws RemoteException {
+        setupView.setInput(SetUpMessages.TWO);
+        String actual = setupView.getMessageForQuizTitle();
+
+        assertEquals(SetUpMessages.ENTER_QUIZ_ID_REQUEST, actual);
+    }
+
+    @Test
+     public void shouldThrowIllegalQuizExceptionIfTitleIsADuplicate() throws RemoteException, IllegalQuizException {
+        doThrow(new IllegalQuizException("Helpful message")).when(quizOrchestrator).createQuiz(anyString());
+
+        setupView.setInput(SetUpMessages.ONE);
+        setupView.getMessageForQuizTitle();
+        setupView.setInput("Quiz about cake.");
+        setupView.getMessageForQuizTitle();
+
+        assertEquals("Helpful message\n", log.getLog());
+    }
+
+    @Test
+     public void shouldThrowIllegalArgumentExceptionIfTitleIsNull() throws RemoteException, IllegalQuizException {
+        doThrow(new IllegalArgumentException("Helpful message")).when(quizOrchestrator).createQuiz(anyString());
+
+        setupView.setInput(SetUpMessages.ONE);
+        setupView.getMessageForQuizTitle();
+        setupView.setInput("Quiz about cake.");
+        setupView.getMessageForQuizTitle();
+
+        assertEquals("Helpful message\n", log.getLog());
+    }
+
+    @Test
+    public void shouldReturnOriginalMessageIfTitleIsADuplicate() throws RemoteException, IllegalQuizException {
+        doThrow(new IllegalQuizException("Helpful message")).when(quizOrchestrator).createQuiz(anyString());
+
+        setupView.setInput(SetUpMessages.ONE);
+        String message1 = setupView.getMessageForQuizTitle();
+        setupView.setInput("Quiz about cake.");
+        String message2 = setupView.getMessageForQuizTitle();
+
+        assertEquals(message1, message2);
+    }
+
+    @Test
+    public void shouldBeAbleToCreateQuiz() throws RemoteException, IllegalQuizException {
+        String title = "Quiz about cake.";
+
+        setupView.setInput(SetUpMessages.ONE);
+        setupView.getMessageForQuizTitle();
+        setupView.setInput(title);
+        setupView.getMessageForQuizTitle();
+
+        verify(quizOrchestrator).createQuiz("Quiz about cake.");
+    }
+
+    @Test
+    public void shouldOutPutQuizIdUponQuizCreation() throws RemoteException, IllegalQuizException {
+        String title = "Quiz about cake.";
+
+        setupView.setInput(SetUpMessages.ONE);
+        setupView.getMessageForQuizTitle();
+        setupView.setInput(title);
+        setupView.getMessageForQuizTitle();
+
+        assertEquals("Your quiz ID is: 0\n", log.getLog());
+    }
 }

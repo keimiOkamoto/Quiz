@@ -30,7 +30,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
      */
     @Override
     public String getMessageForQuizTitle() throws RemoteException {
-        if (userInput == null){
+        if (userInput == null) {
             message = SetUpMessages.START_MESSAGE;
 
         } else if (userInput.trim().isEmpty()) {
@@ -96,9 +96,11 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         if (userInput == null || userInput.trim().isEmpty()) {
             System.out.println(ExceptionMessages.INVALID_USER_INPUT);
             message = SetUpMessages.SAVE_OR_ADD_MORE_QUESTIONS;
+
         } else if (userInput.equals(SetUpMessages.SAVE)) {
             save();
             message = SetUpMessages.SAVE_SUCCESS;
+
         } else if (userInput.equals((SetUpMessages.YES))) {
             message = SetUpMessages.REQUEST_QUESTION;
         }
@@ -125,11 +127,6 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         return message;
     }
 
-    private void close(String userInput) throws RemoteException, IllegalQuizException {
-        int id = Integer.parseInt(userInput);
-        quizOrchestrator.closeQuiz(id);
-    }
-
     @Override
     public void setAnswer(String answer) {
         this.answer = answer;
@@ -140,37 +137,6 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         return answer;
     }
 
-    /*
-    * Quiz orchestrator
-    */
-    @Override
-    public void createQuizTitle(String userAnswer) throws
-            RemoteException, IllegalQuizException, IllegalArgumentException {
-        int id = quizOrchestrator.createQuiz(userAnswer);
-        System.out.println(SetUpMessages.YOUR_QUIZ_ID + id);
-    }
-
-    @Override
-    public void addQuestion(String userInput) throws
-            RemoteException, IllegalQuizException, IllegalArgumentException, IllegalQuestionException {
-        quizOrchestrator.addQuestion(userInput);
-    }
-
-    private void addAnswer(boolean yesOrNo) throws RemoteException, IllegalQuestionException, IllegalArgumentException {
-        quizOrchestrator.addAnswer(getAnswer(), yesOrNo);
-    }
-
-    private void save() {
-        try {
-            quizOrchestrator.save(quizOrchestrator.getQuiz());
-        } catch (IllegalQuizException e) {
-            System.out.println(e.getMessage());
-        } catch (RemoteException e) {
-            System.out.println(ExceptionMessages.SERVER_ERROR);
-        }
-    }
-
-    @Override
     public boolean correct(String userInput) {
         boolean value = false;
         if (userInput.trim().equals(SetUpMessages.YES)) {
@@ -204,6 +170,9 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
             message = getMessageForQuizTitle(setupOrchestrator, message);
             System.out.println(message);
 
+            /*
+             * Option 2: Closing quiz with Id
+             */
             if (message.equals(SetUpMessages.ENTER_QUIZ_ID_REQUEST)) {
 
                 while (message.equals(SetUpMessages.ENTER_QUIZ_ID_REQUEST)) {
@@ -251,9 +220,9 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
                     System.out.println(message);
                 }
 
-                while (message.equals(SetUpMessages.SAVE_SUCCESS)) {
+                if (message.equals(SetUpMessages.SAVE_SUCCESS)) {
                     message = SetUpMessages.START_MESSAGE;
-                    System.out.println(message);
+                    userInput = null;
                 }
             }
         }
@@ -296,5 +265,38 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
             System.out.println(ExceptionMessages.SERVER_ERROR);
         }
         return message;
+    }
+
+    /*
+    * Quiz orchestrator
+    */
+    private void createQuizTitle(String userAnswer) throws
+            RemoteException, IllegalQuizException, IllegalArgumentException {
+        int id = quizOrchestrator.createQuiz(userAnswer);
+        System.out.println(SetUpMessages.YOUR_QUIZ_ID + id);
+    }
+
+    private void addQuestion(String userInput) throws
+            RemoteException, IllegalQuizException, IllegalArgumentException, IllegalQuestionException {
+        quizOrchestrator.addQuestion(userInput);
+    }
+
+    private void close(String userInput) throws RemoteException, IllegalQuizException {
+        int id = Integer.parseInt(userInput);
+        quizOrchestrator.closeQuiz(id);
+    }
+
+    private void addAnswer(boolean yesOrNo) throws RemoteException, IllegalQuestionException, IllegalArgumentException {
+        quizOrchestrator.addAnswer(getAnswer(), yesOrNo);
+    }
+
+    private void save() {
+        try {
+            quizOrchestrator.save(quizOrchestrator.getQuiz());
+        } catch (IllegalQuizException e) {
+            System.out.println(e.getMessage());
+        } catch (RemoteException e) {
+            System.out.println(ExceptionMessages.SERVER_ERROR);
+        }
     }
 }
