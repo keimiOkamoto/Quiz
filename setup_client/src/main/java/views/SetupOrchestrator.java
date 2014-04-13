@@ -1,12 +1,26 @@
 package views;
 
 import exceptions.IllegalQuestionException;
-import exceptions.IllegalQuizException;
 
 import java.rmi.RemoteException;
 
 public interface SetupOrchestrator {
 
+    /**
+     * The start to the even loop.
+     * <p/>
+     * Messages are replaced according to condition.
+     * It determines which even to jump to and depending
+     * on the state of the 'message' string it will
+     * create a quiz with a valid title.
+     * <p/>
+     * IllegalQuizException and IllegalArgumentException
+     * thrown by the quizOrchestrator.createQuiz() is also
+     * caught here.
+     *
+     * @return 'message' for the next state.
+     * @throws RemoteException If there is an issue with the server.
+     */
     String getMessageForQuizTitle() throws RemoteException;
 
     String getMessageForQuestion(String userInput) throws RemoteException;
@@ -27,9 +41,9 @@ public interface SetupOrchestrator {
     void setInput(String userAnswer);
 
     /**
-     * Setter for an A
+     * Setter for an Answer
      *
-     * @param answer
+     * @param answer An anwer
      */
     void setAnswer(String answer);
 

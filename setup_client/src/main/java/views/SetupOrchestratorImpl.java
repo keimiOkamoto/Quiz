@@ -69,8 +69,10 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         if (userInput == null || userInput.trim().isEmpty()) {
             message = SetUpMessages.REQUEST_ANSWER;
             System.out.println(ExceptionMessages.EMPTY_ANSWER);
+
         } else if (userInput.equals(SetUpMessages.DONE)) {
             message = SetUpMessages.SAVE_OR_ADD_MORE_QUESTIONS;
+
         } else {
             setAnswer(userInput);
             message = SetUpMessages.CORRECT_OR_INCORRECT_ANSWER_REQUEST;
@@ -84,6 +86,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
             boolean value = correct(yesOrNo);
             addAnswer(value);
             message = SetUpMessages.REQUEST_ANSWER;
+
         } else {
             System.out.println(ExceptionMessages.INVALID_USER_INPUT);
             message = SetUpMessages.CORRECT_OR_INCORRECT_ANSWER_REQUEST;
@@ -112,6 +115,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         if (userInput == null || userInput.trim().isEmpty()) {
             System.out.println(ExceptionMessages.INVALID_USER_INPUT);
             message = SetUpMessages.ENTER_QUIZ_ID_REQUEST;
+
         } else {
             try {
                 close(userInput);
@@ -177,6 +181,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
 
                 while (message.equals(SetUpMessages.ENTER_QUIZ_ID_REQUEST)) {
                     userInput = scanner.nextLine();
+
                     if (userInput.equals(SetUpMessages.EXIT)) System.exit(0);
                     message = setupOrchestrator.getMessageForCloseQuiz(userInput);
                     System.out.println(message);
@@ -194,12 +199,14 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
 
             while (message.equals(SetUpMessages.REQUEST_QUESTION)) {
                 userInput = scanner.nextLine();
+
                 if (userInput.equals(SetUpMessages.EXIT)) System.exit(0);
                 message = getMessageForQuestion(setupOrchestrator, userInput, message);
                 System.out.println(message);
 
                 while (message.equals(SetUpMessages.REQUEST_ANSWER)) {
                     userInput = scanner.nextLine();
+
                     if (userInput.equals(SetUpMessages.EXIT)) System.exit(0);
                     message = SetUpMessages.REQUEST_QUESTION;
 
