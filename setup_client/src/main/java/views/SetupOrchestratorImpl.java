@@ -58,8 +58,9 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
      */
     @Override
     public String getMessageForQuizTitle() throws RemoteException {
-        if (userInput == null) {
+        if (userInput == null || userInput.trim().isEmpty()) {
             message = printStartMessage();
+            System.out.println(ExceptionMessages.INVALID_USER_INPUT);
 
         } else if (userInput.equals("1")) {
             message = printQuizTitleMessage();
