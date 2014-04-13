@@ -21,41 +21,6 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
     }
 
     @Override
-    public String printAddQuestionMessage() {
-        return "♡ Please enter a question for your quiz. ♡";
-    }
-
-    @Override
-    public String printAddAnswerMessage() {
-        return "♡ Please enter a possible answer, you can have multiple correct answers, when you are done just type 'DONE'in capital letters! ♡ ";
-    }
-
-    @Override
-    public String printCorrectQuestionMessage() {
-        return "♡ Is this answer correct? Press 'Y' for yes and 'N' for no. ♡";
-    }
-
-    @Override
-    public String printSaveSuccess() {
-        return "Your quiz has been saved!";
-    }
-
-    @Override
-    public String printSaveOption() {
-        return "♡ Would you like to add more question or save the quiz? Press 'Y' to add more and 'SAVE' to save. ♡";
-    }
-
-    @Override
-    public String printOptionTwoMessage() {
-        return "♡ Enter the ID of the Quiz you would like to close! ♡";
-    }
-
-    @Override
-    public String printCloseSuccessMessage() {
-        return "♡ Quiz has been closed. ♡";
-    }
-
-    @Override
     public void setInput(String userAnswer) {
         this.userInput = userAnswer;
     }
@@ -71,16 +36,16 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         } else if (userInput.trim().isEmpty()) {
             System.out.println(ExceptionMessages.INVALID_USER_INPUT + "\n");
 
-        } else if (userInput.equals("1")) {
+        } else if (userInput.equals(SetUpMessages.ONE)) {
             message = SetUpMessages.ENTER_QUIZ_TITLE;
 
-        } else if (userInput.equals("2")) {
-            message = printOptionTwoMessage();
+        } else if (userInput.equals(SetUpMessages.TWO)) {
+            message = SetUpMessages.ENTER_QUIZ_ID_REQUEST;
 
         } else if (message.equals(SetUpMessages.ENTER_QUIZ_TITLE)) {
             try {
                 createQuizTitle(userInput);
-                message = printAddQuestionMessage();
+                message = SetUpMessages.REQUEST_QUESTION;
             } catch (IllegalQuizException | IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
@@ -92,7 +57,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
     public String getMessageForQuestion(String userInput) throws RemoteException {
         try {
             addQuestion(userInput);
-            message = printAddAnswerMessage();
+            message = SetUpMessages.REQUEST_ANSWER;
         } catch (IllegalArgumentException | IllegalQuestionException | IllegalQuizException e) {
             System.out.println(e.getMessage());
         }
@@ -102,26 +67,26 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
     @Override
     public String getMessageForAnswer(String userInput) throws RemoteException, IllegalArgumentException {
         if (userInput == null || userInput.trim().isEmpty()) {
-            message = printAddAnswerMessage();
+            message = SetUpMessages.REQUEST_ANSWER;
             System.out.println(ExceptionMessages.EMPTY_ANSWER);
-        } else if (userInput.equals("DONE")) {
-            message = printSaveOption();
+        } else if (userInput.equals(SetUpMessages.DONE)) {
+            message = SetUpMessages.SAVE_OR_ADD_MORE_QUESTIONS;
         } else {
             setAnswer(userInput);
-            message = printCorrectQuestionMessage();
+            message = SetUpMessages.CORRECT_OR_INCORRECT_ANSWER_REQUEST;
         }
         return message;
     }
 
     @Override
     public String getMessageForYesOrNo(String yesOrNo) throws RemoteException, IllegalQuestionException {
-        if (yesOrNo.equals("Y") || yesOrNo.equals("N")) {
+        if (yesOrNo.equals(SetUpMessages.YES) || yesOrNo.equals(SetUpMessages.NO)) {
             boolean value = correct(yesOrNo);
             addAnswer(value);
-            message = printAddAnswerMessage();
+            message = SetUpMessages.REQUEST_ANSWER;
         } else {
             System.out.println(ExceptionMessages.INVALID_USER_INPUT);
-            message = printCorrectQuestionMessage();
+            message = SetUpMessages.CORRECT_OR_INCORRECT_ANSWER_REQUEST;
         }
         return message;
     }
@@ -130,12 +95,12 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
     public String getMessageForSave(String userInput) {
         if (userInput == null || userInput.trim().isEmpty()) {
             System.out.println(ExceptionMessages.INVALID_USER_INPUT);
-            message = printSaveOption();
-        } else if (userInput.equals("SAVE")) {
+            message = SetUpMessages.SAVE_OR_ADD_MORE_QUESTIONS;
+        } else if (userInput.equals(SetUpMessages.SAVE)) {
             save();
-            message = printSaveSuccess();
-        } else if (userInput.equals(("Y"))) {
-            message = printAddQuestionMessage();
+            message = SetUpMessages.SAVE_SUCCESS;
+        } else if (userInput.equals((SetUpMessages.YES))) {
+            message = SetUpMessages.REQUEST_QUESTION;
         }
         return message;
     }
@@ -144,11 +109,11 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
     public String getMessageForCloseQuiz(String userInput) {
         if (userInput == null || userInput.trim().isEmpty()) {
             System.out.println(ExceptionMessages.INVALID_USER_INPUT);
-            message = printOptionTwoMessage();
+            message = SetUpMessages.ENTER_QUIZ_ID_REQUEST;
         } else {
             try {
                 close(userInput);
-                message = printCloseSuccessMessage();
+                message = SetUpMessages.QUIZ_CLOSED_SUCCESS;
 
             } catch (RemoteException e) {
                 System.out.println(ExceptionMessages.SERVER_ERROR);
@@ -182,7 +147,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
     public void createQuizTitle(String userAnswer) throws
             RemoteException, IllegalQuizException, IllegalArgumentException {
         int id = quizOrchestrator.createQuiz(userAnswer);
-        System.out.println("Your quiz ID is: " + id);
+        System.out.println(SetUpMessages.YOUR_QUIZ_ID + id);
     }
 
     @Override
@@ -208,9 +173,9 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
     @Override
     public boolean correct(String userInput) {
         boolean value = false;
-        if (userInput.trim().equals("Y")) {
+        if (userInput.trim().equals(SetUpMessages.YES)) {
             value = true;
-        } else if (userInput.trim().equals("N")) {
+        } else if (userInput.trim().equals(SetUpMessages.NO)) {
             value = false;
         }
         return value;
@@ -234,59 +199,59 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         String userInput = null;
         String message = "";
 
-        while (userInput == null || !userInput.equals("EXIT")) {
+        while (userInput == null || !userInput.equals(SetUpMessages.EXIT)) {
             setupOrchestrator.setInput(userInput);
             message = getMessageForQuizTitle(setupOrchestrator, message);
             System.out.println(message);
 
-            if (message.equals(setupOrchestrator.printOptionTwoMessage())) {
+            if (message.equals(SetUpMessages.ENTER_QUIZ_ID_REQUEST)) {
 
-                while (message.equals(setupOrchestrator.printOptionTwoMessage())) {
+                while (message.equals(SetUpMessages.ENTER_QUIZ_ID_REQUEST)) {
                     userInput = scanner.nextLine();
-                    if (userInput.equals("EXIT")) System.exit(0);
+                    if (userInput.equals(SetUpMessages.EXIT)) System.exit(0);
                     message = setupOrchestrator.getMessageForCloseQuiz(userInput);
                     System.out.println(message);
 
-                    while (message.equals(setupOrchestrator.printCloseSuccessMessage())) {
+                    while (message.equals(SetUpMessages.QUIZ_CLOSED_SUCCESS)) {
                         message = SetUpMessages.START_MESSAGE;
                         System.out.println(message);
                     }
                 }
             }
 
-            if (!message.equals(setupOrchestrator.printAddQuestionMessage())) {
+            if (!message.equals(SetUpMessages.REQUEST_QUESTION)) {
                 userInput = scanner.nextLine();
             }
 
-            while (message.equals(setupOrchestrator.printAddQuestionMessage())) {
+            while (message.equals(SetUpMessages.REQUEST_QUESTION)) {
                 userInput = scanner.nextLine();
-                if (userInput.equals("EXIT")) System.exit(0);
+                if (userInput.equals(SetUpMessages.EXIT)) System.exit(0);
                 message = getMessageForQuestion(setupOrchestrator, userInput, message);
                 System.out.println(message);
 
-                while (message.equals(setupOrchestrator.printAddAnswerMessage())) {
+                while (message.equals(SetUpMessages.REQUEST_ANSWER)) {
                     userInput = scanner.nextLine();
-                    if (userInput.equals("EXIT")) System.exit(0);
-                    message = setupOrchestrator.printAddQuestionMessage();
+                    if (userInput.equals(SetUpMessages.EXIT)) System.exit(0);
+                    message = SetUpMessages.REQUEST_QUESTION;
 
                     message = getMessageForAnswer(setupOrchestrator, userInput, message);
                     System.out.println(message);
 
-                    while (message.equals(setupOrchestrator.printCorrectQuestionMessage())) {
+                    while (message.equals(SetUpMessages.CORRECT_OR_INCORRECT_ANSWER_REQUEST)) {
                         userInput = scanner.nextLine();
-                        if (userInput.equals("EXIT")) System.exit(0);
+                        if (userInput.equals(SetUpMessages.EXIT)) System.exit(0);
                         message = getMessageForYesOrNo(setupOrchestrator, userInput, message);
                         System.out.println(message);
                     }
                 }
 
-                while (message.equals(setupOrchestrator.printSaveOption())) {
+                while (message.equals(SetUpMessages.SAVE_OR_ADD_MORE_QUESTIONS)) {
                     userInput = scanner.nextLine();
                     message = setupOrchestrator.getMessageForSave(userInput);
                     System.out.println(message);
                 }
 
-                while (message.equals(setupOrchestrator.printSaveSuccess())) {
+                while (message.equals(SetUpMessages.SAVE_SUCCESS)) {
                     message = SetUpMessages.START_MESSAGE;
                     System.out.println(message);
                 }

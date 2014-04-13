@@ -11,6 +11,13 @@ public class SetUpMessages {
     public static final String ENTER_QUIZ_ID_REQUEST = "♡ Enter the ID of the Quiz you would like to close! ♡";
     public static final String QUIZ_CLOSED_SUCCESS = "♡ Quiz has been closed. ♡";
     public static final String EXIT = "EXIT";
+    public static final String SAVE = "SAVE";
+    public static final String DONE = "DONE";
+    public static final String YOUR_QUIZ_ID = "Your quiz ID is: ";
+    public static final String YES = "Y";
+    public static final String NO = "N";
+    public static final String ONE = "1";
+    public static final String TWO = "2";
 
 
 }
