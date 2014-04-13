@@ -185,4 +185,23 @@ public class SetupOrchestratorTest {
         assertEquals(SetUpMessages.REQUEST_ANSWER, actual);
     }
 
+    @Test
+    public void shouldDisplayAHelpfulMessageIfUserInputIsNotYesOrNoAndShouldReturnCorrectMessage() throws RemoteException, IllegalQuestionException {
+        String userInput = "fsf";
+        String actual = setupOrchestrator.getMessageForYesOrNo(userInput);
+
+        assertEquals(ExceptionMessages.INVALID_USER_INPUT + "\n", log.getLog());
+
+        assertEquals(SetUpMessages.CORRECT_OR_INCORRECT_ANSWER_REQUEST, actual);
+    }
+
+    @Test
+    public void shouldDisplayAHelpfulMessageIfUserInputIsNullAndReturnSaveOrAddMoreQuestionsMessage() {
+        String userInput = null;
+        String actual = setupOrchestrator.getMessageForSave(userInput);
+
+        assertEquals(ExceptionMessages.INVALID_USER_INPUT + "\n",log.getLog());
+
+        assertEquals(SetUpMessages.SAVE_OR_ADD_MORE_QUESTIONS, actual);
+    }
 }
