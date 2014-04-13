@@ -22,7 +22,7 @@ public class QuestionImpl extends UnicastRemoteObject implements Question {
     public boolean contains(String answer) throws RemoteException {
         boolean result = false;
         for (Answer value : answerSet) {
-            if (!value.getAnswer().equals(answer)) {
+            if (value.getAnswer().equals(answer)) {
                 result = true;
             }
         }

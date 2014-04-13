@@ -107,7 +107,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         if (yesOrNo.equals("Y") || yesOrNo.equals("N")) {
             boolean value = correct(yesOrNo);
             addAnswer(value);
-            message = printAddAnswerMessage();
+            message = printAddMoreAnswerMessage();
         } else {
             System.out.println(ExceptionMessages.INVALID_USER_INPUT);
             message = printCorrectQuestionMessage();
@@ -211,30 +211,37 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
                 userInput = scanner.nextLine();
                 message = getMessageForQuestion(setupOrchestrator, userInput, message);
                 System.out.println(message);
+            }
 
-                while (message.equals(setupOrchestrator.printAddAnswerMessage())) {
-                    userInput = scanner.nextLine();
-                    setupOrchestrator.setAnswer(userInput);
-                    message = getMessageForAnswer(setupOrchestrator, userInput, message);
-                    System.out.println(message);
-                }
-
+            while (message.equals(setupOrchestrator.printAddAnswerMessage())) {
+                userInput = scanner.nextLine();
+                setupOrchestrator.setAnswer(userInput);
+                message = getMessageForAnswer(setupOrchestrator, userInput, message);
+                System.out.println(message);
+            }
                 while (message.equals(setupOrchestrator.printCorrectQuestionMessage())) {
                     userInput = scanner.nextLine();
                     message = getMessageForYesOrNo(setupOrchestrator, userInput, message);
                     System.out.println(message);
-
-                    if (message.equals(setupOrchestrator.printAddAnswerMessage()))
-                        message = setupOrchestrator.printAddQuestionMessage();
                 }
+                while (message.equals(setupOrchestrator.printAddMoreAnswerMessage()) ) {
+                    userInput = scanner.nextLine();
+                    setupOrchestrator.setAnswer(userInput);
+                    getMessageForYesOrNo(setupOrchestrator, userInput, message);
+                    System.out.println(message);
+                }
+            }
+
+
+
 
 //                while (message.equals(setupOrchestrator.printSaveOption())) {
 //                    userInput = scanner.nextLine();
 //                    message = setupOrchestrator.getMessageForSave(userInput);
 //                    System.out.println(message);
 //                }
-            }
-        }
+
+
         System.exit(0);
     }
 
