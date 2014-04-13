@@ -36,7 +36,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
 
     @Override
     public String printAddAnswerMessage() {
-        return "Please enter a possible answer, you can have multiple correct answers: ";
+        return "Please enter a possible answer, you can have multiple correct answers, when you are done just type 'DONE': ";
     }
 
     @Override
@@ -50,12 +50,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
     }
 
     public String printSaveOption() {
-        return "Would you like to add more question or save the quiz? Press 'Y' to add more and 'N' to save.";
-    }
-
-    @Override
-    public String printAddMoreAnswerMessage() {
-        return "Add more answers for your question to distract the player!";
+        return "Would you like to add more question or save the quiz? Press 'Y' to add more and 'SAVE' to save.";
     }
 
     /*
@@ -96,6 +91,8 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         if (userInput == null || userInput.trim().isEmpty()) {
             message = printAddAnswerMessage();
             System.out.println(ExceptionMessages.EMPTY_ANSWER);
+        } else if (userInput.equals("DONE")) {
+            message = printSaveOption();
         } else {
             setAnswer(userInput);
             message = printCorrectQuestionMessage();
@@ -121,7 +118,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         if (userInput == null || userInput.trim().isEmpty()) {
             System.out.println(ExceptionMessages.INVALID_USER_INPUT);
             message = printSaveOption();
-        } else if (userInput.equals("N")) {
+        } else if (userInput.equals("SAVE")) {
             save();
             message = printStartMessage();
         } else if (userInput.equals(("Y"))) {
@@ -215,7 +212,9 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
 
                 while (message.equals(setupOrchestrator.printAddAnswerMessage())) {
                     userInput = scanner.nextLine();
-                    System.out.println(userInput);
+                    message = setupOrchestrator.printAddQuestionMessage();
+                    //System.out.println(userInput);
+
                     message = getMessageForAnswer(setupOrchestrator, userInput, message);
                     System.out.println(message);
 
@@ -228,23 +227,13 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
             }
 
 
+            while (message.equals(setupOrchestrator.printSaveOption())) {
+                userInput = scanner.nextLine();
+                message = setupOrchestrator.getMessageForSave(userInput);
+                //System.out.println(message);
+            }
 
-//            while (message.equals(setupOrchestrator.printAddMoreAnswerMessage())) {
-//                userInput = scanner.nextLine();
-//                setupOrchestrator.setAnswer(userInput);
-//                message = getMessageForYesOrNo(setupOrchestrator, userInput, message);
-//                System.out.println(message);
-//            }
         }
-
-
-//                while (message.equals(setupOrchestrator.printSaveOption())) {
-//                    userInput = scanner.nextLine();
-//                    message = setupOrchestrator.getMessageForSave(userInput);
-//                    System.out.println(message);
-//                }
-
-
         System.exit(0);
     }
 
