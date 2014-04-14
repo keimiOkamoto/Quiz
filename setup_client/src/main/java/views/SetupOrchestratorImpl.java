@@ -161,6 +161,14 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         String userInput = null;
         String message = "";
 
+        setupGameStart(scanner, setupOrchestrator, userInput, message);
+        System.exit(0);
+    }
+
+    /*
+     * Event loop for setting up the quiz.
+     */
+    private static void setupGameStart(Scanner scanner, SetupOrchestrator setupOrchestrator, String userInput, String message) {
         while (userInput == null || !userInput.equals(SetUpMessages.EXIT)) {
             setupOrchestrator.setInput(userInput);
             message = getMessageForQuizTitle(setupOrchestrator, message);
@@ -169,58 +177,14 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
             /*
              * Option 2: Closing quiz with Id
              */
-            if (message.equals(SetUpMessages.ENTER_QUIZ_ID_REQUEST)) {
-
-                while (message.equals(SetUpMessages.ENTER_QUIZ_ID_REQUEST)) {
-                    userInput = scanner.nextLine();
-
-                    if (userInput.equals(SetUpMessages.EXIT)) System.exit(0);
-                    message = setupOrchestrator.getMessageForCloseQuiz(userInput);
-                    System.out.println(message);
-
-                    while (message.equals(SetUpMessages.QUIZ_CLOSED_SUCCESS)) {
-                        message = SetUpMessages.START_MESSAGE;
-                        System.out.println(message);
-                    }
-                }
-            }
-            /*
-             * End of option 2.
-             */
+            message = closeQuizWithId(message, scanner, setupOrchestrator);
 
             if (!message.equals(SetUpMessages.REQUEST_QUESTION)) {
                 userInput = scanner.nextLine();
             }
 
             while (message.equals(SetUpMessages.REQUEST_QUESTION)) {
-                userInput = scanner.nextLine();
-
-                if (userInput.equals(SetUpMessages.EXIT)) System.exit(0);
-                message = getMessageForQuestion(setupOrchestrator, userInput, message);
-                System.out.println(message);
-
-                while (message.equals(SetUpMessages.REQUEST_ANSWER)) {
-                    userInput = scanner.nextLine();
-
-                    if (userInput.equals(SetUpMessages.EXIT)) System.exit(0);
-                    message = SetUpMessages.REQUEST_QUESTION;
-
-                    message = getMessageForAnswer(setupOrchestrator, userInput, message);
-                    System.out.println(message);
-
-                    while (message.equals(SetUpMessages.CORRECT_OR_INCORRECT_ANSWER_REQUEST)) {
-                        userInput = scanner.nextLine();
-                        if (userInput.equals(SetUpMessages.EXIT)) System.exit(0);
-                        message = getMessageForYesOrNo(setupOrchestrator, userInput, message);
-                        System.out.println(message);
-                    }
-                }
-
-                while (message.equals(SetUpMessages.SAVE_OR_ADD_MORE_QUESTIONS)) {
-                    userInput = scanner.nextLine();
-                    message = setupOrchestrator.getMessageForSave(userInput);
-                    System.out.println(message);
-                }
+                message = getUserQuestionMessage(scanner, setupOrchestrator, message);
 
                 if (message.equals(SetUpMessages.SAVE_SUCCESS)) {
                     message = SetUpMessages.START_MESSAGE;
@@ -228,8 +192,139 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
                 }
             }
         }
-        System.exit(0);
     }
+
+    /*
+     * When the message equals Save question this method
+     * is called. This will get the next message depending
+     * on the users input and choice.
+     */
+    private static String getUserQuestionMessage(Scanner scanner, SetupOrchestrator setupOrchestrator, String message) {
+        String userInput = scanner.nextLine();
+
+        if (userInput.equals(SetUpMessages.EXIT)) System.exit(0);
+        message = getMessageForQuestion(setupOrchestrator, userInput, message);
+        System.out.println(message);
+
+        while (message.equals(SetUpMessages.REQUEST_ANSWER)) {
+            message = getUsersAnswer(scanner, setupOrchestrator);
+        }
+
+        while (message.equals(SetUpMessages.SAVE_OR_ADD_MORE_QUESTIONS)) {
+            message = getUserSaveMessage(scanner, setupOrchestrator);
+        }
+        return message;
+    }
+
+    /*
+     * This method takes in the user input for their
+     * decision to save the quiz or carry on adding
+     * questions. Returns the next message depending
+     * on the user input.
+     */
+    private static String getUserSaveMessage(Scanner scanner, SetupOrchestrator setupOrchestrator) {
+        String message;
+        String userInput = scanner.nextLine();
+        message = setupOrchestrator.getMessageForSave(userInput);
+        System.out.println(message);
+
+        return message;
+    }
+
+
+    /*
+     * When 'message' is set to REQUEST_ANSWER, this method
+     * will be called. Depending on the answer the
+     * message will change.
+     */
+    private static String getUsersAnswer(Scanner scanner, SetupOrchestrator setupOrchestrator) {
+        String message;
+        String userInput = scanner.nextLine();
+
+        if (userInput.equals(SetUpMessages.EXIT)) System.exit(0);
+        message = SetUpMessages.REQUEST_QUESTION;
+
+        message = getMessageForAnswer(setupOrchestrator, userInput, message);
+        System.out.println(message);
+
+        while (message.equals(SetUpMessages.CORRECT_OR_INCORRECT_ANSWER_REQUEST)) {
+            message = getAnswerValue(scanner, setupOrchestrator, message);
+        }
+        return message;
+    }
+
+    /*
+     * If 'message' is set to CORRECT_OR_INCORRECT
+     * this method will be called.
+     * Depending on useInput the 'message' will be
+     * altered.
+     */
+    private static String getAnswerValue(Scanner scanner, SetupOrchestrator setupOrchestrator, String message) {
+        String userInput = scanner.nextLine();
+        if (userInput.equals(SetUpMessages.EXIT)) System.exit(0);
+        message = getMessageForYesOrNo(setupOrchestrator, userInput, message);
+        System.out.println(message);
+
+        return message;
+    }
+
+
+
+
+
+
+
+
+
+
+
+    /*
+      * Option 2, Start of logic.
+      */
+    private static String closeQuizWithId(String message, Scanner scanner, SetupOrchestrator setupOrchestrator) {
+        if (message.equals(SetUpMessages.ENTER_QUIZ_ID_REQUEST)) {
+
+            while (message.equals(SetUpMessages.ENTER_QUIZ_ID_REQUEST)) {
+                String userInput = scanner.nextLine();
+
+                message = getOptionTwo(setupOrchestrator, userInput);
+            }
+        }
+        return message;
+    }
+
+    /*
+     * Helper method fof closeQuizWithId.
+     */
+    private static String getOptionTwo(SetupOrchestrator setupOrchestrator, String userInput) {
+        String message;
+        if (userInput.equals(SetUpMessages.EXIT)) System.exit(0);
+        message = setupOrchestrator.getMessageForCloseQuiz(userInput);
+        System.out.println(message);
+
+        while (message.equals(SetUpMessages.QUIZ_CLOSED_SUCCESS)) {
+            message = getStartMessage();
+        }
+        return message;
+    }
+
+    /*
+    * Helper method fof closeQuizWithId.
+    */
+    private static String getStartMessage() {
+        String message;
+        message = SetUpMessages.START_MESSAGE;
+        System.out.println(message);
+        return message;
+    }
+
+
+
+
+
+
+
+
 
     private static String getMessageForYesOrNo(SetupOrchestrator setupOrchestrator, String userInput, String message) {
         try {
