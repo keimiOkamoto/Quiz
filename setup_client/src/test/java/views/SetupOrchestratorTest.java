@@ -5,6 +5,7 @@ import constants.SetUpMessages;
 import controllers.QuizOrchestrator;
 import exceptions.IllegalQuestionException;
 import exceptions.IllegalQuizException;
+import models.Quiz;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,9 +17,7 @@ import java.rmi.RemoteException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emptyStandardInputStream;
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.startsWith;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -35,10 +34,13 @@ public class SetupOrchestratorTest {
     public final TextFromStandardInputStream systemInMock = emptyStandardInputStream();
     private SetupOrchestrator setupOrchestrator;
     private QuizOrchestrator quizOrchestrator;
+    private Quiz quiz;
 
     @Before
     public void buildUp() {
         quizOrchestrator = mock(QuizOrchestrator.class);
+        quiz = mock(Quiz.class);
+
         setupOrchestrator = new SetupOrchestratorImpl(quizOrchestrator);
     }
 
@@ -204,4 +206,43 @@ public class SetupOrchestratorTest {
 
         assertEquals(SetUpMessages.SAVE_OR_ADD_MORE_QUESTIONS, actual);
     }
+
+    @Test
+    public void shouldBeAbleToSaveAQuizAndReturnSaveSuccessMessage() throws RemoteException, IllegalQuizException {
+        String userInput = SetUpMessages.SAVE;
+        String actual = setupOrchestrator.getMessageForSave(userInput);
+
+        verify(quizOrchestrator).save(quizOrchestrator.getQuiz());
+
+        assertEquals(SetUpMessages.SAVE_SUCCESS, actual);
+    }
+
+    @Test
+    public void shouldBeAbleToReturnRequestQuestionMessageIfUserInputIsY() {
+        String userInput = "Y";
+        String actual = setupOrchestrator.getMessageForSave(userInput);
+
+        assertEquals(SetUpMessages.REQUEST_QUESTION, actual);
+    }
+
+    @Test
+    public void shouldDisplayAHelpfulMessageIfUserInputIsNullAndReturnEnterQuizIdMessage() throws RemoteException, IllegalQuizException {
+        String userInput = null;
+        String actual = setupOrchestrator.getMessageForCloseQuiz(userInput);
+
+        assertEquals(ExceptionMessages.INVALID_USER_INPUT + "\n", log.getLog());
+
+        assertEquals(SetUpMessages.ENTER_QUIZ_ID_REQUEST, actual);
+    }
+
+    @Test
+    public void shouldBeAbleToCloseQuizAndReturnQuizClosedSuccessMessage() throws RemoteException, IllegalQuizException {
+        String userInput = "1";
+        String actual = setupOrchestrator.getMessageForCloseQuiz(userInput);
+
+        verify(quizOrchestrator).closeQuiz(anyInt());
+
+        assertEquals(SetUpMessages.QUIZ_CLOSED_SUCCESS, actual);
+    }
+
 }

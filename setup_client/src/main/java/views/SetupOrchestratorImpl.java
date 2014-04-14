@@ -141,7 +141,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         return answer;
     }
 
-    public boolean correct(String userInput) {
+    private boolean correct(String userInput) {
         boolean value = false;
         if (userInput.trim().equals(SetUpMessages.YES)) {
             value = true;
