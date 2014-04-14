@@ -5,11 +5,8 @@ import constants.SetUpMessages;
 import controllers.*;
 import exceptions.IllegalQuestionException;
 import exceptions.IllegalQuizException;
-import models.Question;
 
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.Scanner;
 
 public class SetupOrchestratorImpl implements SetupOrchestrator {
     private QuizOrchestrator quizOrchestrator;
@@ -21,9 +18,6 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         this.quizOrchestrator = quizOrchestrator;
     }
 
-    /*
-     * Gets the messages
-     */
     @Override
     public String getMessageForQuizTitle() throws RemoteException {
         if (userInput == null) {
@@ -142,102 +136,6 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
     @Override
     public String getAnswer() {
         return answer;
-    }
-
-    /*
-     * Event loop for setting up the quiz.
-     */
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        ServerLink serverLink = new ServerLinkImpl();
-        Views views = new ViewsImpl();
-        Server server = null;
-        try {
-            server = new ServerImpl(serverLink);
-        } catch (RemoteException | NotBoundException e) {
-            System.out.println(ExceptionMessages.SERVER_ERROR);
-        }
-        QuizOrchestrator quizOrchestrator = new QuizOrchestratorImpl(server);
-        SetupOrchestrator setupOrchestrator = new SetupOrchestratorImpl(quizOrchestrator);
-
-        String message = "";
-
-        setupGameStart(scanner, setupOrchestrator, null, message, views);
-        System.exit(0);
-    }
-
-
-
-
-
-
-    /*
-     * Event loop for setting up the quiz.
-     */
-    private static void setupGameStart(Scanner scanner, SetupOrchestrator setupOrchestrator, String userInput, String message, Views views) {
-        while (userInput == null || !userInput.equals(SetUpMessages.EXIT)) {
-            setupOrchestrator.setInput(userInput);
-            message = getMessageForQuizTitle(setupOrchestrator, message);
-            System.out.println(message);
-
-            QuizCloser quizCloser = views.getQuizCloser(setupOrchestrator);
-            QuestionView questionView = views.getQuestionView();
-            /*
-             * Option 2: Closing quiz with Id
-             */
-            message = quizCloser.closeQuizWithId(message, scanner);
-
-            if (!message.equals(SetUpMessages.REQUEST_QUESTION)) {
-                userInput = scanner.nextLine();
-            }
-
-            while (message.equals(SetUpMessages.REQUEST_QUESTION)) {
-                message = questionView.getUserQuestionMessage(scanner, setupOrchestrator, message, views);
-
-                if (message.equals(SetUpMessages.SAVE_SUCCESS)) {
-                    message = SetUpMessages.START_MESSAGE;
-                    userInput = null;
-                }
-            }
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private static String getMessageForQuizTitle(SetupOrchestrator setupOrchestrator, String message) {
-        try {
-            message = setupOrchestrator.getMessageForQuizTitle();
-        } catch (RemoteException e) {
-            System.out.println(ExceptionMessages.SERVER_ERROR);
-        }
-        return message;
     }
 
     private boolean correct(String userInput) {

@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public interface QuestionView {
 
-
     /**
      * When the message equals Save question this method
      * is called. This will get the next message depending

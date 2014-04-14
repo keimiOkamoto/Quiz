@@ -35,4 +35,11 @@ public interface Views {
      * @return A QuestionView.
      */
     QuestionView getQuestionView();
+
+    /**
+     * Get instance of a GameSetupView.
+     *
+     * @return A a GameSetupView.
+     */
+    GameSetupView getGameSetupView();
 }
