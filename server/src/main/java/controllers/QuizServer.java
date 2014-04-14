@@ -132,4 +132,6 @@ public interface QuizServer extends Remote {
      * @return The winner of the quiz.
      */
     Player getWinnerBy(int quizId) throws RemoteException;
+
+    Player generatePlayer(String name, String country, int age) throws RemoteException;
 }

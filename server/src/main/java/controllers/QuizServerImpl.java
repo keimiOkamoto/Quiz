@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import factories.ItemsFactory;
 import factories.PlayerFactory;
 import models.*;
+import utils.UniqueNumberGeneratorUtils;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -94,5 +95,10 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     @Override
     public Player getWinnerBy(int quizId)throws RemoteException  {
         return scoreKeeper.getLeader(quizId);
+    }
+
+    @Override
+    public Player generatePlayer(String name, String country, int age) throws RemoteException {
+        return playerFactory.generatePlayer(name, country, age);
     }
 }
