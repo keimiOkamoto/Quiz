@@ -20,11 +20,6 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         this.quizOrchestrator = quizOrchestrator;
     }
 
-    @Override
-    public void setInput(String userAnswer) {
-        this.userInput = userAnswer;
-    }
-
     /*
      * Gets the messages
      */
@@ -118,9 +113,11 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
 
         } else {
             try {
-                close(userInput);
-                message = SetUpMessages.QUIZ_CLOSED_SUCCESS;
-
+                if (close(userInput)) {
+                    message = SetUpMessages.QUIZ_CLOSED_SUCCESS;
+                } else {
+                    message = SetUpMessages.ENTER_QUIZ_ID_REQUEST;
+                }
             } catch (RemoteException e) {
                 System.out.println(ExceptionMessages.SERVER_ERROR);
             } catch (IllegalQuizException e) {
@@ -132,6 +129,11 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
     }
 
     @Override
+    public void setInput(String userAnswer) {
+        this.userInput = userAnswer;
+    }
+
+    @Override
     public void setAnswer(String answer) {
         this.answer = answer;
     }
@@ -139,16 +141,6 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
     @Override
     public String getAnswer() {
         return answer;
-    }
-
-    private boolean correct(String userInput) {
-        boolean value = false;
-        if (userInput.trim().equals(SetUpMessages.YES)) {
-            value = true;
-        } else if (userInput.trim().equals(SetUpMessages.NO)) {
-            value = false;
-        }
-        return value;
     }
 
     /*
@@ -274,6 +266,16 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         return message;
     }
 
+    private boolean correct(String userInput) {
+        boolean value = false;
+        if (userInput.trim().equals(SetUpMessages.YES)) {
+            value = true;
+        } else if (userInput.trim().equals(SetUpMessages.NO)) {
+            value = false;
+        }
+        return value;
+    }
+
     /*
     * Quiz orchestrator
     */
@@ -288,9 +290,17 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         quizOrchestrator.addQuestion(userInput);
     }
 
-    private void close(String userInput) throws RemoteException, IllegalQuizException {
-        int id = Integer.parseInt(userInput);
-        quizOrchestrator.closeQuiz(id);
+    private boolean close(String userInput) throws RemoteException, IllegalQuizException {
+        int id;
+        boolean result = false;
+        try {
+            id = Integer.parseInt(userInput);
+            quizOrchestrator.closeQuiz(id);
+            result = true;
+        } catch (NumberFormatException e) {
+            System.out.println(ExceptionMessages.NO_NUMBER_ENTERED);
+        }
+        return result;
     }
 
     private void addAnswer(boolean yesOrNo) throws RemoteException, IllegalQuestionException, IllegalArgumentException {

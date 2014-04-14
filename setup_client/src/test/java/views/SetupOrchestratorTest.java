@@ -245,4 +245,33 @@ public class SetupOrchestratorTest {
         assertEquals(SetUpMessages.QUIZ_CLOSED_SUCCESS, actual);
     }
 
+    @Test
+    public void shouldDisplayAHelpfulMessageIfUserInputHasNoNumbersInTheString() throws RemoteException, IllegalQuizException {
+        doThrow(new NumberFormatException(ExceptionMessages.NO_NUMBER_ENTERED)).when(quizOrchestrator).closeQuiz(anyInt());
+
+        String userInput = "string with no numbers!";
+        setupOrchestrator.getMessageForCloseQuiz(userInput);
+
+        assertEquals(ExceptionMessages.NO_NUMBER_ENTERED + "\n", log.getLog());
+    }
+
+    @Test
+    public void shouldBeAbleToReturnEnterQuizIdMessageIfUserInputHasNoNumbersInTheString() throws RemoteException, IllegalQuizException {
+        String userInput = "string with no numbers!";
+        String actual = setupOrchestrator.getMessageForCloseQuiz(userInput);
+
+        assertEquals(SetUpMessages.ENTER_QUIZ_ID_REQUEST, actual);
+    }
+
+    @Test
+    public void shouldDisplayAHelpfulMessageIfQuizDoesNotExist() throws RemoteException, IllegalQuizException {
+        doThrow(new IllegalQuizException("Helpful message")).when(quizOrchestrator).closeQuiz(anyInt());
+
+        String userInput = "5";
+        setupOrchestrator.getMessageForCloseQuiz(userInput);
+
+        verify(quizOrchestrator).closeQuiz(anyInt());
+
+        assertEquals("Helpful message" + "\n", log.getLog());
+    }
 }
