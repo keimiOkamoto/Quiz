@@ -13,17 +13,18 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String userInput = null;
-        String message = null;
 
         Views views = new ViewsImpl();
 
         ServerLink serverLink = new ServerLinkImpl();
         Server server = new ServerImpl(serverLink);
-
         QuizPlayerOrchestrator quizPlayerOrchestrator = new QuizPlayerOrchestratorImpl(server);
+        QuizGameOrchestrator quizGameOrchestrator = new QuizGameOrchestratorImpl();
 
-        while(userInput == null && !userInput.equals("EXIT")) {
+        String userInput = null;
+        String message;
+
+        while(userInput == null || !userInput.equals("EXIT")) {
 
             List<Quiz> quizList = null;
             try {
@@ -35,6 +36,8 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
             QuizMenu quizMenu = new QuizMenuImpl(quizList);
             message = quizMenu.getQuizNumberMessage();
+
+            System.out.println(message);
             try {
                 quizMenu.printListOfQuizzes();
             } catch (RemoteException e) {
@@ -42,12 +45,17 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
             }
 
             if (message.equals(quizMenu.getQuizNumberMessage())) {
+                System.out.println("Yay");
                 userInput = scanner.nextLine();
-
-
+                message = quizGameOrchestrator.getQuiz();
             }
 
         }
 
+    }
+
+    @Override
+    public String getQuiz() {
+        return null;
     }
 }

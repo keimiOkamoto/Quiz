@@ -36,7 +36,7 @@ public interface QuizPlayerOrchestrator {
      * @param age The age of the player.
      * @throws IllegalArgumentException If the name or aga is null.
      */
-    void addPlayer(String name, String country, int age) throws IllegalArgumentException ;
+    void addPlayer(String name, String country, int age) throws IllegalArgumentException, RemoteException;
 
     /**
      * Sets the player as the winner if the player's
@@ -53,4 +53,5 @@ public interface QuizPlayerOrchestrator {
      * @return The winner. (Player)
      */
     Player getWinner(int quizId);
+
 }

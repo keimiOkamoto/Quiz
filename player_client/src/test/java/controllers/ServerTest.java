@@ -6,6 +6,8 @@ import models.Quiz;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.rmi.RemoteException;
+
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -45,7 +47,7 @@ public class ServerTest {
     }
 
     @Test
-    public void shouldBeAbleToCreateNewPlayer() {
+    public void shouldBeAbleToCreateNewPlayer() throws RemoteException {
         int age = 5;
         String name = "Superman";
         String country = "Krypton";

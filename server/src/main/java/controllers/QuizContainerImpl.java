@@ -1,24 +1,55 @@
 package controllers;
 
+import com.google.inject.Guice;
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import models.Quiz;
+import modules.QuizContainerModule;
+import utils.DiskWriter;
 
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.TreeMap;
 
 @Singleton
-public class QuizContainerImpl extends UnicastRemoteObject implements QuizContainer {
-    private TreeMap<Integer, Quiz> quizTreeMap = new TreeMap<>();
+public class QuizContainerImpl implements QuizContainer {
+    private TreeMap<Integer, Quiz> quizTreeMap;
     private ClosedQuizContainer closedQuizContainer;
+    DiskWriter diskWriter;
 
     @Inject
-    public QuizContainerImpl(ClosedQuizContainer closedQuizContainer) throws RemoteException {
-        this.closedQuizContainer = closedQuizContainer;
+    public QuizContainerImpl(ClosedQuizContainer closedQuizContainer, DiskWriter diskWriter) {
+        if (diskWriter.checkIfDataExists()) {
+            diskWriter.readDisk();
+            this.closedQuizContainer = diskWriter.getClosedQuizContainer();
+            this.quizTreeMap = diskWriter.getQuizTreeMap();
+        } else {
+            this.closedQuizContainer = closedQuizContainer;
+            this.quizTreeMap = new TreeMap<>();
+        }
+        this.diskWriter = diskWriter;
+        addShutdownHook();
+        
+    }
+
+    /**
+     * This method adds a shutdown hook
+     */
+    private void addShutdownHook() {
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                flush();
+            }
+        });
+    }
+
+    @Override
+    public void flush() {
+        diskWriter.writeToDisk(closedQuizContainer, quizTreeMap);
     }
 
     @Override
@@ -62,4 +93,5 @@ public class QuizContainerImpl extends UnicastRemoteObject implements QuizContai
         }
         return list;
     }
+
 }

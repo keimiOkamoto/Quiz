@@ -95,7 +95,7 @@ public class QuizPlayerOrchestratorImplTest {
     }
 
     @Test
-    public void shouldBeAbleToAddPlayer() {
+    public void shouldBeAbleToAddPlayer() throws RemoteException {
         String name = "KEI";
         String country = "London";
         int age = 27;
@@ -105,7 +105,7 @@ public class QuizPlayerOrchestratorImplTest {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionIfNoNameIsEntered() {
+    public void shouldThrowIllegalArgumentExceptionIfNoNameIsEntered() throws RemoteException {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage(ExceptionMessages.NO_NAME);
 
@@ -113,7 +113,7 @@ public class QuizPlayerOrchestratorImplTest {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionIfNoCountryIsEntered() {
+    public void shouldThrowIllegalArgumentExceptionIfNoCountryIsEntered() throws RemoteException {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage(ExceptionMessages.NO_COUNTRY);
 

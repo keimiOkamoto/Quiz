@@ -3,6 +3,7 @@ package controllers;
 import models.Quiz;
 import org.junit.Before;
 import org.junit.Test;
+import utils.DiskWriter;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -25,7 +26,8 @@ public class QuizContainerImplTest {
     public void buildUp() throws RemoteException {
         closedQuizContainer = mock(ClosedQuizContainer.class);
         quiz = mock(Quiz.class);
-        quizContainer = new QuizContainerImpl(closedQuizContainer);
+        DiskWriter diskWriter = mock(DiskWriter.class);
+        quizContainer = new QuizContainerImpl(closedQuizContainer, diskWriter);
     }
     
     @Test

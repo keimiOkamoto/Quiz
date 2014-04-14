@@ -10,6 +10,8 @@ import java.util.List;
  * A container class that contains and validates Quizzes.
  */
 public interface QuizContainer extends Remote {
+    void flush();
+
     /**
      * Checks if a quiz with the same title exists.
      *

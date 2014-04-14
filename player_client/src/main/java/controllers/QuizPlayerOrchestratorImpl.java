@@ -31,7 +31,7 @@ public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
     }
 
     @Override
-    public void addPlayer(String name, String country, int age) throws IllegalArgumentException {
+    public void addPlayer(String name, String country, int age) throws IllegalArgumentException, RemoteException {
         if (name == null) throw new IllegalArgumentException(ExceptionMessages.NO_NAME);
         if (country == null) throw new IllegalArgumentException(ExceptionMessages.NO_COUNTRY);
         server.createPlayer(name, country, age);
@@ -46,4 +46,5 @@ public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
     public Player getWinner(int quizId) {
         return server.getWinnerBy(quizId);
     }
+
 }

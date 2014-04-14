@@ -5,10 +5,10 @@ package controllers;
 import com.google.inject.Guice;
 import modules.QuizSeverModule;
 
-import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Scanner;
 
 public class ServerStart {
     /**
@@ -31,5 +31,9 @@ public class ServerStart {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+        System.exit(0);
     }
 }
