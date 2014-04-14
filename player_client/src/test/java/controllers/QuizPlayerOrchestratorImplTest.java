@@ -9,11 +9,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -43,7 +44,7 @@ public class QuizPlayerOrchestratorImplTest {
         arrayList.add(quiz);
 
         when(server.getQuizzes()).thenReturn(arrayList);
-        ArrayList<Quiz> actual = quizPlayerOrchestrator.getQuizzes();
+        List<Quiz> actual = quizPlayerOrchestrator.getQuizzes();
 
         assertEquals(arrayList, actual);
     }
@@ -77,7 +78,7 @@ public class QuizPlayerOrchestratorImplTest {
     }
 
     @Test
-    public void shouldBeAbleToSetThePlayerAsTheWinner() {
+    public void shouldBeAbleToSetThePlayerAsTheWinner() throws RemoteException {
         when(quiz.checkForHighScore(anyInt())).thenReturn(true);
         quizPlayerOrchestrator.setPlayerAsWinner(player, quiz);
 

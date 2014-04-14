@@ -1,10 +1,12 @@
 package controllers;
 
+import exceptions.IllegalGameException;
 import exceptions.IllegalQuizException;
 import models.Player;
 import models.Quiz;
 
-import java.util.ArrayList;
+import java.rmi.RemoteException;
+import java.util.List;
 
 public interface QuizPlayerOrchestrator {
 
@@ -14,7 +16,7 @@ public interface QuizPlayerOrchestrator {
      * @return A list of available quizzes.
      * @throws IllegalGameException Throws illegal games exception if no games exit.
      */
-    ArrayList<Quiz> getQuizzes() throws exceptions.IllegalGameException;
+    List<Quiz> getQuizzes() throws IllegalGameException;
 
     /**
      * Gets a requested quiz by ID from the server.
@@ -42,7 +44,7 @@ public interface QuizPlayerOrchestrator {
      *
      * @param player
      */
-    void setPlayerAsWinner(Player player, Quiz quiz);
+    void setPlayerAsWinner(Player player, Quiz quiz) throws RemoteException;
 
     /**
      * Getter for the winner player.

@@ -1,8 +1,6 @@
 package view;
 
-public class QuizGameOrchestrator {
+public interface QuizGameOrchestrator {
 
-    public static void main(String[] args) {
 
-    }
 }

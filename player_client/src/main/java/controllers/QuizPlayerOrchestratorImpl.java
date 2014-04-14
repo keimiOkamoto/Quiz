@@ -1,11 +1,14 @@
 package controllers;
 
 import constants.ExceptionMessages;
+import exceptions.IllegalGameException;
 import exceptions.IllegalQuizException;
 import models.Player;
 import models.Quiz;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
     private Server server;
@@ -14,9 +17,9 @@ public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
         this.server = server;
     }
 
-    public ArrayList<Quiz> getQuizzes() throws exceptions.IllegalGameException {
-        ArrayList<Quiz> result = (ArrayList<Quiz>) server.getQuizzes();
-        if (result == null) throw new exceptions.IllegalGameException(ExceptionMessages.NO_AVAILABLE_QUIZZES);
+    public List<Quiz> getQuizzes() throws IllegalGameException {
+        List<Quiz> result = server.getQuizzes();
+        if (result == null) throw new IllegalGameException(ExceptionMessages.NO_AVAILABLE_QUIZZES);
         return result;
     }
 
@@ -35,7 +38,7 @@ public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
     }
 
     @Override
-    public void setPlayerAsWinner(Player player, Quiz quiz) {
+    public void setPlayerAsWinner(Player player, Quiz quiz) throws RemoteException {
         if (quiz.checkForHighScore(quiz.getScore())) server.setPlayerAsWinner(player, quiz, quiz.getScore());
     }
 
