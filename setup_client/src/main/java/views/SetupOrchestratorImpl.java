@@ -149,6 +149,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ServerLink serverLink = new ServerLinkImpl();
+        Views views = new ViewsImpl();
         Server server = null;
         try {
             server = new ServerImpl(serverLink);
@@ -158,33 +159,38 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         QuizOrchestrator quizOrchestrator = new QuizOrchestratorImpl(server);
         SetupOrchestrator setupOrchestrator = new SetupOrchestratorImpl(quizOrchestrator);
 
-        String userInput = null;
         String message = "";
 
-        setupGameStart(scanner, setupOrchestrator, userInput, message);
+        setupGameStart(scanner, setupOrchestrator, null, message, views);
         System.exit(0);
     }
+
+
+
+
+
 
     /*
      * Event loop for setting up the quiz.
      */
-    private static void setupGameStart(Scanner scanner, SetupOrchestrator setupOrchestrator, String userInput, String message) {
+    private static void setupGameStart(Scanner scanner, SetupOrchestrator setupOrchestrator, String userInput, String message, Views views) {
         while (userInput == null || !userInput.equals(SetUpMessages.EXIT)) {
             setupOrchestrator.setInput(userInput);
             message = getMessageForQuizTitle(setupOrchestrator, message);
             System.out.println(message);
 
+            QuizCloser quizCloser = views.getQuizCloser(setupOrchestrator);
             /*
              * Option 2: Closing quiz with Id
              */
-            message = closeQuizWithId(message, scanner, setupOrchestrator);
+            message = quizCloser.closeQuizWithId(message, scanner);
 
             if (!message.equals(SetUpMessages.REQUEST_QUESTION)) {
                 userInput = scanner.nextLine();
             }
 
             while (message.equals(SetUpMessages.REQUEST_QUESTION)) {
-                message = getUserQuestionMessage(scanner, setupOrchestrator, message);
+                message = getUserQuestionMessage(scanner, setupOrchestrator, message, views);
 
                 if (message.equals(SetUpMessages.SAVE_SUCCESS)) {
                     message = SetUpMessages.START_MESSAGE;
@@ -199,15 +205,18 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
      * is called. This will get the next message depending
      * on the users input and choice.
      */
-    private static String getUserQuestionMessage(Scanner scanner, SetupOrchestrator setupOrchestrator, String message) {
+    private static String getUserQuestionMessage(Scanner scanner, SetupOrchestrator setupOrchestrator, String message, Views views) {
         String userInput = scanner.nextLine();
+
+        UserAnswerView userAnswerView = views.getUserAnswerView();
+        SaveQuizView saveQuizView = views.getSaveQuizView();
 
         if (userInput.equals(SetUpMessages.EXIT)) System.exit(0);
         message = getMessageForQuestion(setupOrchestrator, userInput, message);
         System.out.println(message);
 
         while (message.equals(SetUpMessages.REQUEST_ANSWER)) {
-            message = getUsersAnswer(scanner, setupOrchestrator);
+            message = userAnswerView.getUsersAnswer(scanner, setupOrchestrator);
         }
 
         while (message.equals(SetUpMessages.SAVE_OR_ADD_MORE_QUESTIONS)) {
@@ -216,57 +225,6 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         return message;
     }
 
-    /*
-     * This method takes in the user input for their
-     * decision to save the quiz or carry on adding
-     * questions. Returns the next message depending
-     * on the user input.
-     */
-    private static String getUserSaveMessage(Scanner scanner, SetupOrchestrator setupOrchestrator) {
-        String message;
-        String userInput = scanner.nextLine();
-        message = setupOrchestrator.getMessageForSave(userInput);
-        System.out.println(message);
-
-        return message;
-    }
-
-
-    /*
-     * When 'message' is set to REQUEST_ANSWER, this method
-     * will be called. Depending on the answer the
-     * message will change.
-     */
-    private static String getUsersAnswer(Scanner scanner, SetupOrchestrator setupOrchestrator) {
-        String message;
-        String userInput = scanner.nextLine();
-
-        if (userInput.equals(SetUpMessages.EXIT)) System.exit(0);
-        message = SetUpMessages.REQUEST_QUESTION;
-
-        message = getMessageForAnswer(setupOrchestrator, userInput, message);
-        System.out.println(message);
-
-        while (message.equals(SetUpMessages.CORRECT_OR_INCORRECT_ANSWER_REQUEST)) {
-            message = getAnswerValue(scanner, setupOrchestrator, message);
-        }
-        return message;
-    }
-
-    /*
-     * If 'message' is set to CORRECT_OR_INCORRECT
-     * this method will be called.
-     * Depending on useInput the 'message' will be
-     * altered.
-     */
-    private static String getAnswerValue(Scanner scanner, SetupOrchestrator setupOrchestrator, String message) {
-        String userInput = scanner.nextLine();
-        if (userInput.equals(SetUpMessages.EXIT)) System.exit(0);
-        message = getMessageForYesOrNo(setupOrchestrator, userInput, message);
-        System.out.println(message);
-
-        return message;
-    }
 
 
 
@@ -278,45 +236,6 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
 
 
 
-    /*
-      * Option 2, Start of logic.
-      */
-    private static String closeQuizWithId(String message, Scanner scanner, SetupOrchestrator setupOrchestrator) {
-        if (message.equals(SetUpMessages.ENTER_QUIZ_ID_REQUEST)) {
-
-            while (message.equals(SetUpMessages.ENTER_QUIZ_ID_REQUEST)) {
-                String userInput = scanner.nextLine();
-
-                message = getOptionTwo(setupOrchestrator, userInput);
-            }
-        }
-        return message;
-    }
-
-    /*
-     * Helper method fof closeQuizWithId.
-     */
-    private static String getOptionTwo(SetupOrchestrator setupOrchestrator, String userInput) {
-        String message;
-        if (userInput.equals(SetUpMessages.EXIT)) System.exit(0);
-        message = setupOrchestrator.getMessageForCloseQuiz(userInput);
-        System.out.println(message);
-
-        while (message.equals(SetUpMessages.QUIZ_CLOSED_SUCCESS)) {
-            message = getStartMessage();
-        }
-        return message;
-    }
-
-    /*
-    * Helper method fof closeQuizWithId.
-    */
-    private static String getStartMessage() {
-        String message;
-        message = SetUpMessages.START_MESSAGE;
-        System.out.println(message);
-        return message;
-    }
 
 
 
@@ -326,25 +245,10 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
 
 
 
-    private static String getMessageForYesOrNo(SetupOrchestrator setupOrchestrator, String userInput, String message) {
-        try {
-            message = setupOrchestrator.getMessageForYesOrNo(userInput);
-        } catch (IllegalQuestionException e) {
-            System.out.println(e.getMessage());
-        } catch (RemoteException e) {
-            System.out.println(ExceptionMessages.SERVER_ERROR);
-        }
-        return message;
-    }
 
-    private static String getMessageForAnswer(SetupOrchestrator setupOrchestrator, String userInput, String message) {
-        try {
-            message = setupOrchestrator.getMessageForAnswer(userInput);
-        } catch (RemoteException e) {
-            System.out.println(ExceptionMessages.SERVER_ERROR);
-        }
-        return message;
-    }
+
+
+
 
     private static String getMessageForQuestion(SetupOrchestrator setupOrchestrator, String userInput, String message) {
         try {
@@ -375,7 +279,8 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
     }
 
     /*
-    * Quiz orchestrator
+    * Quiz orchestrator,
+    * Helper for public methods.
     */
     private void createQuizTitle(String userAnswer) throws
             RemoteException, IllegalQuizException, IllegalArgumentException {
