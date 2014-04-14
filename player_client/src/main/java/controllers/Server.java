@@ -3,6 +3,7 @@ package controllers;
 import models.Player;
 import models.Quiz;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public interface Server {
      * @param country The country of a player.
      * @param age The age of the player.
      */
-    void createPlayer(String name, String country, int age);
+    void createPlayer(String name, String country, int age) throws RemoteException;
 
     /**
      * Getter for the winner of the a quiz.

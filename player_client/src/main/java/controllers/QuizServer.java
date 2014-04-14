@@ -4,6 +4,7 @@ import models.Player;
 import models.PlayerFactory;
 import models.Quiz;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,4 +59,15 @@ public interface QuizServer {
      * @param player A player of a quiz.
      */
     void setPlayerAsWinner(Player player, Quiz quiz);
+
+    /**
+     * Generates a Player.
+     *
+     * @param name The name of the player.
+     * @param country The country of the player.
+     * @param age The age of the player.
+     * @return A player with the above fields.
+     * @throws java.rmi.RemoteException If there is a problem with the server.
+     */
+    Player generatePlayer(String name, String country, int age) throws RemoteException;
 }

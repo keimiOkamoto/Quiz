@@ -133,5 +133,14 @@ public interface QuizServer extends Remote {
      */
     Player getWinnerBy(int quizId) throws RemoteException;
 
+    /**
+     * Generates a Player.
+     *
+     * @param name The name of the player.
+     * @param country The country of the player.
+     * @param age The age of the player.
+     * @return A player with the above fields.
+     * @throws RemoteException If there is a problem with the server.
+     */
     Player generatePlayer(String name, String country, int age) throws RemoteException;
 }

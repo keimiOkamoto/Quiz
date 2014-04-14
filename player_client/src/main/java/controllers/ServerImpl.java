@@ -4,15 +4,14 @@ import models.Player;
 import models.PlayerFactory;
 import models.Quiz;
 
+import java.rmi.RemoteException;
 import java.util.List;
 
 public class ServerImpl implements Server {
     private QuizServer quizServer;
-    private PlayerFactory playerFactory;
 
     public ServerImpl(ServerLink serverLink) {
         quizServer = serverLink.getQuizServer();
-        playerFactory = quizServer.getPlayerFactory();
     }
 
     @Override
@@ -26,8 +25,8 @@ public class ServerImpl implements Server {
     }
 
     @Override
-    public void createPlayer(String name, String country, int age) {
-        playerFactory.generatePlayer(name, country, age);
+    public void createPlayer(String name, String country, int age) throws RemoteException {
+        quizServer.generatePlayer(name, country, age);
     }
 
     @Override
