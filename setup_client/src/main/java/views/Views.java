@@ -28,4 +28,11 @@ public interface Views {
      * @return A SaveQuizView.
      */
     SaveQuizView getSaveQuizView();
+
+    /**
+     * Gets instance of a QuestionView.
+     *
+     * @return A QuestionView.
+     */
+    QuestionView getQuestionView();
 }
