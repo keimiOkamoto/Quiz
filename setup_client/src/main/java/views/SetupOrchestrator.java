@@ -6,7 +6,7 @@ import java.rmi.RemoteException;
 
 /**
  * This class orchestrates the setup of a quiz.
- *
+ * <p/>
  * Through out the comments when 'messages' are seen,
  * this means the messages that allow the event to
  * proceed.
@@ -35,7 +35,7 @@ public interface SetupOrchestrator {
      * If addQuestion(userInput) throws exceptions.
      * i.e If input is invalid.
      * current 'message' is unaltered.
-     *
+     * <p/>
      * If the input is valid the message is updated
      * and the can proceed.
      *
@@ -46,11 +46,21 @@ public interface SetupOrchestrator {
     String getMessageForQuestion(String userInput) throws RemoteException;
 
     /**
+     * Method that determines the next state of the 'message' variable.
+     * <p/>
+     * If null is entered, message remains in current state
+     * and requests an answer to be entered.
+     * <p/>
+     * If 'DONE' is entered, 'save or add more questions?'
+     * is returned.
+     * <p/>
+     * If anything ele is entered the answer is set and
+     * the message 'correct or incorrect answer?' is returned.
      *
      * @param userInput
-     * @return
-     * @throws RemoteException
-     * @throws IllegalArgumentException
+     * @return A message depending on the state.
+     * @throws RemoteException          If there is a problem with the server.
+     * @throws IllegalArgumentException If the answer already exists.
      */
     String getMessageForAnswer(String userInput) throws RemoteException, IllegalArgumentException;
 
@@ -68,11 +78,16 @@ public interface SetupOrchestrator {
     void setInput(String userAnswer);
 
     /**
-     * Setter for an Answer
+     * Setter for an Answer.
      *
-     * @param answer An anwer
+     * @param answer An answer.
      */
     void setAnswer(String answer);
 
+    /**
+     * Getter for answer.
+     *
+     * @return The answer set.
+     */
     String getAnswer();
 }

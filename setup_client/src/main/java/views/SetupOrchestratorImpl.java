@@ -184,6 +184,9 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
                     }
                 }
             }
+            /*
+             * End of option 2.
+             */
 
             if (!message.equals(SetUpMessages.REQUEST_QUESTION)) {
                 userInput = scanner.nextLine();
