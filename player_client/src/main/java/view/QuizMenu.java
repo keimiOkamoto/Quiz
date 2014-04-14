@@ -10,10 +10,7 @@ public interface QuizMenu {
     void printListOfQuizzes() throws RemoteException;
 
     /**
-     * Gets the users choice from the
-     * menue.
-     *
-     * @param scanner A user input
+     * Gets the message for the menu.
      */
-    void getUserQuizChoice(Scanner scanner);
+    String getQuizNumberMessage();
 }

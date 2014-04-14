@@ -4,7 +4,6 @@ import models.Quiz;
 
 import java.rmi.RemoteException;
 import java.util.List;
-import java.util.Scanner;
 
 public class QuizMenuImpl implements QuizMenu {
 
@@ -16,16 +15,15 @@ public class QuizMenuImpl implements QuizMenu {
 
     @Override
     public void printListOfQuizzes() throws RemoteException {
-        for (Quiz quiz : quizList) {
+        for (int x = 1; x <= quizList.size(); x++) {
+            Quiz quiz = quizList.get(x - 1);
+            System.out.print(x + ". ");
             System.out.println(quiz.getTitle());
         }
     }
 
     @Override
-    public void getUserQuizChoice(Scanner scanner) {
-        System.out.println("Please enter the quiz number you want to play!");
-
-        String input = scanner.nextLine();
-
+    public String getQuizNumberMessage() {
+        return "\t\t\t♬ ☆ ☆ ☆ Welcome to the Quiz Game! ☆ ☆ ☆ ♬\n❤ Please enter the quiz number you want to play! ❤ ";
     }
 }

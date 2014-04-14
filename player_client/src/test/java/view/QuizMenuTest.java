@@ -13,6 +13,7 @@ import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 public class QuizMenuTest {
@@ -37,15 +38,14 @@ public class QuizMenuTest {
     public void shouldBeAbleToSeeAListOfQuizzes() throws RemoteException {
         quizMenu.printListOfQuizzes();
 
-        assertEquals(quiz1.getTitle() + "\n" + quiz2.getTitle() + "\n", log.getLog());
+        assertEquals("1. " + quiz1.getTitle() + "\n" + "2. " + quiz2.getTitle() + "\n", log.getLog());
     }
 
     @Test
     public void shouldBeAbleToSeeMessageAndGetUserInput() {
-        Scanner scanner = mock(Scanner.class);
+        String actual = quizMenu.getQuizNumberMessage();
 
-        quizMenu.getUserQuizChoice(scanner);
-
-        assertEquals("Please enter the quiz number you want to play!\n",log.getLog());
+        assertEquals("\t\t\t♬ ☆ ☆ ☆ Welcome to the Quiz Game! ☆ ☆ ☆ ♬\n" +
+                "❤ Please enter the quiz number you want to play! ❤ ", actual);
     }
 }
