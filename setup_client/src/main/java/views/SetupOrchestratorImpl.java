@@ -25,6 +25,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
 
         } else if (userInput.trim().isEmpty()) {
             System.out.println(ExceptionMessages.INVALID_USER_INPUT + "\n");
+            message = SetUpMessages.START_MESSAGE;;
 
         } else if (userInput.equals(SetUpMessages.ONE)) {
             message = SetUpMessages.ENTER_QUIZ_TITLE;
@@ -39,6 +40,8 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
             } catch (IllegalQuizException | IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
+        } else {
+            System.out.println(ExceptionMessages.INVALID_USER_INPUT + "\n");
         }
         return message;
     }
