@@ -143,4 +143,6 @@ public interface QuizServer extends Remote {
      * @throws RemoteException If there is a problem with the server.
      */
     Player generatePlayer(String name, String country, int age) throws RemoteException;
+
+    void flush() throws RemoteException;
 }

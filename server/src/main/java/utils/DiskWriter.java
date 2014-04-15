@@ -37,6 +37,14 @@ public interface DiskWriter {
 
     TreeMap<Integer,Quiz> getQuizTreeMap();
 
+    int getUniqueNumberGenerator();
+
+    void writeIdToDisk(int id);
+
+    boolean checkIfIdDataExists();
+
+    void readDiskForIdFile();
+
 
     /**
      * Returns a MeetingContainer

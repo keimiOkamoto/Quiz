@@ -6,6 +6,8 @@ package utils;
  * was made.
  */
 public interface UniqueNumberGeneratorUtils {
+    void flush();
+
     /**
      * Method that gets a unique number;
      *

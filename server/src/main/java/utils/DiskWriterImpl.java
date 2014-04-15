@@ -14,8 +14,11 @@ import java.util.TreeMap;
 
 public class DiskWriterImpl implements DiskWriter {
     private static final String filename = "quiz.txt";
+    private static final String idFile = "id.txt";
+
     private ClosedQuizContainer closedQuizContainer;
     private TreeMap<Integer, Quiz> treeMap;
+    private Integer id;
 
     @Override
     public void writeToDisk(ClosedQuizContainer closedQuizContainer, TreeMap<Integer, Quiz> treeMap) {
@@ -64,4 +67,49 @@ public class DiskWriterImpl implements DiskWriter {
     public TreeMap<Integer, Quiz> getQuizTreeMap() {
         return treeMap;
     }
+
+    @Override
+    public int getUniqueNumberGenerator() {
+        return id;
+    }
+
+
+
+
+    @Override
+    public boolean checkIfIdDataExists() {
+        File file = new File(DiskWriterImpl.idFile);
+        return file.exists();
+    }
+
+    @Override
+    public void writeIdToDisk(int id) {
+        FileOutputStream fos;
+        ObjectOutputStream out;
+
+        try {
+            fos = new FileOutputStream(DiskWriterImpl.idFile);
+            out = new ObjectOutputStream(fos);
+            out.writeObject(id);
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void readDiskForIdFile() {
+        FileInputStream fis;
+        ObjectInputStream in;
+
+        try {
+            fis = new FileInputStream(DiskWriterImpl.filename);
+            in = new ObjectInputStream(fis);
+            id = (Integer) in.readObject();
+            in.close();
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

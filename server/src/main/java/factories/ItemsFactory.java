@@ -35,4 +35,6 @@ public interface ItemsFactory extends Remote {
      * @return Answer object
      */
     Answer generateAnswer(String answer, boolean answerType) throws RemoteException;
+
+    void flush() throws RemoteException;
 }

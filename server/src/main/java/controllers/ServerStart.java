@@ -16,7 +16,7 @@ public class ServerStart {
      *
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws RemoteException {
         QuizServer quizServer = Guice.createInjector(new QuizSeverModule()).getInstance(QuizServerImpl.class);
 
 //        if (System.getSecurityManager() == null) {
@@ -34,6 +34,7 @@ public class ServerStart {
 
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
+        quizServer.flush();
         System.exit(0);
     }
 }

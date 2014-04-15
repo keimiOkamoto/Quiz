@@ -31,4 +31,9 @@ public class ItemsFactoryImpl extends UnicastRemoteObject implements ItemsFactor
     public Answer generateAnswer(String answer, boolean answerType) throws RemoteException {
         return new AnswerImpl(answer, answerType);
     }
+
+    @Override
+    public void flush() throws RemoteException {
+        uniqueNumberGeneratorUtils.flush();
+    }
 }

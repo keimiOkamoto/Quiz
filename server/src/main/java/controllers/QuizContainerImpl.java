@@ -1,11 +1,10 @@
 package controllers;
 
-import com.google.inject.Guice;
+
 import com.google.inject.Inject;
-import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import models.Quiz;
-import modules.QuizContainerModule;
+
 import utils.DiskWriter;
 
 import java.rmi.RemoteException;
@@ -32,7 +31,6 @@ public class QuizContainerImpl implements QuizContainer {
         }
         this.diskWriter = diskWriter;
         addShutdownHook();
-        
     }
 
     /**

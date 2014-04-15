@@ -7,6 +7,7 @@ package utils;
 
 import org.junit.Test;
 import static junit.framework.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 public class UniqueNumberGeneratorUtilsTest {
 
@@ -16,7 +17,8 @@ public class UniqueNumberGeneratorUtilsTest {
      */
     @Test
     public void shouldBeAbleToGenerateUniqueNumber() {
-        UniqueNumberGeneratorUtils aUniqueNumberGeneratorUtils = new UniqueNumberGeneratorUtilsImpl();
+        DiskWriter diskWriter = mock(DiskWriter.class);
+        UniqueNumberGeneratorUtils aUniqueNumberGeneratorUtils = new UniqueNumberGeneratorUtilsImpl(diskWriter);
         int actual = aUniqueNumberGeneratorUtils.getUniqueNumber();
         int expected = 0;
 
