@@ -16,6 +16,7 @@ public class Start {
         ServerLink serverLink = new ServerLinkImpl();
         Views views = new ViewsImpl();
         Server server = null;
+
         try {
             server = new ServerImpl(serverLink);
         } catch (RemoteException | NotBoundException e) {

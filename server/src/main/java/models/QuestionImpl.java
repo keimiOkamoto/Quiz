@@ -19,7 +19,7 @@ public class QuestionImpl extends UnicastRemoteObject implements Question {
     }
 
     @Override
-    public boolean contains(String answer) throws RemoteException {
+    public boolean contains(String answer) {
         boolean result = false;
         for (Answer value : answerSet) {
             if (value.getAnswer().equals(answer)) {

@@ -47,5 +47,5 @@ public class GameSetupViewImpl implements GameSetupView {
             System.out.println(ExceptionMessages.SERVER_ERROR);
         }
         return message;
-    }
+    } //TODO
 }

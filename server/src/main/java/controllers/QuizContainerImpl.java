@@ -8,6 +8,7 @@ import models.Quiz;
 import utils.DiskWriter;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -51,7 +52,7 @@ public class QuizContainerImpl implements QuizContainer {
     }
 
     @Override
-    public boolean contains(String title) throws RemoteException {
+    public boolean contains(String title) {
         Collection<Quiz> quizCollection = quizTreeMap.values();
         boolean result = false;
         for (Quiz quiz : quizCollection) {
@@ -61,28 +62,32 @@ public class QuizContainerImpl implements QuizContainer {
     }
 
     @Override
-    public boolean contains(int id) throws RemoteException {
+    public boolean contains(int id) {
         return quizTreeMap.containsKey(id);
     }
 
     @Override
-    public void closeQuizWith(int id) throws RemoteException {
+    public void closeQuizWith(int id) {
         Quiz closedQuiz = quizTreeMap.remove(id);
         closedQuizContainer.add(closedQuiz);
     }
 
     @Override
-    public void save(Quiz quiz) throws RemoteException {
-        quizTreeMap.put(quiz.getId(), quiz);
+    public void save(Quiz quiz) {
+        try {
+            quizTreeMap.put(quiz.getId(), quiz);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public Quiz getQuizBy(int id) throws RemoteException {
+    public Quiz getQuizBy(int id) {
         return quizTreeMap.get(id);
     }
 
     @Override
-    public List<Quiz> getQuizzes() throws RemoteException {
+    public List<Quiz> getQuizzes() {
         Collection<Quiz> collection = quizTreeMap.values();
         List<Quiz> list = new ArrayList<>();
 

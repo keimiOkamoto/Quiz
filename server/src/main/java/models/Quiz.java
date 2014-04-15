@@ -6,11 +6,11 @@ import java.util.Set;
 
 public interface Quiz extends Remote {
     /**
-     * Adds a uestion to the quiz.
+     * Adds a question to the quiz.
      *
      * @param question a question
      */
-    void addQuestion(Question question) throws RemoteException;
+    void addQuestion(Question question) ;
 
     /**
      * Checks if the question is contains.
@@ -18,21 +18,21 @@ public interface Quiz extends Remote {
      * @param question A question
      * @return false if the question already exists
      */
-    boolean contains(String question) throws RemoteException;
+    boolean contains(String question) ;
 
     /**
      * Checks if the quiz contains and questions.
      *
      * @return false if it contains one or more questions.
      */
-    boolean isEmpty() throws RemoteException;
+    boolean isEmpty() ;
 
     /**
      * Getter for the title of a quiz.
      *
      * @return Title of a quiz
      */
-    String getTitle() throws RemoteException;
+    String getTitle() ;
 
     /**
      * Getter for the quiz's ID.
@@ -46,7 +46,7 @@ public interface Quiz extends Remote {
      *
      * @return A set containing all questions in a quiz.
      */
-    Set<Question> getQuestions() throws RemoteException;
+    Set<Question> getQuestions();
 
     /* player client methods
      */
@@ -56,11 +56,11 @@ public interface Quiz extends Remote {
      *
      * @return A Score for a player.
      */
-    int getScore() throws RemoteException;
+    int getScore();
 
     /**
      * Increments the score if a correct
      * answer is entered.
      */
-    void incrementScore() throws RemoteException;
+    void incrementScore();
 }

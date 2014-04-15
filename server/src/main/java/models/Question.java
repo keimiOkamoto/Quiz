@@ -11,7 +11,7 @@ public interface Question extends Remote {
      *
      * @param answer an answer to the question.
      */
-    void add(Answer answer) throws RemoteException;
+    void add(Answer answer);
 
     /**
      * Checks for duplicate answer
@@ -19,19 +19,19 @@ public interface Question extends Remote {
      * @param answer an answer for a question
      * @return false if invalid
      */
-    boolean contains(String answer) throws RemoteException;
+    boolean contains(String answer);
 
     /**
      * Getter for question.
      *
      * @return A question String.
      */
-    String getQuestion() throws RemoteException;
+    String getQuestion();
 
     /**
      * Getter for a set of answers belonging to the quiz.
      *
      * @return A set of answers.
      */
-    Set<Answer> getAnswers() throws RemoteException;
+    Set<Answer> getAnswers();
 }

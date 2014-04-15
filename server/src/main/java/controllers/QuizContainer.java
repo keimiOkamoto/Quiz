@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * A container class that contains and validates Quizzes.
  */
-public interface QuizContainer extends Remote {
+public interface QuizContainer {
     void flush();
 
     /**
@@ -18,7 +18,7 @@ public interface QuizContainer extends Remote {
      * @param title A title of a Quiz.
      * @return False if the same name exists.
      */
-    boolean contains(String title) throws RemoteException;
+    boolean contains(String title);
 
     /**
      * Checks if a quiz with the specified ID exists.
@@ -26,21 +26,21 @@ public interface QuizContainer extends Remote {
      * @param id ID of a quiz.
      * @return False if the quiz does not exist.
      */
-    boolean contains(int id) throws RemoteException;
+    boolean contains(int id);
 
     /**
      * Finds the Quiz with the corresponding ID.
      *
      * @param id ID of a quiz.
      */
-    void closeQuizWith(int id) throws RemoteException;
+    void closeQuizWith(int id);
 
     /**
      * Saves a quiz to a container.
      *
      * @param quiz A quiz object.
      */
-    void save(Quiz quiz) throws RemoteException;
+    void save(Quiz quiz);
 
     /**
      * Getter for a quiz by ID.
@@ -48,12 +48,12 @@ public interface QuizContainer extends Remote {
      * @param id ID of a quiz.
      * @return A Quiz object.
      */
-    Quiz getQuizBy(int id) throws RemoteException;
+    Quiz getQuizBy(int id);
 
     /**
      * Getter for a list of quizzes
      *
      * @return A list of available quizzes.
      */
-    List<Quiz> getQuizzes() throws RemoteException;
+    List<Quiz> getQuizzes();
 }

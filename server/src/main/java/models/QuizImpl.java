@@ -24,7 +24,7 @@ public class QuizImpl extends UnicastRemoteObject implements Quiz {
     }
 
     @Override
-    public boolean contains(String question) throws RemoteException {
+    public boolean contains(String question) {
         boolean result = false;
         for (Question value : questionSet) {
             if (value.getQuestion().equals(question)) result = true;

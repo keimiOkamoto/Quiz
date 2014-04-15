@@ -8,27 +8,38 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
 @Singleton
-public class ScoreKeeperImpl extends UnicastRemoteObject implements ScoreKeeper {
+public class ScoreKeeperImpl implements ScoreKeeper {
     private Map<Integer, List<Remote>> scoreBoardMap = new HashMap<>();
 
     protected ScoreKeeperImpl() throws RemoteException {
     }
 
     @Override
-    public void addHighScore(Quiz quiz, Player player) throws RemoteException {
+    public void addHighScore(Quiz quiz, Player player) {
         if (!highScoreContains(quiz) || scoreIsHighest(quiz)) {
             setLeader(quiz, player);
         }
     }
 
     @Override
-    public boolean highScoreContains(Quiz quiz) throws RemoteException {
-        return scoreBoardMap.containsKey(quiz.getId());
+    public boolean highScoreContains(Quiz quiz) {
+        boolean result = false;
+        try {
+            result = scoreBoardMap.containsKey(quiz.getId());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
-    public int getHighScore(Quiz quiz) throws RemoteException {
-        List<Remote> list = scoreBoardMap.get(quiz.getId());
+    public int getHighScore(Quiz quiz) {
+        List<Remote> list = null;
+        try {
+            list = scoreBoardMap.get(quiz.getId());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         return ((Quiz) list.get(0)).getScore();
     }
 
@@ -39,16 +50,25 @@ public class ScoreKeeperImpl extends UnicastRemoteObject implements ScoreKeeper 
     }
 
     @Override
-    public void setLeader(Quiz quiz, Player player) throws RemoteException {
+    public void setLeader(Quiz quiz, Player player) {
         List<Remote> list = Arrays.asList(quiz, player);
-        scoreBoardMap.put(quiz.getId(),list);
+        try {
+            scoreBoardMap.put(quiz.getId(),list);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public boolean scoreIsHighest(Quiz quiz) throws RemoteException {
+    public boolean scoreIsHighest(Quiz quiz) {
         boolean result = false;
         if (highScoreContains(quiz)) {
-            List<Remote> list = scoreBoardMap.get(quiz.getId());
+            List<Remote> list = null;
+            try {
+                list = scoreBoardMap.get(quiz.getId());
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
             int currentHighest = ((Quiz) list.get(0)).getScore();
             if (quiz.getScore() >= currentHighest) {
                 result = true;

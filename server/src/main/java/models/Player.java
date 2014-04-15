@@ -10,26 +10,26 @@ public interface Player extends Remote {
      *
      * @return The ID of the player.
      */
-    int getId() throws RemoteException;
+    int getId();
 
     /**
      * Getter for a players name.
      *
      * @return The name of the player.
      */
-    String getName() throws RemoteException;
+    String getName();
 
     /**
      * Getter for a players country.
      *
      * @return The country of the player.
      */
-    String getCountry() throws RemoteException;
+    String getCountry();
 
     /**
      * Getter for a players age.
      *
      * @return The age of the player.
      */
-    int getAge() throws RemoteException;
+    int getAge();
 }

@@ -10,12 +10,12 @@ public interface Answer extends Remote{
      *
      * @return A answer String.
      */
-    String getAnswer() throws RemoteException;
+    String getAnswer();
 
     /**
      * Getter for a Answers' type.
      *
      * @return true is the answer is the correct one.
      */
-    boolean getAnswerType() throws RemoteException;
+    boolean getAnswerType();
 }
