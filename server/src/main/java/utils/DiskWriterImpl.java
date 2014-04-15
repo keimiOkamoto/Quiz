@@ -69,11 +69,9 @@ public class DiskWriterImpl implements DiskWriter {
     }
 
     @Override
-    public int getUniqueNumberGenerator() {
+    public Integer getUniqueNumber() {
         return id;
     }
-
-
 
 
     @Override
@@ -83,7 +81,7 @@ public class DiskWriterImpl implements DiskWriter {
     }
 
     @Override
-    public void writeIdToDisk(int id) {
+    public void writeIdToDisk(Integer id) {
         FileOutputStream fos;
         ObjectOutputStream out;
 
@@ -103,9 +101,10 @@ public class DiskWriterImpl implements DiskWriter {
         ObjectInputStream in;
 
         try {
-            fis = new FileInputStream(DiskWriterImpl.filename);
+            fis = new FileInputStream(DiskWriterImpl.idFile);
             in = new ObjectInputStream(fis);
             id = (Integer) in.readObject();
+            System.out.println(id);
             in.close();
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();

@@ -3,6 +3,7 @@ package controllers;
  * This class starts the server.
  */
 import com.google.inject.Guice;
+import com.google.inject.Injector;
 import modules.QuizSeverModule;
 
 import java.rmi.RemoteException;
@@ -17,7 +18,8 @@ public class ServerStart {
      * @param args
      */
     public static void main(String[] args) throws RemoteException {
-        QuizServer quizServer = Guice.createInjector(new QuizSeverModule()).getInstance(QuizServerImpl.class);
+        Injector injector = Guice.createInjector(new QuizSeverModule());
+        QuizServer quizServer = injector.getInstance(QuizServerImpl.class);
 
 //        if (System.getSecurityManager() == null) {
 //            System.setSecurityManager(new RMISecurityManager());

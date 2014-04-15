@@ -37,9 +37,9 @@ public interface DiskWriter {
 
     TreeMap<Integer,Quiz> getQuizTreeMap();
 
-    int getUniqueNumberGenerator();
+    Integer getUniqueNumber();
 
-    void writeIdToDisk(int id);
+    void writeIdToDisk(Integer id);
 
     boolean checkIfIdDataExists();
 
