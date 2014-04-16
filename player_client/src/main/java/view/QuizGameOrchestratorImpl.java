@@ -11,6 +11,11 @@ import java.util.Scanner;
 
 public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
+    private static QuizPlayerOrchestrator quizPlayerOrchestrator;
+    private static QuizGameOrchestrator quizGameOrchestrator;
+    private static String message;
+    private static QuizMenu quizMenu;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -18,11 +23,10 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
         ServerLink serverLink = new ServerLinkImpl();
         Server server = new ServerImpl(serverLink);
-        QuizPlayerOrchestrator quizPlayerOrchestrator = new QuizPlayerOrchestratorImpl(server);
-        QuizGameOrchestrator quizGameOrchestrator = new QuizGameOrchestratorImpl();
+        quizPlayerOrchestrator = new QuizPlayerOrchestratorImpl(server);
+        quizGameOrchestrator = new QuizGameOrchestratorImpl();
 
         String userInput = null;
-        String message;
 
         while(userInput == null || !userInput.equals("EXIT")) {
 
@@ -33,8 +37,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
                 System.out.println(e.getMessage());
             }
 
-
-            QuizMenu quizMenu = new QuizMenuImpl(quizList);
+            quizMenu = new QuizMenuImpl(quizList);
             message = quizMenu.getQuizNumberMessage();
 
             System.out.println(message);
@@ -45,17 +48,34 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
             }
 
             if (message.equals(quizMenu.getQuizNumberMessage())) {
-                System.out.println("Yay");
                 userInput = scanner.nextLine();
-                message = quizGameOrchestrator.getQuiz();
+                message = quizGameOrchestrator.checkForValidNumber(userInput);
             }
-
         }
-
     }
 
     @Override
+    public String checkForValidNumber(String userInput) {
+        int index = 0;
+        try {
+            index = Integer.parseInt(userInput);
+            quizGameOrchestrator.setQuizNumber(index);
+            message = quizGameOrchestrator.getValidNumberMessage();
+
+        } catch (NumberFormatException e) {
+            System.out.println(ExceptionMessages.NO_NUMBER_ENTERED);
+            message = quizMenu.getQuizNumberMessage();
+        }
+        return message;
+    }
+
+    @Override
+    public String getValidNumberMessage() {
+        return "Number valid.";
+    }
+
     public String getQuiz() {
+
         return null;
     }
 }

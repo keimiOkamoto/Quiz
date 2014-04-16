@@ -6,6 +6,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import modules.QuizSeverModule;
 
+import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -21,9 +22,10 @@ public class ServerStart {
         Injector injector = Guice.createInjector(new QuizSeverModule());
         QuizServer quizServer = injector.getInstance(QuizServerImpl.class);
 
-//        if (System.getSecurityManager() == null) {
-//            System.setSecurityManager(new RMISecurityManager());
-//        }
+        System.setProperty("java.security.policy", "server/security.policy");
+        if (System.getSecurityManager() == null) {
+            System.setSecurityManager(new RMISecurityManager());
+        }
 
         try {
             Registry registry = LocateRegistry.createRegistry(1099);

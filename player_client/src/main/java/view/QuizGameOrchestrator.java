@@ -8,4 +8,10 @@ public interface QuizGameOrchestrator {
      * @return the message that will lead to the next event.
      */
     String getQuiz();
+
+    String checkForValidNumber(String userInput);
+
+    String getValidNumberMessage();
+
+    void setQuizNumber(int numberIndex);
 }
