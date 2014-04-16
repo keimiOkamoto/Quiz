@@ -6,7 +6,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class ServerImpl extends UnicastRemoteObject implements Server {
+public class ServerImpl implements Server {
     private QuizServer quizServer;
 
     public ServerImpl(ServerLink serverLink) throws RemoteException, NotBoundException {

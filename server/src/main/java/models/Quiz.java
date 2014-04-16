@@ -10,7 +10,7 @@ public interface Quiz extends Remote {
      *
      * @param question a question
      */
-    void addQuestion(Question question) ;
+    void addQuestion(Question question) throws RemoteException;
 
     /**
      * Checks if the question is contains.
@@ -18,21 +18,21 @@ public interface Quiz extends Remote {
      * @param question A question
      * @return false if the question already exists
      */
-    boolean contains(String question) ;
+    boolean contains(String question) throws RemoteException;
 
     /**
      * Checks if the quiz contains and questions.
      *
      * @return false if it contains one or more questions.
      */
-    boolean isEmpty() ;
+    boolean isEmpty() throws RemoteException;
 
     /**
      * Getter for the title of a quiz.
      *
      * @return Title of a quiz
      */
-    String getTitle() ;
+    String getTitle() throws RemoteException;
 
     /**
      * Getter for the quiz's ID.
@@ -46,7 +46,7 @@ public interface Quiz extends Remote {
      *
      * @return A set containing all questions in a quiz.
      */
-    Set<Question> getQuestions();
+    Set<Question> getQuestions() throws RemoteException;
 
     /* player client methods
      */
@@ -56,11 +56,11 @@ public interface Quiz extends Remote {
      *
      * @return A Score for a player.
      */
-    int getScore();
+    int getScore() throws RemoteException;
 
     /**
      * Increments the score if a correct
      * answer is entered.
      */
-    void incrementScore();
+    void incrementScore() throws RemoteException;
 }

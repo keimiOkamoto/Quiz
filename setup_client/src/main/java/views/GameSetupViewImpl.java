@@ -44,8 +44,9 @@ public class GameSetupViewImpl implements GameSetupView {
         try {
             message = setupOrchestrator.getMessageForQuizTitle();
         } catch (RemoteException e) {
+            e.printStackTrace();
             System.out.println(ExceptionMessages.SERVER_ERROR);
         }
         return message;
-    } //TODO
+    }
 }

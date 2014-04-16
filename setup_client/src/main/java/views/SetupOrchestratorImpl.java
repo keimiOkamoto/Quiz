@@ -39,6 +39,9 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
                 message = SetUpMessages.REQUEST_QUESTION;
             } catch (IllegalQuizException | IllegalArgumentException e) {
                 System.out.println(e.getMessage());
+            } catch (RemoteException e) {
+                System.out.println("poop");
+                e.printStackTrace();
             }
         } else {
             System.out.println(ExceptionMessages.INVALID_USER_INPUT + "\n");

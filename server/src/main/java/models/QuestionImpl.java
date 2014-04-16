@@ -14,12 +14,12 @@ public class QuestionImpl extends UnicastRemoteObject implements Question {
     }
 
     @Override
-    public void add(Answer answer) {
+    public void add(Answer answer) throws RemoteException {
         answerSet.add(answer);
     }
 
     @Override
-    public boolean contains(String answer) {
+    public boolean contains(String answer) throws RemoteException {
         boolean result = false;
         for (Answer value : answerSet) {
             if (value.getAnswer().equals(answer)) {
@@ -30,12 +30,12 @@ public class QuestionImpl extends UnicastRemoteObject implements Question {
     }
 
     @Override
-    public String getQuestion() {
+    public String getQuestion() throws RemoteException {
         return question;
     }
 
     @Override
-    public Set<Answer> getAnswers() {
+    public Set<Answer> getAnswers() throws RemoteException{
         return answerSet;
     }
 }

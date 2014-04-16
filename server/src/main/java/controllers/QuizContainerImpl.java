@@ -56,7 +56,11 @@ public class QuizContainerImpl implements QuizContainer {
         Collection<Quiz> quizCollection = quizTreeMap.values();
         boolean result = false;
         for (Quiz quiz : quizCollection) {
-            if (quiz.getTitle().equals(title)) result = true;
+            try {
+                if (quiz.getTitle().equals(title)) result = true;
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
         return result;
     }

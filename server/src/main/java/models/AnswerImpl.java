@@ -13,12 +13,12 @@ public class AnswerImpl extends UnicastRemoteObject implements Answer {
     }
 
     @Override
-    public String getAnswer() {
+    public String getAnswer() throws RemoteException{
         return answerStr;
     }
 
     @Override
-    public boolean getAnswerType() {
+    public boolean getAnswerType() throws RemoteException{
         return answerType;
     }
 }

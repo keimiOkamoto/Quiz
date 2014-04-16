@@ -18,22 +18,22 @@ public class PlayerImpl extends UnicastRemoteObject implements Player {
     }
 
     @Override
-    public int getId() {
+    public int getId() throws RemoteException {
         return id;
     }
 
     @Override
-    public String getName() {
+    public String getName() throws RemoteException {
         return name;
     }
 
     @Override
-    public String getCountry() {
+    public String getCountry() throws RemoteException {
         return country;
     }
 
     @Override
-    public int getAge() {
+    public int getAge() throws RemoteException {
         return age;
     }
 }

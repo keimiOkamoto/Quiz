@@ -11,7 +11,7 @@ import java.rmi.RemoteException;
  * This class is the connection between the setup client and the
  * server.
  */
-public interface Server extends Remote{
+public interface Server {
     /**
      * creates a quiz.
      *

@@ -19,12 +19,12 @@ public class QuizImpl extends UnicastRemoteObject implements Quiz {
     }
 
     @Override
-    public void addQuestion(Question question) {
+    public void addQuestion(Question question) throws RemoteException {
         questionSet.add(question);
     }
 
     @Override
-    public boolean contains(String question) {
+    public boolean contains(String question) throws RemoteException {
         boolean result = false;
         for (Question value : questionSet) {
             if (value.getQuestion().equals(question)) result = true;
@@ -33,32 +33,32 @@ public class QuizImpl extends UnicastRemoteObject implements Quiz {
     }
 
     @Override
-    public boolean isEmpty() {
+    public boolean isEmpty() throws RemoteException {
         return questionSet.isEmpty();
     }
 
     @Override
-    public String getTitle() {
+    public String getTitle() throws RemoteException {
         return title;
     }
 
     @Override
-    public int getId() {
+    public int getId() throws RemoteException {
         return id;
     }
 
     @Override
-    public Set<Question> getQuestions() {
+    public Set<Question> getQuestions() throws RemoteException {
         return questionSet;
     }
 
     @Override
-    public int getScore() {
+    public int getScore() throws RemoteException {
         return score;
     }
 
     @Override
-    public void incrementScore() {
+    public void incrementScore() throws RemoteException {
         score++;
     }
 }

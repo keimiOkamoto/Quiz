@@ -35,12 +35,18 @@ public class ScoreKeeperImpl implements ScoreKeeper {
     @Override
     public int getHighScore(Quiz quiz) {
         List<Remote> list = null;
+        int score = 0;
         try {
             list = scoreBoardMap.get(quiz.getId());
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        return ((Quiz) list.get(0)).getScore();
+        try {
+            score = ((Quiz) list.get(0)).getScore();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return score;
     }
 
     @Override
@@ -69,9 +75,18 @@ public class ScoreKeeperImpl implements ScoreKeeper {
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
-            int currentHighest = ((Quiz) list.get(0)).getScore();
-            if (quiz.getScore() >= currentHighest) {
-                result = true;
+            int currentHighest = 0;
+            try {
+                currentHighest = ((Quiz) list.get(0)).getScore();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (quiz.getScore() >= currentHighest) {
+                    result = true;
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
             }
         }
         return result;

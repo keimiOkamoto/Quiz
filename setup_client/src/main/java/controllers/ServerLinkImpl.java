@@ -1,10 +1,13 @@
 package controllers;
 
+import com.google.inject.Singleton;
+
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+@Singleton
 public class ServerLinkImpl implements ServerLink {
 
     private Registry registry;
