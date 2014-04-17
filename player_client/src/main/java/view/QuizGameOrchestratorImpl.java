@@ -4,6 +4,7 @@ import constants.ExceptionMessages;
 import controllers.*;
 import exceptions.IllegalGameException;
 import models.Answer;
+import models.Player;
 import models.Question;
 import models.Quiz;
 
@@ -19,6 +20,9 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     private static String message;
     private static QuizMenu quizMenu;
     private int quizIndex;
+    private Answer[] answers;
+    private Player player;
+    private static Quiz quiz;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -33,6 +37,22 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
         String userInput = null;
 
         while (userInput == null || !userInput.equals("EXIT")) {
+
+            System.out.println("Please enter your name!");
+            String name = scanner.nextLine();
+
+            System.out.println("Please enter your country!");
+            String country = scanner.nextLine();
+
+            System.out.println("Please enter your age!");
+            String age = scanner.nextLine();
+            int age1 = Integer.parseInt(age);
+
+            try {
+                quizPlayerOrchestrator.addPlayer(name, country, age1);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
 
             List<Quiz> quizList = null;
             try {
@@ -57,13 +77,14 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
             }
 
             while (message.equals(quizGameOrchestrator.getValidNumberMessage())) {
-                Quiz quiz = quizGameOrchestrator.getQuiz();
+                quiz = quizGameOrchestrator.getQuiz();
                 message = quizGameOrchestrator.play(quiz);
             }
 
             while (message.equals(quizGameOrchestrator.getUserAnswerMessage())) {
+                System.out.println("poo");
                 userInput = scanner.nextLine();
-                quizGameOrchestrator.checkForValidInputForAnswer();
+                quizGameOrchestrator.checkForValidInputForAnswer(userInput);
 
             }
         }
@@ -113,7 +134,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
                 System.out.println("QUESTION:" + question.getQuestion());
                 Set<Answer> answerSet = question.getAnswers();
 
-                Answer[] answers = answerSet.toArray(new Answer[answerSet.size()]);
+                answers = answerSet.toArray(new Answer[answerSet.size()]);
 
                 for (int y = 0; y < answers.length; y++) {
                     System.out.println((y + 1) + ": " + answers[y].getAnswer());
@@ -127,7 +148,18 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     }
 
     @Override
-    public void checkForValidInputForAnswer() {
+    public void checkForValidInputForAnswer(String userInput) {
+        int answerIndex = Integer.parseInt(userInput);
+        try {
+             if (answers[answerIndex - 1].getAnswerType()) {
+                quiz.incrementScore();
+                System.out.println("score is " + quiz.getScore());
+             } else {
+
+             }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
 
     }
 

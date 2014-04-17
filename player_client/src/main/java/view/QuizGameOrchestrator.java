@@ -23,5 +23,5 @@ public interface QuizGameOrchestrator {
 
     String play(Quiz quiz);
 
-    void checkForValidInputForAnswer();
+    void checkForValidInputForAnswer(String userInput);
 }
