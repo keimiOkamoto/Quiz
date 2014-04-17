@@ -25,10 +25,10 @@ public interface ScoreKeeper {
      * Getter for the highest score corresponding
      * to the quiz.
      *
-     * @param quiz A quiz.
+     * @param player A quiz.
      * @return The highest score for that quiz.
      */
-    int getHighScore(Quiz quiz);
+    int getHighScore(Player player);
 
     /**
      * Getter for the leader of a quiz.
@@ -54,5 +54,5 @@ public interface ScoreKeeper {
      * @param quiz A quiz with the score.
      * @return false if the score is not the highest.
      */
-    public boolean scoreIsHighest(Quiz quiz);
+    boolean scoreIsHighest(Player player, Quiz quiz);
 }

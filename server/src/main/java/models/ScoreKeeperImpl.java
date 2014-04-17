@@ -16,7 +16,7 @@ public class ScoreKeeperImpl implements ScoreKeeper {
 
     @Override
     public void addHighScore(Quiz quiz, Player player) {
-        if (!highScoreContains(quiz) || scoreIsHighest(quiz)) {
+        if (!highScoreContains(quiz) || scoreIsHighest(player, quiz)) {
             setLeader(quiz, player);
         }
     }
@@ -33,16 +33,16 @@ public class ScoreKeeperImpl implements ScoreKeeper {
     }
 
     @Override
-    public int getHighScore(Quiz quiz) {
+    public int getHighScore(Player player) {
         List<Remote> list = null;
         int score = 0;
         try {
-            list = scoreBoardMap.get(quiz.getId());
+            list = scoreBoardMap.get(player.getId());
         } catch (RemoteException e) {
             e.printStackTrace();
         }
         try {
-            score = ((Quiz) list.get(0)).getScore();
+            score = ((Player) list.get(0)).getScore();
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -66,23 +66,23 @@ public class ScoreKeeperImpl implements ScoreKeeper {
     }
 
     @Override
-    public boolean scoreIsHighest(Quiz quiz) {
+    public boolean scoreIsHighest(Player player, Quiz quiz) {
         boolean result = false;
         if (highScoreContains(quiz)) {
             List<Remote> list = null;
             try {
-                list = scoreBoardMap.get(quiz.getId());
+                list = scoreBoardMap.get(player.getId());
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
             int currentHighest = 0;
             try {
-                currentHighest = ((Quiz) list.get(0)).getScore();
+                currentHighest = ((Player) list.get(0)).getScore();
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
             try {
-                if (quiz.getScore() >= currentHighest) {
+                if (player.getScore() >= currentHighest) {
                     result = true;
                 }
             } catch (RemoteException e) {

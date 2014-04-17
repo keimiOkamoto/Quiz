@@ -78,8 +78,8 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     }
 
     @Override
-    public boolean checkForHighScore(Quiz quiz)throws RemoteException {
-        return scoreKeeper.scoreIsHighest(quiz);
+    public boolean checkForHighScore(Quiz quiz, Player player)throws RemoteException {
+        return scoreKeeper.scoreIsHighest(player, quiz);
     }
 
     @Override

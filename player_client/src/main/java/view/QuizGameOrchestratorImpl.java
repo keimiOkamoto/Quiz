@@ -21,11 +21,11 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     private static QuizMenu quizMenu;
     private int quizIndex;
     private Answer[] answers;
-    private Player player;
     private static Quiz quiz;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        Player player = null;
 
         Views views = new ViewsImpl();
 
@@ -48,8 +48,9 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
             String age = scanner.nextLine();
             int age1 = Integer.parseInt(age);
 
+
             try {
-                quizPlayerOrchestrator.addPlayer(name, country, age1);
+                player = quizPlayerOrchestrator.addPlayer(name, country, age1);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -78,7 +79,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
             while (message.equals(quizGameOrchestrator.getValidNumberMessage())) {
                 quiz = quizGameOrchestrator.getQuiz();
-                message = quizGameOrchestrator.play(quiz, scanner);
+                message = quizGameOrchestrator.play(quiz, scanner, player);
 
                 while (message.equals(quizGameOrchestrator.getUserAnswerMessage())) {
                     userInput = scanner.nextLine();
@@ -119,7 +120,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     }
 
     @Override
-    public String play(Quiz quiz, Scanner scanner) {
+    public String play(Quiz quiz, Scanner scanner, Player player) {
         Set<Question> questionSet = null;
         try {
             questionSet = quiz.getQuestions();
@@ -141,8 +142,8 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
                 int answerIndex = Integer.parseInt(userInput);
 
                 if (answers[answerIndex - 1].getAnswerType()) {
-                    quiz.incrementScore();
-                    System.out.println("score is " + quiz.getScore());
+                    player.incrementScore();
+                    System.out.println("score is " + player.getScore());
                 }
 
                 message = getUserAnswerMessage();

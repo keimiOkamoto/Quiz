@@ -107,13 +107,13 @@ public class QuizServerTest {
 
     @Test
     public void shouldBeAbleToCheckForHighScoreOfAParticularQuiz() throws RemoteException {
-        quizServer.checkForHighScore(quiz);
-        verify(scoreKeeper).scoreIsHighest(quiz);
+        quizServer.checkForHighScore(quiz, player);
+        verify(scoreKeeper).scoreIsHighest(player, quiz);
 
-        when(quiz.getScore()).thenReturn(50);
-        when(scoreKeeper.scoreIsHighest(quiz)).thenReturn(true);
+        when(player.getScore()).thenReturn(50);
+        when(scoreKeeper.scoreIsHighest(player, quiz)).thenReturn(true);
 
-        assertTrue(quizServer.checkForHighScore(quiz));
+        assertTrue(quizServer.checkForHighScore(quiz, player));
     }
 
     @Test
@@ -128,7 +128,7 @@ public class QuizServerTest {
         int quizId = 5;
 
         when(quiz.getId()).thenReturn(quizId);
-        when(quiz.getScore()).thenReturn(50);
+        when(player.getScore()).thenReturn(50);
         when(player.getName()).thenReturn("Green Goblin");
         quizServer.setPlayerAsWinner(quiz, player);
         verify(scoreKeeper).setLeader(quiz, player);

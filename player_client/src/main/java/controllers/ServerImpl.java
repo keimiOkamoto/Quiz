@@ -25,8 +25,8 @@ public class ServerImpl implements Server {
     }
 
     @Override
-    public void createPlayer(String name, String country, int age) throws RemoteException {
-        quizServer.generatePlayer(name, country, age);
+    public Player createPlayer(String name, String country, int age) throws RemoteException {
+        return quizServer.generatePlayer(name, country, age);
     }
 
     @Override

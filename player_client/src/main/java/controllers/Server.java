@@ -30,8 +30,9 @@ public interface Server {
      * @param name The name of a player.
      * @param country The country of a player.
      * @param age The age of the player.
+     * @return A player that has been created.
      */
-    void createPlayer(String name, String country, int age) throws RemoteException;
+    Player createPlayer(String name, String country, int age) throws RemoteException;
 
     /**
      * Getter for the winner of the a quiz.

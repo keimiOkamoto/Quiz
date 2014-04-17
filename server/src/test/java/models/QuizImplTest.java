@@ -18,11 +18,13 @@ import static org.mockito.Mockito.when;
 public class QuizImplTest {
 
     private Quiz quiz;
+    private Player player;
 
     @Before
     public void buildUp() throws RemoteException {
         int id = 5;
         quiz = new QuizImpl(id, "Quiz about dinosaurs.");
+        player = mock(Player.class);
     }
 
     @Test
@@ -78,7 +80,7 @@ public class QuizImplTest {
     @Test
     public void shouldBeAbleToGetScore() throws RemoteException {
         int expectedScore = 0;
-        int actualScore = quiz.getScore();
+        int actualScore = player.getScore();
 
         assertEquals(expectedScore, actualScore);
     }
@@ -86,10 +88,10 @@ public class QuizImplTest {
     @Test
     public void shouldBeAbleToIncrementScore() throws RemoteException {
         int expectedScore = 2;
-        quiz.incrementScore();
-        quiz.incrementScore();
+        player.incrementScore();
+        player.incrementScore();
 
-        int actualScore = quiz.getScore();
+        int actualScore = player.getScore();
         assertEquals(expectedScore, actualScore);
     }
 }

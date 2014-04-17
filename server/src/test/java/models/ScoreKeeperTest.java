@@ -24,7 +24,7 @@ public class ScoreKeeperTest {
 
     @Test
     public void shouldBeAbleToCheckIfItContainsHighScore() throws RemoteException {
-        when(quiz.getScore()).thenReturn(32);
+        when(player.getScore()).thenReturn(32);
         scoreKeeper.addHighScore(quiz, player);
 
         assertTrue(scoreKeeper.highScoreContains(quiz));
@@ -33,9 +33,9 @@ public class ScoreKeeperTest {
     @Test
     public void shouldBeAbleToGetHighestScore() throws RemoteException {
         int score = 32;
-        when(quiz.getScore()).thenReturn(score);
+        when(player.getScore()).thenReturn(score);
         scoreKeeper.addHighScore(quiz, player);
-        int actualHighScore  = scoreKeeper.getHighScore(quiz);
+        int actualHighScore  = scoreKeeper.getHighScore(player);
 
         assertEquals(32, actualHighScore);
     }

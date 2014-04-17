@@ -31,15 +31,15 @@ public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
     }
 
     @Override
-    public void addPlayer(String name, String country, int age) throws IllegalArgumentException, RemoteException {
+    public Player addPlayer(String name, String country, int age) throws IllegalArgumentException, RemoteException {
         if (name == null) throw new IllegalArgumentException(ExceptionMessages.NO_NAME);
         if (country == null) throw new IllegalArgumentException(ExceptionMessages.NO_COUNTRY);
-        server.createPlayer(name, country, age);
+        return server.createPlayer(name, country, age);
     }
 
     @Override
     public void setPlayerAsWinner(Player player, Quiz quiz) throws RemoteException {
-        if (quiz.checkForHighScore(quiz.getScore())) server.setPlayerAsWinner(player, quiz, quiz.getScore());
+        if (quiz.checkForHighScore(player.getScore())) server.setPlayerAsWinner(player, quiz, player.getScore());
     }
 
     @Override

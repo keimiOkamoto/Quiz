@@ -35,8 +35,9 @@ public interface QuizPlayerOrchestrator {
      * @param country The country which the player is from.
      * @param age The age of the player.
      * @throws IllegalArgumentException If the name or aga is null.
+     * @return the player that has been created.
      */
-    void addPlayer(String name, String country, int age) throws IllegalArgumentException, RemoteException;
+    Player addPlayer(String name, String country, int age) throws IllegalArgumentException, RemoteException;
 
     /**
      * Sets the player as the winner if the player's

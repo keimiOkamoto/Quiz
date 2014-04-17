@@ -1,5 +1,6 @@
 package view;
 
+import models.Player;
 import models.Quiz;
 
 import java.util.Scanner;
@@ -23,7 +24,7 @@ public interface QuizGameOrchestrator {
 
     void setQuizNumber(int numberIndex);
 
-    String play(Quiz quiz, Scanner scanner);
+    String play(Quiz quiz, Scanner scanner, Player player);
 
     void checkForValidInputForAnswer(String userInput);
 }

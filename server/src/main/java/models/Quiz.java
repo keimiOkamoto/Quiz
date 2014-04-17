@@ -62,16 +62,5 @@ public interface Quiz extends Remote {
     /* player client methods
      */
 
-    /**
-     * Getter for a Score.
-     *
-     * @return A Score for a player.
-     */
-    int getScore() throws RemoteException;
 
-    /**
-     * Increments the score if a correct
-     * answer is entered.
-     */
-    void incrementScore() throws RemoteException;
 }

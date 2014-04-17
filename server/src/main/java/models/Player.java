@@ -32,4 +32,17 @@ public interface Player extends Remote {
      * @return The age of the player.
      */
     int getAge() throws RemoteException;
+
+    /**
+     * Getter for a Score.
+     *
+     * @return A Score for a player.
+     */
+    int getScore() throws RemoteException;
+
+    /**
+     * Increments the score if a correct
+     * answer is entered.
+     */
+    void incrementScore() throws RemoteException;
 }
