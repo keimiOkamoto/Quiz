@@ -3,11 +3,14 @@ package view;
 import constants.ExceptionMessages;
 import controllers.*;
 import exceptions.IllegalGameException;
+import models.Answer;
+import models.Question;
 import models.Quiz;
 
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
@@ -29,7 +32,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
         String userInput = null;
 
-        while(userInput == null || !userInput.equals("EXIT")) {
+        while (userInput == null || !userInput.equals("EXIT")) {
 
             List<Quiz> quizList = null;
             try {
@@ -48,14 +51,20 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
                 e.getMessage();
             }
 
-            if (message.equals(quizMenu.getQuizNumberMessage())) {
+            while (message.equals(quizMenu.getQuizNumberMessage())) {
                 userInput = scanner.nextLine();
                 message = quizGameOrchestrator.checkForValidNumber(userInput);
             }
 
-            if (message.equals(quizGameOrchestrator.getValidNumberMessage())) {
+            while (message.equals(quizGameOrchestrator.getValidNumberMessage())) {
                 Quiz quiz = quizGameOrchestrator.getQuiz();
-                quizGameOrchestrator.play(quiz);
+                message = quizGameOrchestrator.play(quiz);
+            }
+
+            while (message.equals(quizGameOrchestrator.getUserAnswerMessage())) {
+                userInput = scanner.nextLine();
+                quizGameOrchestrator.checkForValidInputForAnswer();
+
             }
         }
     }
@@ -81,8 +90,45 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     }
 
     @Override
+    public String getUserAnswerMessage() {
+        return "Please select from above answers by entering the index number.";
+    }
+
+    @Override
     public void setQuizNumber(int quizIndex) {
         this.quizIndex = quizIndex;
+    }
+
+    @Override
+    public String play(Quiz quiz) {
+        Set<Question> questionSet = null;
+        try {
+            questionSet = quiz.getQuestions();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        for (Question question : questionSet) {
+            try {
+                System.out.println("QUESTION:" + question.getQuestion());
+                Set<Answer> answerSet = question.getAnswers();
+
+                Answer[] answers = answerSet.toArray(new Answer[answerSet.size()]);
+
+                for (int y = 0; y < answers.length; y++) {
+                    System.out.println((y + 1) + ": " + answers[y].getAnswer());
+                }
+                message = getUserAnswerMessage();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+        return message;
+    }
+
+    @Override
+    public void checkForValidInputForAnswer() {
+
     }
 
     @Override
@@ -92,13 +138,13 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
     public Quiz getQuiz() {
         List<Quiz> quizList;
-
+        Quiz quiz = null;
         try {
             quizList = quizPlayerOrchestrator.getQuizzes();
-            Quiz quiz = quizList.get(getQuizIndex());
+            quiz = quizList.get(getQuizIndex() - 1);
         } catch (IllegalGameException e) {
             e.printStackTrace();
         }
-        return null;
+        return quiz;
     }
 }

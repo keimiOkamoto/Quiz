@@ -17,5 +17,11 @@ public interface QuizGameOrchestrator {
 
     String getValidNumberMessage();
 
+    String getUserAnswerMessage();
+
     void setQuizNumber(int numberIndex);
+
+    String play(Quiz quiz);
+
+    void checkForValidInputForAnswer();
 }
