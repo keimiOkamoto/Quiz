@@ -1,21 +1,26 @@
 package models;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import factories.ItemsFactory;
 
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Singleton
-public class ScoreKeeperImpl implements ScoreKeeper {
-    private Map<Integer, List<Remote>> scoreBoardMap = new HashMap<>();
+public class ScoreKeeperImpl extends UnicastRemoteObject implements ScoreKeeper {
+    private Map<Integer, HighScore> scoreBoardMap = new HashMap<>();
+    private ItemsFactory itemsFactory;
 
-    protected ScoreKeeperImpl() throws RemoteException {
+    @Inject
+    protected ScoreKeeperImpl(ItemsFactory itemsFactory) throws RemoteException {
+        this.itemsFactory = itemsFactory;
     }
 
     @Override
-    public void addHighScore(Quiz quiz, Player player) {
+    public void addHighScore(Quiz quiz, Player player) throws RemoteException {
         if (!highScoreContains(quiz) || scoreIsHighest(player, quiz)) {
             setLeader(quiz, player);
         }
@@ -33,58 +38,30 @@ public class ScoreKeeperImpl implements ScoreKeeper {
     }
 
     @Override
-    public int getHighScore(Player player) {
-        List<Remote> list = null;
-        int score = 0;
-        try {
-            list = scoreBoardMap.get(player.getId());
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        try {
-            score = ((Player) list.get(0)).getScore();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        return score;
+    public int getHighScore(Quiz quiz) throws RemoteException {
+        return scoreBoardMap.get(quiz.getId()).getHighScore();
     }
 
     @Override
     public Player getLeader(int quizId) {
-        List<Remote> list = scoreBoardMap.get(quizId);
-        return (Player)list.get(1);
+        return scoreBoardMap.get(quizId).getPlayer();
     }
 
     @Override
-    public void setLeader(Quiz quiz, Player player) {
-        List<Remote> list = Arrays.asList(quiz, player);
-        try {
-            scoreBoardMap.put(quiz.getId(),list);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+    public void setLeader(Quiz quiz, Player player) throws RemoteException {
+            HighScore highScore = itemsFactory.getHighScore(quiz, player);
+            scoreBoardMap.put(quiz.getId(), highScore);
     }
 
     @Override
-    public boolean scoreIsHighest(Player player, Quiz quiz) {
-        boolean result = false;
-        if (highScoreContains(quiz)) {
-            List<Remote> list = null;
+    public boolean scoreIsHighest(Player player, Quiz quiz) throws RemoteException {
+        boolean result = true;
+        if (scoreBoardMap.containsKey(quiz.getId())) {
             try {
-                list = scoreBoardMap.get(player.getId());
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-            int currentHighest = 0;
-            try {
-                currentHighest = ((Player) list.get(0)).getScore();
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-            try {
-                if (player.getScore() >= currentHighest) {
-                    result = true;
-                }
+                HighScore highScore = scoreBoardMap.get(quiz.getId());
+                int currentHighest = highScore.getHighScore();
+
+                result = player.getScore() >= currentHighest;
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

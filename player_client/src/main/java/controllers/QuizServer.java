@@ -58,7 +58,7 @@ public interface QuizServer {
      *
      * @param player A player of a quiz.
      */
-    void setPlayerAsWinner(Player player, Quiz quiz);
+    void setPlayerAsWinner(Quiz quiz, Player player) throws RemoteException;
 
     /**
      * Generates a Player.

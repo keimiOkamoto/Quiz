@@ -32,7 +32,7 @@ public interface QuizGameOrchestrator {
 
     String play(Quiz quiz, Scanner scanner, Player player);
 
-    void checkForHighScore(Player player, Quiz quiz, Server server);
+    String checkForHighScore(Player player, Quiz quiz, Server server);
 
     String getStartMessage();
 

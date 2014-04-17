@@ -1,5 +1,6 @@
 package models;
 
+import factories.ItemsFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,7 +19,8 @@ public class ScoreKeeperTest {
     @Before
     public void buildUp() throws RemoteException {
         player = mock(Player.class);
-        scoreKeeper = new ScoreKeeperImpl();
+        ItemsFactory itemsFactory = mock(ItemsFactory.class);
+        scoreKeeper = new ScoreKeeperImpl(itemsFactory);
         quiz = mock(Quiz.class);
     }
 
@@ -35,7 +37,7 @@ public class ScoreKeeperTest {
         int score = 32;
         when(player.getScore()).thenReturn(score);
         scoreKeeper.addHighScore(quiz, player);
-        int actualHighScore  = scoreKeeper.getHighScore(player);
+        int actualHighScore  = scoreKeeper.getHighScore(quiz);
 
         assertEquals(32, actualHighScore);
     }

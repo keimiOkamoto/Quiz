@@ -36,4 +36,9 @@ public class ItemsFactoryImpl extends UnicastRemoteObject implements ItemsFactor
     public void flush() throws RemoteException {
         uniqueNumberGeneratorUtils.flush();
     }
+
+    @Override
+    public HighScore getHighScore(Quiz quiz, Player player) throws RemoteException{
+        return new HighScoreImpl(quiz, player);
+    }
 }

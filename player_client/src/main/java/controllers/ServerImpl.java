@@ -35,12 +35,12 @@ public class ServerImpl implements Server {
     }
 
     @Override
-    public void setPlayerAsWinner(Player player, Quiz quiz, int score) {
-        quizServer.setPlayerAsWinner(player, quiz);
+    public void setPlayerAsWinner(Player player, Quiz quiz, int score) throws RemoteException{
+        quizServer.setPlayerAsWinner(quiz,player);
     }
 
     @Override
-    public boolean checkForHighScore(Quiz quiz, Player player) {
+    public boolean checkForHighScore(Quiz quiz, Player player) throws RemoteException{
         return quizServer.checkForHighScore(quiz, player);
     }
 }

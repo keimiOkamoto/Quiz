@@ -16,6 +16,7 @@ public class QuizSeverModule extends AbstractModule {
         install(new ItemFactoryModule());
         install(new PlayerFactoryModule());
         install(new QuizContainerModule());
+        install(new ScoreKeeperModule());
         bind(ItemsFactory.class).to(ItemsFactoryImpl.class);
         bind(PlayerFactory.class).to(PlayerFactoryImpl.class);
         bind(QuizContainer.class).to(QuizContainerImpl.class);

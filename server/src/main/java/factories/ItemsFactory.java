@@ -1,8 +1,6 @@
 package factories;
 
-import models.Answer;
-import models.Question;
-import models.Quiz;
+import models.*;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -37,4 +35,6 @@ public interface ItemsFactory extends Remote {
     Answer generateAnswer(String answer, boolean answerType) throws RemoteException;
 
     void flush() throws RemoteException;
+
+    HighScore getHighScore(Quiz quiz, Player player) throws RemoteException;
 }

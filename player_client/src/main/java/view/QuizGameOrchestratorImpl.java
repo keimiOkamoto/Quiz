@@ -27,7 +27,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Player player = null;
-        boolean initialized = false;
+        boolean initialized = true;
 
 
         Views views = new ViewsImpl();
@@ -43,6 +43,8 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
             if (initialized) {
                 player = makePlayer(scanner, player);
+                initialized = false;
+                message = quizGameOrchestrator.getStartMessage();
             }
 
             if (message.equals(quizGameOrchestrator.getStartMessage())) {
@@ -59,19 +61,22 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
                 message = quizGameOrchestrator.play(quiz, scanner, player);
 
                 while (message.equals(quizGameOrchestrator.getUserHighScoreMessage())) {
-                    quizGameOrchestrator.checkForHighScore(player, quiz, server);
+                    message = quizGameOrchestrator.checkForHighScore(player, quiz, server);
+
+                    try {
+                        if (message.equals(quizGameOrchestrator.getNewWinnerMessage(player))) {
+                            System.out.println(message);
+                        }
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+
+                    message = quizGameOrchestrator.getThanksForPlayingMessage();
+                    System.out.println(message);
+                    message = quizGameOrchestrator.getStartMessage();
                 }
             }
 
-            while (message.equals(quizGameOrchestrator.getUserHighScoreMessage())) {
-                System.out.println(message);
-                message = quizGameOrchestrator.getThanksForPlayingMessage();
-            }
-
-            while (message.equals(quizGameOrchestrator.getUserHighScoreMessage())) {
-                System.out.println(message);
-                message = quizGameOrchestrator.getStartMessage();
-            }
         }
     }
 
@@ -146,7 +151,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
     @Override
     public String getThanksForPlayingMessage() {
-        return "Thank you for playing!\n\t\tCome back soon!";
+        return "Thank you for playing, come back soon!\n\n";
     }
 
     @Override
@@ -215,7 +220,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
     @Override
     public String getStartMessage() {
-        return null;
+        return "Game start";
     }
 
     @Override

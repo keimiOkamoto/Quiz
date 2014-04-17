@@ -11,7 +11,7 @@ public interface ScoreKeeper {
     /**
      * Adds high score.
      */
-    void addHighScore(Quiz quiz, Player player);
+    void addHighScore(Quiz quiz, Player player) throws RemoteException;
 
     /**
      * Checks if a previous high score exists.
@@ -25,10 +25,10 @@ public interface ScoreKeeper {
      * Getter for the highest score corresponding
      * to the quiz.
      *
-     * @param player A quiz.
+     * @param quiz A quiz.
      * @return The highest score for that quiz.
      */
-    int getHighScore(Player player);
+    int getHighScore(Quiz quiz) throws RemoteException;
 
     /**
      * Getter for the leader of a quiz.
@@ -45,7 +45,7 @@ public interface ScoreKeeper {
      * @param quiz A quiz with the score.
      * @param player A player of the quiz.
      */
-    void setLeader(Quiz quiz, Player player);
+    void setLeader(Quiz quiz, Player player) throws RemoteException;
 
     /**
      * Checks if the score is the highest for a
@@ -54,5 +54,5 @@ public interface ScoreKeeper {
      * @param quiz A quiz with the score.
      * @return false if the score is not the highest.
      */
-    boolean scoreIsHighest(Player player, Quiz quiz);
+    boolean scoreIsHighest(Player player, Quiz quiz) throws RemoteException;
 }

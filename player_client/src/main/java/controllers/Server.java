@@ -49,7 +49,7 @@ public interface Server {
      * @param quiz The quiz the player was making.
      * @param score The score of the player.
      */
-    void setPlayerAsWinner(Player player, Quiz quiz, int score);
+    void setPlayerAsWinner(Player player, Quiz quiz, int score) throws RemoteException;
 
     /**
      * Checks for a if the quiz is the high score;
@@ -58,5 +58,5 @@ public interface Server {
      * @param quiz A quiz.
      * @return false if the quiz is not the highest.
      */
-    public boolean checkForHighScore(Quiz quiz, Player player);
+    public boolean checkForHighScore(Quiz quiz, Player player) throws RemoteException;
 }
