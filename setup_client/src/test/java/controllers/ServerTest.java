@@ -33,40 +33,40 @@ public class ServerTest {
     }
 
     @Test
-    public void shouldBeAbleToCreateQuizWithAValidTitle() {
+    public void shouldBeAbleToCreateQuizWithAValidTitle() throws RemoteException {
         String title = "Quiz about cake.";
         Quiz expectedQuiz = mock(Quiz.class);
 
-        when(itemsFactory.generateQuiz(anyString())).thenReturn(expectedQuiz);
+        when(quizServer.generateQuiz(anyString())).thenReturn(expectedQuiz);
         Quiz actualQuiz = server.createQuiz(title);
 
         assertEquals(expectedQuiz, actualQuiz);
     }
 
     @Test
-    public void shouldBeAbleToCreateQuestion() {
+    public void shouldBeAbleToCreateQuestion() throws RemoteException {
         String question = "Where is the treasure buried?";
         Question expectedQuestion = mock(Question.class);
 
-        when(itemsFactory.generateQuestion(anyString())).thenReturn(expectedQuestion);
+        when(quizServer.generateQuestion(anyString())).thenReturn(expectedQuestion);
         Question actualQuestion = server.createQuestion(question);
 
         assertEquals(expectedQuestion, actualQuestion);
     }
 
     @Test
-    public void shouldBeAbleToCreateAnswer() {
+    public void shouldBeAbleToCreateAnswer() throws RemoteException {
         String answer = "on the moon";
         Answer expectedAnswer = mock(Answer.class);
 
-        when(itemsFactory.generateAnswer(anyString(), anyBoolean())).thenReturn(expectedAnswer);
+        when(quizServer.generateAnswer(anyString(), anyBoolean())).thenReturn(expectedAnswer);
         Answer actualQuestion = server.createAnswer(answer, true);
 
         assertEquals(expectedAnswer, actualQuestion);
     }
 
     @Test
-    public void shouldBeAbleToCheckForValidQuizTitle() {
+    public void shouldBeAbleToCheckForValidQuizTitle() throws RemoteException {
         String title = "Quiz about noodles";
 
         when(quizServer.titleIsValid(anyString())).thenReturn(true);
@@ -74,14 +74,14 @@ public class ServerTest {
     }
 
     @Test
-    public void shouldBeAbleToCloseQuiz() {
+    public void shouldBeAbleToCloseQuiz() throws RemoteException {
         int id = 0;
         server.closeQuiz(id);
         verify(quizServer).endQuiz(anyInt());
     }
 
     @Test
-    public void shouldBeAbleToCheckForValidQuizId() {
+    public void shouldBeAbleToCheckForValidQuizId() throws RemoteException {
         int id = 5;
 
         when(quizServer.iDIsValid(anyInt())).thenReturn(true);
@@ -89,7 +89,7 @@ public class ServerTest {
     }
 
     @Test
-    public void shouldBeAbleToSaveQuizToServer() {
+    public void shouldBeAbleToSaveQuizToServer() throws RemoteException {
         Quiz quiz = mock(Quiz.class);
 
         server.save(quiz);

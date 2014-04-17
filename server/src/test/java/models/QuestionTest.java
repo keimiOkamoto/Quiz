@@ -51,7 +51,7 @@ public class QuestionTest {
         question.add(answer1);
         when(answer1.getAnswer()).thenReturn(answerString);
 
-        assertFalse(question.contains(answerString));
-        assertTrue(question.contains("Tea, Barny?"));
+        assertTrue(question.contains(answerString));
+        assertFalse(question.contains("Tea, Barny?"));
     }
 }

@@ -78,14 +78,12 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
             while (message.equals(quizGameOrchestrator.getValidNumberMessage())) {
                 quiz = quizGameOrchestrator.getQuiz();
-                message = quizGameOrchestrator.play(quiz);
-            }
+                message = quizGameOrchestrator.play(quiz, scanner);
 
-            while (message.equals(quizGameOrchestrator.getUserAnswerMessage())) {
-                System.out.println("poo");
-                userInput = scanner.nextLine();
-                quizGameOrchestrator.checkForValidInputForAnswer(userInput);
-
+                while (message.equals(quizGameOrchestrator.getUserAnswerMessage())) {
+                    userInput = scanner.nextLine();
+                    quizGameOrchestrator.checkForValidInputForAnswer(userInput);
+                }
             }
         }
     }
@@ -121,7 +119,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     }
 
     @Override
-    public String play(Quiz quiz) {
+    public String play(Quiz quiz, Scanner scanner) {
         Set<Question> questionSet = null;
         try {
             questionSet = quiz.getQuestions();
@@ -139,6 +137,14 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
                 for (int y = 0; y < answers.length; y++) {
                     System.out.println((y + 1) + ": " + answers[y].getAnswer());
                 }
+                String userInput = scanner.nextLine();
+                int answerIndex = Integer.parseInt(userInput);
+
+                if (answers[answerIndex - 1].getAnswerType()) {
+                    quiz.incrementScore();
+                    System.out.println("score is " + quiz.getScore());
+                }
+
                 message = getUserAnswerMessage();
             } catch (RemoteException e) {
                 e.printStackTrace();
@@ -149,17 +155,6 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
     @Override
     public void checkForValidInputForAnswer(String userInput) {
-        int answerIndex = Integer.parseInt(userInput);
-        try {
-             if (answers[answerIndex - 1].getAnswerType()) {
-                quiz.incrementScore();
-                System.out.println("score is " + quiz.getScore());
-             } else {
-
-             }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
 
     }
 

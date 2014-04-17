@@ -53,7 +53,7 @@ public class ServerTest {
         String country = "Krypton";
 
         server.createPlayer(name, country, age);
-        verify(playerFactory).generatePlayer(anyString(), anyString(), anyInt());
+        verify(quizServer).generatePlayer(anyString(), anyString(), anyInt());
     }
 
     @Test
