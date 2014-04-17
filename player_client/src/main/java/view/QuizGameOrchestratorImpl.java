@@ -15,6 +15,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     private static QuizGameOrchestrator quizGameOrchestrator;
     private static String message;
     private static QuizMenu quizMenu;
+    private int quizIndex;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -44,12 +45,17 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
             try {
                 quizMenu.printListOfQuizzes();
             } catch (RemoteException e) {
-                System.out.println(ExceptionMessages.SERVER_ERROR);
+                e.getMessage();
             }
 
             if (message.equals(quizMenu.getQuizNumberMessage())) {
                 userInput = scanner.nextLine();
                 message = quizGameOrchestrator.checkForValidNumber(userInput);
+            }
+
+            if (message.equals(quizGameOrchestrator.getValidNumberMessage())) {
+                Quiz quiz = quizGameOrchestrator.getQuiz();
+                quizGameOrchestrator.play(quiz);
             }
         }
     }
@@ -74,8 +80,25 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
         return "Number valid.";
     }
 
-    public String getQuiz() {
+    @Override
+    public void setQuizNumber(int quizIndex) {
+        this.quizIndex = quizIndex;
+    }
 
+    @Override
+    public int getQuizIndex() {
+        return quizIndex;
+    }
+
+    public Quiz getQuiz() {
+        List<Quiz> quizList;
+
+        try {
+            quizList = quizPlayerOrchestrator.getQuizzes();
+            Quiz quiz = quizList.get(getQuizIndex());
+        } catch (IllegalGameException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }

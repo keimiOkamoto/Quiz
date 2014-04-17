@@ -1,5 +1,6 @@
 package view;
 
+import constants.ExceptionMessages;
 import models.Quiz;
 
 import java.rmi.RemoteException;
@@ -18,7 +19,12 @@ public class QuizMenuImpl implements QuizMenu {
         for (int x = 1; x <= quizList.size(); x++) {
             Quiz quiz = quizList.get(x - 1);
             System.out.print(x + ". ");
-            System.out.println(quiz.getTitle());
+            try {
+                System.out.println(quiz.getTitle());
+            } catch (RemoteException e) {
+                e.printStackTrace();
+                throw new RemoteException(ExceptionMessages.SERVER_ERROR);
+            }
         }
     }
 

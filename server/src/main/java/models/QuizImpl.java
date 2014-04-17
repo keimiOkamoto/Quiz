@@ -19,6 +19,11 @@ public class QuizImpl extends UnicastRemoteObject implements Quiz {
     }
 
     @Override
+    public boolean checkForHighScore(int score) throws RemoteException {
+        return false;
+    }
+
+    @Override
     public void addQuestion(Question question) throws RemoteException {
         questionSet.add(question);
     }

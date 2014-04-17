@@ -62,7 +62,13 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
 
     @Override
     public String getTitle() {
-        return quiz.getTitle();
+        String title = null;
+        try {
+            title = quiz.getTitle();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return title;
     }
 
     @Override

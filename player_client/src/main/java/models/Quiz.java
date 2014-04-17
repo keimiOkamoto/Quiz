@@ -1,9 +1,10 @@
 package models;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Set;
 
-public interface Quiz {
+public interface Quiz extends Remote {
 
     /**
      * Check if the score is the highest score.
@@ -11,7 +12,7 @@ public interface Quiz {
      * @return False if it is not the highest score.
      * @param score The score of a qui.
      */
-    boolean checkForHighScore(int score);
+    boolean checkForHighScore(int score) throws RemoteException;
 
     /****************** Server methods *******************/
 

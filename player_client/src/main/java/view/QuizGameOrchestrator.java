@@ -1,13 +1,17 @@
 package view;
 
+import models.Quiz;
+
 public interface QuizGameOrchestrator {
+
+    int getQuizIndex();
 
     /**
      * Gets the quiz and allows the player to play the quiz.
      *
      * @return the message that will lead to the next event.
      */
-    String getQuiz();
+    Quiz getQuiz();
 
     String checkForValidNumber(String userInput);
 
