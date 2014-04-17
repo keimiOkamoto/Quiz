@@ -39,11 +39,4 @@ public class QuizMenuTest {
         assertEquals("1. " + quiz1.getTitle() + "\n" + "2. " + quiz2.getTitle() + "\n", log.getLog());
     }
 
-    @Test
-    public void shouldBeAbleToSeeMessageAndGetUserInput() {
-        String actual = quizMenu.getQuizNumberMessage();
-
-        assertEquals("\t\t\t♬ ☆ ☆ ☆ Welcome to the Quiz Game! ☆ ☆ ☆ ♬\n" +
-                "❤ Please enter the quiz number you want to play! ❤ ", actual);
-    }
 }

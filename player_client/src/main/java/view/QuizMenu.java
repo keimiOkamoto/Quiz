@@ -9,8 +9,4 @@ public interface QuizMenu {
      */
     void printListOfQuizzes() throws RemoteException;
 
-    /**
-     * Gets the message for the menu.
-     */
-    String getQuizNumberMessage();
 }

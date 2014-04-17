@@ -18,7 +18,11 @@ public interface QuizGameOrchestrator {
      */
     Quiz getQuiz();
 
+    String printListOfQuizzes();
+
     String checkForValidNumber(String userInput);
+
+    String getQuizNumberSelectMessage();
 
     String getValidNumberMessage();
 
@@ -27,6 +31,8 @@ public interface QuizGameOrchestrator {
     String getNewWinnerMessage(Player player) throws RemoteException;
 
     String getThanksForPlayingMessage();
+
+    String getWelcomeMessage();
 
     void setQuizNumber(int numberIndex);
 

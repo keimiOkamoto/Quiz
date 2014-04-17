@@ -28,8 +28,5 @@ public class QuizMenuImpl implements QuizMenu {
         }
     }
 
-    @Override
-    public String getQuizNumberMessage() {
-        return "\t\t\t♬ ☆ ☆ ☆ Welcome to the Quiz Game! ☆ ☆ ☆ ♬\n❤ Please enter the quiz number you want to play! ❤ ";
-    }
+
 }
