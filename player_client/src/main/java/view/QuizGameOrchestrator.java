@@ -18,9 +18,21 @@ public interface QuizGameOrchestrator {
      */
     Quiz getQuiz();
 
+    Player makePlayer(Scanner scanner, Player player);
+
     String printListOfQuizzes();
 
+    void setQuizSize(int size);
+
+    int getQuizSize();
+
     String checkForValidNumber(String userInput);
+
+    String getNameMessage();
+
+    String getCountryMessage();
+
+    String getAgeMessage();
 
     String getQuizNumberSelectMessage();
 

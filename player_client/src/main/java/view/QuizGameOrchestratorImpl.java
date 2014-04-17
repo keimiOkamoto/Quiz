@@ -22,18 +22,17 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     private int quizIndex;
     private Answer[] answers;
     private static Quiz quiz;
+    private int quizSize;
 
 
     public static void main(String[] args) {
+        boolean initialized = true;
         Scanner scanner = new Scanner(System.in);
         Player player = null;
-        boolean initialized = true;
-
-
         Views views = new ViewsImpl();
-
         ServerLink serverLink = new ServerLinkImpl();
         Server server = new ServerImpl(serverLink);
+
         quizPlayerOrchestrator = new QuizPlayerOrchestratorImpl(server);
         quizGameOrchestrator = new QuizGameOrchestratorImpl();
 
@@ -45,12 +44,13 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
             System.out.println(message);
 
             if (initialized) {
-                player = makePlayer(scanner, player);
+                player = quizGameOrchestrator.makePlayer(scanner, player);
                 initialized = false;
             }
             message = quizGameOrchestrator.printListOfQuizzes();
 
             while (message.equals(quizGameOrchestrator.getQuizNumberSelectMessage())) {
+                System.out.println("ds");
                 userInput = scanner.nextLine();
                 message = quizGameOrchestrator.checkForValidNumber(userInput);
 
@@ -76,13 +76,10 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
                 }
             }
         }
-
-
-
-
     }
 
-    private static Player makePlayer(Scanner scanner, Player player) {
+    @Override
+    public Player makePlayer(Scanner scanner, Player player) {
         String message1 = null;
         String name = null;
         String country = null;
@@ -91,23 +88,17 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
         message1 = "start";
 
         while (message1 == "start") {
-            System.out.println("Please enter your name!");
+            System.out.println(getNameMessage());
             name = scanner.nextLine();
 
-            if (checkForNull(name)) {
-                message1 = "Please enter your country!";
-            }
-
-            while (message1.equals("Please enter your country!")) {
-                System.out.println("Please enter your country!");
+            if (checkForNull(name)) message1 = getCountryMessage();
+            while (message1.equals(getCountryMessage())) {
+                System.out.println(message1);
                 country = scanner.nextLine();
 
-                if (checkForNull(country)) {
-                    message1 = "Please enter your age!";
-                }
-
-                while (message1.equals("Please enter your age!")) {
-                    System.out.println("Please enter your age!");
+                if (checkForNull(country)) message1 = getAgeMessage();
+                while (message1.equals(getAgeMessage())) {
+                    System.out.println(message1);
                     age = scanner.nextLine();
 
                     age1 = 0;
@@ -140,9 +131,12 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
     @Override
     public String printListOfQuizzes() {
+
+        System.out.println("☆ Please select which quiz you would like to play by typing in the index number. ☆");
         List<Quiz> quizList = null;
         try {
             quizList = quizPlayerOrchestrator.getQuizzes();
+            setQuizSize(quizList.size());
         } catch (IllegalGameException e) {
             System.out.println(e.getMessage());
         }
@@ -159,18 +153,41 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     }
 
     @Override
+    public void setQuizSize(int size) {
+        this.quizSize = size;
+    }
+
+    @Override
+    public int getQuizSize() {
+        return quizSize;
+    }
+
+    @Override
     public String checkForValidNumber(String userInput) {
         int index = 0;
         try {
             index = Integer.parseInt(userInput);
             quizGameOrchestrator.setQuizNumber(index);
-            message = quizGameOrchestrator.getValidNumberMessage();
 
+            if (validRange(index)) {
+                message = quizGameOrchestrator.getValidNumberMessage();
+            } else {
+                System.out.println(ExceptionMessages.INVALID_USER_INPUT);
+                message = getWelcomeMessage();
+            }
         } catch (NumberFormatException e) {
-            System.out.println(ExceptionMessages.NO_NUMBER_ENTERED);
+            System.out.println(ExceptionMessages.INVALID_USER_INPUT);
             message = getWelcomeMessage();
         }
         return message;
+    }
+
+    private boolean validRange(int index) {
+        boolean result = true;
+        if (index > quizSize || index <= 0) {
+            result = false;
+        }
+        return result;
     }
 
     @Override
@@ -179,8 +196,23 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     }
 
     @Override
+    public String getNameMessage() {
+        return "☆ Please enter your name ☆";
+    }
+
+    @Override
+    public String getCountryMessage() {
+        return "☆ Please enter your country ☆";
+    }
+
+    @Override
+    public String getAgeMessage() {
+        return "☆ Please enter your age ☆";
+    }
+
+    @Override
     public String getQuizNumberSelectMessage() {
-        return "❤ Please enter the quiz number you want to play! ❤ ";
+        return "☆ Please enter the quiz number you want to play! ☆ ";
     }
 
     @Override
