@@ -7,18 +7,14 @@ import java.util.Set;
 
 public class QuizImpl extends UnicastRemoteObject implements Quiz {
     private int id;
-    private Set<Question> questionSet = new HashSet<>();
+    private Set<Question> questionSet;
     private String title;
 
 
     public QuizImpl(int id, String title) throws RemoteException {
         this.id = id;
         this.title = title;
-    }
-
-    @Override
-    public boolean checkForHighScore(int score) throws RemoteException {
-        return false;
+        questionSet = new HashSet<>();
     }
 
     @Override
@@ -54,5 +50,4 @@ public class QuizImpl extends UnicastRemoteObject implements Quiz {
     public Set<Question> getQuestions() throws RemoteException {
         return questionSet;
     }
-
 }

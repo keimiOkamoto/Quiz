@@ -39,7 +39,7 @@ public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
 
     @Override
     public void setPlayerAsWinner(Player player, Quiz quiz) throws RemoteException {
-        if (quiz.checkForHighScore(player.getScore())) server.setPlayerAsWinner(player, quiz, player.getScore());
+        if (server.checkForHighScore(quiz, player)) server.setPlayerAsWinner(player, quiz, player.getScore());
     }
 
     @Override

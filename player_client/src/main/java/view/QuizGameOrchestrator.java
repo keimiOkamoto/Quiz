@@ -1,8 +1,10 @@
 package view;
 
+import controllers.Server;
 import models.Player;
 import models.Quiz;
 
+import java.rmi.RemoteException;
 import java.util.Scanner;
 
 public interface QuizGameOrchestrator {
@@ -20,11 +22,18 @@ public interface QuizGameOrchestrator {
 
     String getValidNumberMessage();
 
-    String getUserAnswerMessage();
+    String getUserHighScoreMessage();
+
+    String getNewWinnerMessage(Player player) throws RemoteException;
+
+    String getThanksForPlayingMessage();
 
     void setQuizNumber(int numberIndex);
 
     String play(Quiz quiz, Scanner scanner, Player player);
 
-    void checkForValidInputForAnswer(String userInput);
+    void checkForHighScore(Player player, Quiz quiz, Server server);
+
+    String getStartMessage();
+
 }

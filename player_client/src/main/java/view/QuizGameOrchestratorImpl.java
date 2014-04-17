@@ -23,9 +23,12 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     private Answer[] answers;
     private static Quiz quiz;
 
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Player player = null;
+        boolean initialized = false;
+
 
         Views views = new ViewsImpl();
 
@@ -38,38 +41,12 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
         while (userInput == null || !userInput.equals("EXIT")) {
 
-            System.out.println("Please enter your name!");
-            String name = scanner.nextLine();
-
-            System.out.println("Please enter your country!");
-            String country = scanner.nextLine();
-
-            System.out.println("Please enter your age!");
-            String age = scanner.nextLine();
-            int age1 = Integer.parseInt(age);
-
-
-            try {
-                player = quizPlayerOrchestrator.addPlayer(name, country, age1);
-            } catch (RemoteException e) {
-                e.printStackTrace();
+            if (initialized) {
+                player = makePlayer(scanner, player);
             }
 
-            List<Quiz> quizList = null;
-            try {
-                quizList = quizPlayerOrchestrator.getQuizzes();
-            } catch (IllegalGameException e) {
-                System.out.println(e.getMessage());
-            }
-
-            quizMenu = new QuizMenuImpl(quizList);
-            message = quizMenu.getQuizNumberMessage();
-
-            System.out.println(message);
-            try {
-                quizMenu.printListOfQuizzes();
-            } catch (RemoteException e) {
-                e.getMessage();
+            if (message.equals(quizGameOrchestrator.getStartMessage())) {
+                printWelcomeAndListOfQuizzes();
             }
 
             while (message.equals(quizMenu.getQuizNumberMessage())) {
@@ -81,11 +58,59 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
                 quiz = quizGameOrchestrator.getQuiz();
                 message = quizGameOrchestrator.play(quiz, scanner, player);
 
-                while (message.equals(quizGameOrchestrator.getUserAnswerMessage())) {
-                    userInput = scanner.nextLine();
-                    quizGameOrchestrator.checkForValidInputForAnswer(userInput);
+                while (message.equals(quizGameOrchestrator.getUserHighScoreMessage())) {
+                    quizGameOrchestrator.checkForHighScore(player, quiz, server);
                 }
             }
+
+            while (message.equals(quizGameOrchestrator.getUserHighScoreMessage())) {
+                System.out.println(message);
+                message = quizGameOrchestrator.getThanksForPlayingMessage();
+            }
+
+            while (message.equals(quizGameOrchestrator.getUserHighScoreMessage())) {
+                System.out.println(message);
+                message = quizGameOrchestrator.getStartMessage();
+            }
+        }
+    }
+
+    private static Player makePlayer(Scanner scanner, Player player) {
+        System.out.println("Please enter your name!");
+        String name = scanner.nextLine();
+
+        System.out.println("Please enter your country!");
+        String country = scanner.nextLine();
+
+        System.out.println("Please enter your age!");
+        String age = scanner.nextLine();
+        int age1 = Integer.parseInt(age);
+
+
+        try {
+            player = quizPlayerOrchestrator.addPlayer(name, country, age1);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return player;
+    }
+
+    private static void printWelcomeAndListOfQuizzes() {
+        List<Quiz> quizList = null;
+        try {
+            quizList = quizPlayerOrchestrator.getQuizzes();
+        } catch (IllegalGameException e) {
+            System.out.println(e.getMessage());
+        }
+
+        quizMenu = new QuizMenuImpl(quizList);
+        message = quizMenu.getQuizNumberMessage();
+
+        System.out.println(message);
+        try {
+            quizMenu.printListOfQuizzes();
+        } catch (RemoteException e) {
+            e.getMessage();
         }
     }
 
@@ -110,8 +135,18 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     }
 
     @Override
-    public String getUserAnswerMessage() {
-        return "Please select from above answers by entering the index number.";
+    public String getUserHighScoreMessage() {
+        return "is highScore";
+    }
+
+    @Override
+    public String getNewWinnerMessage(Player player) throws RemoteException {
+        return "\t\t\tHIGH-SCORE!\nCongratulations " + player.getName() + " from " + player.getCountry() + "!";
+    }
+
+    @Override
+    public String getThanksForPlayingMessage() {
+        return "Thank you for playing!\n\t\tCome back soon!";
     }
 
     @Override
@@ -146,17 +181,41 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
                     System.out.println("score is " + player.getScore());
                 }
 
-                message = getUserAnswerMessage();
+                message = getUserHighScoreMessage();
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
+        }
+
+        try {
+            System.out.println("Total Score is: " + player.getScore());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return message;
+    }
+
+
+    @Override
+    public String checkForHighScore(Player player, Quiz quiz, Server server) {
+        try {
+            if (server.checkForHighScore(quiz, player)) {
+                server.setPlayerAsWinner(player, quiz, player.getScore());
+                message = getNewWinnerMessage(player);
+
+            } else {
+                message = getThanksForPlayingMessage();
+            }
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
         }
         return message;
     }
 
     @Override
-    public void checkForValidInputForAnswer(String userInput) {
-
+    public String getStartMessage() {
+        return null;
     }
 
     @Override

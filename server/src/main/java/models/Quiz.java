@@ -7,16 +7,6 @@ import java.util.Set;
 public interface Quiz extends Remote {
 
     /**
-     * Check if the score is the highest score.
-     *
-     * @return False if it is not the highest score.
-     * @param score The score of a qui.
-     */
-    boolean checkForHighScore(int score) throws RemoteException;
-
-    /****************** Server methods *******************/
-
-    /**
      * Adds a uestion to the quiz.
      *
      * @param question a question
@@ -58,9 +48,4 @@ public interface Quiz extends Remote {
      * @return A set containing all questions in a quiz.
      */
     Set<Question> getQuestions() throws RemoteException;
-
-    /* player client methods
-     */
-
-
 }
