@@ -1,6 +1,7 @@
 package view;
 
 import constants.ExceptionMessages;
+import constants.SetUpMessages;
 import controllers.*;
 import exceptions.IllegalGameException;
 import models.Answer;
@@ -27,7 +28,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     private int answerIndex;
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IllegalGameException, RemoteException {
         boolean initialized = true;
         Scanner scanner = new Scanner(System.in);
         Player player = null;
@@ -39,17 +40,17 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
         String userInput = null;
 
-        System.out.println(quizGameOrchestrator.getWelcomeMessage());
+        System.out.println(SetUpMessages.WELCOME_MESSAGE);
         while (userInput == null || !userInput.equals("EXIT")) {
 
-            message = quizGameOrchestrator.getWelcomeMessage();
+            message = SetUpMessages.WELCOME_MESSAGE;
 
             if (initialized) {
                 player = quizGameOrchestrator.makePlayer(scanner, player);
                 initialized = false;
             }
 
-            while (message.equals(quizGameOrchestrator.getWelcomeMessage())) {
+            while (message.equals(SetUpMessages.WELCOME_MESSAGE)) {
                 System.out.println(quizGameOrchestrator.getMenuMessage());
                 userInput = scanner.nextLine();
                 message = quizGameOrchestrator.getStartChoice(userInput);
@@ -61,57 +62,19 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
                     if (message.equals(quizGameOrchestrator.getClosedQuizMessage())) {
                         userInput = scanner.nextLine();
                     }
-                }
+                } //TODO
 
-                while (message.equals(quizGameOrchestrator.getQuizNumberSelectMessage())) {
-                    message = getQuizMenu(scanner, player, server);
+
+                //Done
+                while (message.equals(SetUpMessages.QUIZ_SELECT_MESSAAGE)) {
+                    PlayQuiz playQuiz = new PlayQuizImpl(quizGameOrchestrator, quizPlayerOrchestrator);
+                    message = playQuiz.getQuizMenu(scanner, player, server, message);
                 }
             }
         }
     }
 
 
-    private static String getQuizMenu(Scanner scanner, Player player, Server server) {
-        String message = quizGameOrchestrator.printMenu();
-        String userInput = scanner.nextLine();
-        if (message.equals(quizGameOrchestrator.getExitMessage())) System.exit(0);
-        message = quizGameOrchestrator.checkForValidNumber(userInput);
-
-        while (message.equals(quizGameOrchestrator.getValidNumberMessage())) {
-            message = playQuiz(scanner, player, server, quizGameOrchestrator.getQuiz());
-        }
-        return message;
-    }
-
-
-    private static String playQuiz(Scanner scanner, Player player, Server server, Quiz quiz) {
-        String message = quizGameOrchestrator.play(quiz, scanner, player);
-
-        while (message.equals(quizGameOrchestrator.getUserHighScoreMessage())) {
-            message = getUserHighScoreMessage(player, server, quiz);
-        }
-        return message;
-    }
-
-
-    private static String getUserHighScoreMessage(Player player, Server server, Quiz quiz) {
-        String message = quizGameOrchestrator.checkForHighScore(player, quiz, server);
-
-        try {
-            if (message.equals(quizGameOrchestrator.getNewWinnerMessage(player))) {
-                System.out.println(message);
-                quizPlayerOrchestrator.setPlayerAsWinner(player, quiz);
-                message = quizGameOrchestrator.getThanksForPlayingMessage();
-                System.out.println(message);
-                quizPlayerOrchestrator.resetPlayerScore(player);
-            }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        message = quizGameOrchestrator.getStartMessage();
-
-        return message;
-    }
 
 
     @Override
@@ -170,58 +133,13 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
 
     @Override
-    public String printMenu() {
-        try {
-            List<Quiz> quizList = quizPlayerOrchestrator.getQuizzes();
-            if (quizList == null || quizList.isEmpty()) {
-                message = getExitMessage();
-            } else {
-                setQuizSize(quizList.size());
-                quizMenu = new QuizMenuImpl(quizList);
-                quizMenu.print();
-                message = getQuizNumberSelectMessage();
-            }
-        } catch (IllegalGameException | RemoteException e) {
-            System.out.println(e.getMessage());
-        }
-        return message;
-    }
-
-    @Override
-    public String printListOfQuizzes() {
-
-        List<Quiz> quizList = null;
-        try {
-            quizList = quizPlayerOrchestrator.getQuizzes();
-            setQuizSize(quizList.size());
-        } catch (IllegalGameException e) {
-            System.out.println(e.getMessage());
-        }
-
-        if (getQuizSize() == 0) {
-            System.out.println(getExitMessage());
-            message = "EXIT";
-        } else {
-            quizMenu = new QuizMenuImpl(quizList);
-            try {
-                quizMenu.printListOfQuizzes(quizList);
-                message = getQuizNumberSelectMessage();
-
-            } catch (RemoteException e) {
-                e.getMessage();
-            }
-        }
-        return message;
-    }
-
-    @Override
     public String printListOfClosedQuizzes() {
         List<Quiz> quizList = null;
         try {
             quizList = quizPlayerOrchestrator.getClosedQuizList();
             if (quizList.isEmpty()) {
                 System.out.println("No quizzes have been closed!");
-                message = getWelcomeMessage();
+                message = SetUpMessages.WELCOME_MESSAGE;
 
             }
         } catch (RemoteException e) {
@@ -234,136 +152,31 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     public String getStartChoice(String userInput) {
         if (userInput == null || userInput.trim().isEmpty()) {
             System.out.println(ExceptionMessages.INVALID_USER_INPUT);
-            message = getWelcomeMessage();
+            message = SetUpMessages.WELCOME_MESSAGE;
         } else if (userInput.equals("1")) {
-            message = getQuizNumberSelectMessage();
+            message = SetUpMessages.QUIZ_SELECT_MESSAAGE;
         } else if (userInput.equals("2")) {
             message = getClosedQuizMessage();
         } else {
-            message = getWelcomeMessage();
+            message = SetUpMessages.WELCOME_MESSAGE;
         }
         return message;
     }
 
-    @Override
-    public void setQuizSize(int size) {
-        this.quizSize = size;
-    }
-
-    @Override
-    public int getQuizSize() {
-        return quizSize;
-    }
-
-    @Override
-    public String checkForValidNumber(String userInput) {
-        int index;
-        try {
-            index = Integer.parseInt(userInput);
-            quizGameOrchestrator.setQuizNumber(index);
-
-            if (validRangeQuizSize(index)) {
-                message = quizGameOrchestrator.getValidNumberMessage();
-            } else {
-                System.out.println(ExceptionMessages.INVALID_USER_INPUT);
-                message = getWelcomeMessage();
-            }
-        } catch (NumberFormatException e) {
-            System.out.println(ExceptionMessages.INVALID_USER_INPUT);
-            message = getWelcomeMessage();
-        }
-        return message;
-    }
-
-    private boolean validRangeQuizSize(int index) {
-        boolean result = true;
-        if (index > quizSize || index <= 0) {
-            result = false;
-        }
-        return result;
-    }
-
-    private boolean validRangeAnswerSize(int index) {
-        return index <= answerSize && index > 0;
-    }
-
-    @Override
-    public String play(Quiz quiz, Scanner scanner, Player player) {
-        Set<Question> questionSet = null;
-
-        try {
-            questionSet = quiz.getQuestions();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
-        for (Question question : questionSet) {
-            String userInput = "";
-
-            while (!validInput(userInput)) {
-                try {
-                    System.out.println("\nQUESTION: " + question.getQuestion());
-                    Set<Answer> answerSet = question.getAnswers();
-
-                    answers = answerSet.toArray(new Answer[answerSet.size()]);
-                    setAnswerSize(answers.length);
-
-                    for (int y = 0; y < answers.length; y++) {
-                        System.out.println((y + 1) + ": " + answers[y].getAnswer());
-                    }
-                    userInput = scanner.nextLine();
-
-                    if (validInput(userInput)) {
-                        setAnswerIndex(userInput);
-
-                        if (answers[getAnswerIndex() - 1].getAnswerType()) {
-                            player.incrementScore();
-                        }
-                    }
-
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        try {
-            System.out.println("¸¸.•*¨*•♫♪ You scored: " + player.getScore() + " out of " + questionSet.size() + "! ♪♫•*¨*•.¸¸");
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        message = getUserHighScoreMessage();
-
-        return message;
-    }
-
-    private boolean validInput(String userInput) {
-        return (!checkForNull(userInput)) &&
-                checkIfNumber(userInput) &&
-                validRangeAnswerSize(Integer.parseInt(userInput));
-    }
-
-    private boolean checkIfNumber(String userInput) {
-        boolean answer = true;
-        try {
-            Integer.parseInt(userInput);
-        } catch (NumberFormatException e) {
-            answer = false;
-        }
-        return answer;
-    }
-
-    private void setAnswerIndex(String answerIndex) {
-        this.answerIndex = Integer.parseInt(answerIndex);
-    }
-
-    private int getAnswerIndex() {
-        return answerIndex;
-    }
+//
+//    @Override
+//    public int getQuizSize() {
+//        return quizSize;
+//    }
 
 
-    private void setAnswerSize(int answerSize) {
-        this.answerSize = answerSize;
-    }
+
+
+
+
+
+
+
 
     @Override
     public String checkForHighScore(Player player, Quiz quiz, Server server) {
@@ -374,7 +187,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
                 message = getNewWinnerMessage(player);
 
             } else {
-                message = getThanksForPlayingMessage();
+                message = SetUpMessages.THANKS_FOR_PLAYING;
             }
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -387,7 +200,6 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
         this.quizIndex = quizIndex;
     }
 
-    @Override
     public int getQuizIndex() {
         return quizIndex;
     }
@@ -409,15 +221,15 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
         return "☆ Please enter the quiz number you want to view the winner of! ☆ ";
     }
 
-    @Override
-    public String getSelectClosedQuizMessage() {
-        return "Select close quiz";
+//    @Override
+//    public String getSelectClosedQuizMessage() {
+//        return "Select close quiz";
+//    }
+
+    private String getNewWinnerMessage(Player player) throws RemoteException {
+        return "\t\tYOU GOT THE HIGHEST SCORE!\n☆☆☆☆☆ Congratulations " + player.getName() + " from " + player.getCountry() + "!  ☆☆☆☆☆";
     }
 
-    @Override
-    public String getWelcomeMessage() {
-        return "\t\t\t♬ ☆ ☆ ☆ Welcome to the Quiz Game! ☆ ☆ ☆ ♬\n";
-    }
 
     @Override
     public String getMenuMessage() {
@@ -437,40 +249,5 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     @Override
     public String getAgeMessage() {
         return "☆ Please enter your age ☆";
-    }
-
-    @Override
-    public String getQuizNumberSelectMessage() {
-        return "☆ Please enter the quiz number you want to play! ☆ ";
-    }
-
-    @Override
-    public String getStartMessage() {
-        return "Game start";
-    }
-
-    @Override
-    public String getValidNumberMessage() {
-        return "Number valid.";
-    }
-
-    @Override
-    public String getUserHighScoreMessage() {
-        return "is highScore";
-    }
-
-    @Override
-    public String getNewWinnerMessage(Player player) throws RemoteException {
-        return "\t\tYOU GOT THE HIGHEST SCORE!\n☆☆☆☆☆ Congratulations " + player.getName() + " from " + player.getCountry() + "!  ☆☆☆☆☆";
-    }
-
-    @Override
-    public String getThanksForPlayingMessage() {
-        return "♬ ☆ Thank you for playing, come back soon! ☆ ♬\n";
-    }
-
-    @Override
-    public String getExitMessage() {
-        return "There are no quizzes available. :(\nPlease wait for someone to set one up.\nAlternatively, make your own quiz!";
     }
 }

@@ -9,8 +9,6 @@ import java.util.Scanner;
 
 public interface QuizGameOrchestrator {
 
-    int getQuizIndex();
-
     /**
      * Gets the quiz and allows the player to play the quiz.
      *
@@ -20,43 +18,11 @@ public interface QuizGameOrchestrator {
 
     Player makePlayer(Scanner scanner, Player player);
 
-    String printMenu();
-
-    String printListOfQuizzes();
-
-    void setQuizSize(int size);
-
-    int getQuizSize();
-
-    String checkForValidNumber(String userInput);
-
     String getMenuMessage();
-
-    String getNameMessage();
-
-    String getCountryMessage();
-
-    String getAgeMessage();
-
-    String getQuizNumberSelectMessage();
-
-    String getValidNumberMessage();
-
-    String getUserHighScoreMessage();
-
-    String getNewWinnerMessage(Player player) throws RemoteException;
-
-    String getThanksForPlayingMessage();
-
-    String getWelcomeMessage();
 
     void setQuizNumber(int numberIndex);
 
-    String play(Quiz quiz, Scanner scanner, Player player);
-
     String checkForHighScore(Player player, Quiz quiz, Server server);
-
-    String getStartMessage();
 
     String printListOfClosedQuizzes();
 
@@ -64,7 +30,9 @@ public interface QuizGameOrchestrator {
 
     String getClosedQuizMessage();
 
-    String getSelectClosedQuizMessage();
+    String getNameMessage();
 
-    String getExitMessage();
+    String getCountryMessage();
+
+    String getAgeMessage();
 }
