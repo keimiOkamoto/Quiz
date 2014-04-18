@@ -28,93 +28,93 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     }
 
     @Override
-    public boolean titleIsValid(String title) throws RemoteException {
+    public synchronized boolean titleIsValid(String title) throws RemoteException {
         return !quizContainer.contains(title);
     }
 
     @Override
-    public boolean iDIsValid(int id) throws RemoteException {
+    public synchronized boolean iDIsValid(int id) throws RemoteException {
         return quizContainer.contains(id);
     }
 
     @Override
-    public void endQuiz(int id) throws RemoteException {
+    public synchronized void endQuiz(int id) throws RemoteException {
         quizContainer.closeQuizWith(id);
     }
 
     @Override
-    public void save(Quiz quiz) throws RemoteException {
+    public synchronized void save(Quiz quiz) throws RemoteException {
         quizContainer.save(quiz);
     }
 
     @Override
-    public ItemsFactory getItemsFactory() throws RemoteException {
+    public synchronized ItemsFactory getItemsFactory() throws RemoteException {
         return itemsFactory;
     }
 
     @Override
-    public Quiz generateQuiz(String title) throws RemoteException {
+    public synchronized Quiz generateQuiz(String title) throws RemoteException {
         return itemsFactory.generateQuiz(title);
     }
 
     @Override
-    public Question generateQuestion(String question) throws RemoteException {
+    public synchronized Question generateQuestion(String question) throws RemoteException {
         return itemsFactory.generateQuestion(question);
     }
 
     @Override
-    public Answer generateAnswer(String answer, boolean answerType) throws RemoteException {
+    public synchronized Answer generateAnswer(String answer, boolean answerType) throws RemoteException {
         return itemsFactory.generateAnswer(answer, answerType);
     }
 
     /********** Player client methods ***********/
 
     @Override
-    public List<Quiz> getQuizzes() throws RemoteException {
+    public synchronized List<Quiz> getQuizzes() throws RemoteException {
         return quizContainer.getQuizzes();
     }
 
     @Override
-    public Quiz getQuiz(int id) throws RemoteException {
+    public synchronized Quiz getQuiz(int id) throws RemoteException {
         return quizContainer.getQuizBy(id);
     }
 
     @Override
-    public boolean checkForHighScore(Quiz quiz, Player player)throws RemoteException {
+    public synchronized boolean checkForHighScore(Quiz quiz, Player player)throws RemoteException {
         return scoreKeeper.scoreIsHighest(player, quiz);
     }
 
     @Override
-    public PlayerFactory getPlayerFactory()throws RemoteException {
+    public synchronized PlayerFactory getPlayerFactory()throws RemoteException {
         return playerFactory;
     }
 
     @Override
-    public void setPlayerAsWinner(Quiz quiz, Player player) throws RemoteException {
+    public synchronized void setPlayerAsWinner(Quiz quiz, Player player) throws RemoteException {
         scoreKeeper.setLeader(quiz, player);
     }
 
     @Override
-    public Player getWinnerBy(int quizId)throws RemoteException  {
+    public synchronized Player getWinnerBy(int quizId)throws RemoteException  {
         return scoreKeeper.getLeader(quizId);
     }
 
     @Override
-    public Player generatePlayer(String name, String country, int age) throws RemoteException {
+    public synchronized Player generatePlayer(String name, String country, int age) throws RemoteException {
         return playerFactory.generatePlayer(name, country, age);
     }
 
     @Override
-    public void resetPlayerScore(Player player) throws RemoteException {
+    public synchronized void resetPlayerScore(Player player) throws RemoteException {
         player.resetScore();
     }
 
     @Override
-    public List<Quiz> getClosedQuizList() throws RemoteException {
+    public synchronized List<Quiz> getClosedQuizList() throws RemoteException {
         return closedQuizContainer.getClosedQuizList();
     }
     @Override
-    public void flush() throws RemoteException {
+    public synchronized void flush() throws RemoteException {
         quizContainer.flush();
         itemsFactory.flush();
     }
