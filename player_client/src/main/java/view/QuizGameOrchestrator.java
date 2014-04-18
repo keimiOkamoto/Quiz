@@ -24,7 +24,7 @@ public interface QuizGameOrchestrator {
 
     String checkForHighScore(Player player, Quiz quiz, Server server);
 
-    String printListOfClosedQuizzes();
+    String checkIfClosedQuizIsNull();
 
     String getStartChoice(String userInput);
 
@@ -35,4 +35,8 @@ public interface QuizGameOrchestrator {
     String getCountryMessage();
 
     String getAgeMessage();
+
+    String getValidClosedQuizMessage();
+
+    String selectClosedQuiz(Scanner scanner);
 }

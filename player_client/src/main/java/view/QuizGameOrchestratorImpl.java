@@ -6,13 +6,11 @@ import controllers.*;
 import exceptions.IllegalGameException;
 import models.Answer;
 import models.Player;
-import models.Question;
 import models.Quiz;
 
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 
 public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
@@ -57,10 +55,12 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
 
                 while (message.equals(quizGameOrchestrator.getClosedQuizMessage())) {
-                    message = quizGameOrchestrator.printListOfClosedQuizzes();
+                    message = quizGameOrchestrator.checkIfClosedQuizIsNull();
 
-                    if (message.equals(quizGameOrchestrator.getClosedQuizMessage())) {
-                        userInput = scanner.nextLine();
+                    if (message.equals(quizGameOrchestrator.getValidClosedQuizMessage())) {
+                        System.out.println(quizGameOrchestrator.getClosedQuizMessage());
+                        message = quizGameOrchestrator.selectClosedQuiz(scanner);
+
                     }
                 } //TODO
 
@@ -133,18 +133,37 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
 
     @Override
-    public String printListOfClosedQuizzes() {
+    public String checkIfClosedQuizIsNull() {
         List<Quiz> quizList = null;
         try {
             quizList = quizPlayerOrchestrator.getClosedQuizList();
             if (quizList.isEmpty()) {
                 System.out.println("No quizzes have been closed!");
                 message = SetUpMessages.WELCOME_MESSAGE;
-
+            } else {
+                message = getValidClosedQuizMessage();
             }
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+        return message;
+    }
+
+    @Override
+    public String selectClosedQuiz(Scanner scanner) {
+        List<Quiz> quizList = null;
+        try {
+            quizList = quizPlayerOrchestrator.getClosedQuizList();
+
+            for (int x = 1; x >= quizList.size(); x++) {
+                System.out.println(x + ":" + quizList.get(x-1));
+            }
+            message
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
         return message;
     }
 
@@ -168,14 +187,6 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 //    public int getQuizSize() {
 //        return quizSize;
 //    }
-
-
-
-
-
-
-
-
 
 
     @Override
@@ -250,4 +261,11 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     public String getAgeMessage() {
         return "☆ Please enter your age ☆";
     }
+
+    @Override
+    public String getValidClosedQuizMessage() {
+        return "valid";
+    }
+
+
 }
