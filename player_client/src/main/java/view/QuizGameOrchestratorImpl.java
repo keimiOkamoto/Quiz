@@ -287,6 +287,11 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
                 }
             }
         }
+        try {
+            System.out.println("¸¸.•*¨*•♫♪ You scored: " + player.getScore() + " out of " + getQuizSize() + "! ♪♫•*¨*•.¸¸");
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         message = getUserHighScoreMessage();
 
         return message;
