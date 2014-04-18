@@ -43,6 +43,11 @@ public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
     }
 
     @Override
+    public void resetPlayerScore(Player player) throws RemoteException{
+        server.resetPlayerScore(player);
+    }
+
+    @Override
     public Player getWinner(int quizId) {
         return server.getWinnerBy(quizId);
     }

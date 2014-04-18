@@ -103,6 +103,11 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     }
 
     @Override
+    public void resetPlayerScore(Player player) throws RemoteException {
+        player.resetScore();
+    }
+
+    @Override
     public void flush() throws RemoteException {
         quizContainer.flush();
         itemsFactory.flush();

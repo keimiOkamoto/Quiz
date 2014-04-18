@@ -49,4 +49,9 @@ public class PlayerImpl extends UnicastRemoteObject implements Player {
     public void incrementScore() throws RemoteException {
         score++;
     }
+
+    @Override
+    public  void resetScore() {
+        score = 0;
+    }
 }

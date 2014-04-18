@@ -47,6 +47,8 @@ public interface QuizPlayerOrchestrator {
      */
     void setPlayerAsWinner(Player player, Quiz quiz) throws RemoteException;
 
+    void resetPlayerScore(Player player) throws RemoteException;
+
     /**
      * Getter for the winner player.
      *

@@ -288,13 +288,18 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
             }
         }
         try {
-            System.out.println("¸¸.•*¨*•♫♪ You scored: " + player.getScore() + " out of " + getQuizSize() + "! ♪♫•*¨*•.¸¸");
+            System.out.println("¸¸.•*¨*•♫♪ You scored: " + player.getScore() + " out of " + questionSet.size() + "! ♪♫•*¨*•.¸¸");
+            resetPlayerScore(player);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
         message = getUserHighScoreMessage();
 
         return message;
+    }
+
+    private void resetPlayerScore(Player player) throws RemoteException {
+        quizPlayerOrchestrator.resetPlayerScore(player);
     }
 
     private boolean validInput(String userInput) {

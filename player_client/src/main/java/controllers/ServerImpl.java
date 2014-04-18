@@ -43,4 +43,9 @@ public class ServerImpl implements Server {
     public boolean checkForHighScore(Quiz quiz, Player player) throws RemoteException{
         return quizServer.checkForHighScore(quiz, player);
     }
+
+    @Override
+    public void resetPlayerScore(Player player) throws RemoteException {
+        quizServer.resetPlayerScore(player);
+    }
 }

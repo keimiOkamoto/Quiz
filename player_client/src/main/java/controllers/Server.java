@@ -59,4 +59,6 @@ public interface Server {
      * @return false if the quiz is not the highest.
      */
     public boolean checkForHighScore(Quiz quiz, Player player) throws RemoteException;
+
+    void resetPlayerScore(Player player) throws RemoteException;
 }

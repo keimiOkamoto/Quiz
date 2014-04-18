@@ -70,4 +70,6 @@ public interface QuizServer {
      * @throws java.rmi.RemoteException If there is a problem with the server.
      */
     Player generatePlayer(String name, String country, int age) throws RemoteException;
+
+    void resetPlayerScore(Player player) throws RemoteException;
 }

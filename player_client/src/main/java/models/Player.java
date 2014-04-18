@@ -45,4 +45,9 @@ public interface Player {
      * answer is entered.
      */
     void incrementScore() throws RemoteException;
+
+    /**
+     * Resets the player score.
+     */
+    void resetScore() throws RemoteException;
 }
