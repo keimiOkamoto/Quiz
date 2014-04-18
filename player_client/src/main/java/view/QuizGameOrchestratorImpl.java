@@ -72,6 +72,11 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
                         message = quizGameOrchestrator.getThanksForPlayingMessage();
                         System.out.println(message);
+                        try {
+                            quizPlayerOrchestrator.resetPlayerScore(player);
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
                         message = quizGameOrchestrator.getStartMessage();
                     }
                 }
@@ -289,7 +294,6 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
         }
         try {
             System.out.println("¸¸.•*¨*•♫♪ You scored: " + player.getScore() + " out of " + questionSet.size() + "! ♪♫•*¨*•.¸¸");
-            resetPlayerScore(player);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -333,15 +337,15 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
     @Override
     public String checkForHighScore(Player player, Quiz quiz, Server server) {
+
         try {
-            if (server.checkForHighScore(quiz, player)) {
+            if (server.checkForHighScore(quiz, player) && player.getScore() != 0) {
                 server.setPlayerAsWinner(player, quiz, player.getScore());
                 message = getNewWinnerMessage(player);
 
             } else {
                 message = getThanksForPlayingMessage();
             }
-
         } catch (RemoteException e) {
             e.printStackTrace();
         }
