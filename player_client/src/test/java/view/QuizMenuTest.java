@@ -21,20 +21,21 @@ public class QuizMenuTest {
     private QuizMenu quizMenu;
     private Quiz quiz1;
     private Quiz quiz2;
+    private List<Quiz> quizList;
 
     @Before
     public void buildUp() {
         quiz1 = mock(Quiz.class);
         quiz2 = mock(Quiz.class);
 
-        List<Quiz> quizList = Arrays.asList(quiz1, quiz2);
+        quizList = Arrays.asList(quiz1, quiz2);
         quizMenu = new QuizMenuImpl(quizList);
 
     }
 
     @Test
     public void shouldBeAbleToSeeAListOfQuizzes() throws RemoteException {
-        quizMenu.printListOfQuizzes();
+        quizMenu.printListOfQuizzes(quizList);
 
         assertEquals("1. " + quiz1.getTitle() + "\n" + "2. " + quiz2.getTitle() + "\n", log.getLog());
     }

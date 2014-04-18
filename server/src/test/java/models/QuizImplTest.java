@@ -85,13 +85,5 @@ public class QuizImplTest {
         assertEquals(expectedScore, actualScore);
     }
 
-    @Test
-    public void shouldBeAbleToIncrementScore() throws RemoteException {
-        int expectedScore = 2;
-        player.incrementScore();
-        player.incrementScore();
 
-        int actualScore = player.getScore();
-        assertEquals(expectedScore, actualScore);
-    }
 }

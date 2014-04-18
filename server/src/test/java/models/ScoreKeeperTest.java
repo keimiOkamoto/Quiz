@@ -8,6 +8,7 @@ import java.rmi.RemoteException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -15,12 +16,15 @@ public class ScoreKeeperTest {
     private ScoreKeeper scoreKeeper;
     private Quiz quiz;
     private Player player;
+    private ItemsFactory itemsFactory;
+    private HighScore highScore;
 
     @Before
     public void buildUp() throws RemoteException {
         player = mock(Player.class);
-        ItemsFactory itemsFactory = mock(ItemsFactory.class);
+        itemsFactory = mock(ItemsFactory.class);
         scoreKeeper = new ScoreKeeperImpl(itemsFactory);
+        highScore = mock(HighScore.class);
         quiz = mock(Quiz.class);
     }
 
@@ -36,10 +40,15 @@ public class ScoreKeeperTest {
     public void shouldBeAbleToGetHighestScore() throws RemoteException {
         int score = 32;
         when(player.getScore()).thenReturn(score);
+        when(itemsFactory.getHighScore(eq(quiz), eq(player))).thenReturn(highScore);
+        when(highScore.getHighScore()).thenReturn(score);
+
         scoreKeeper.addHighScore(quiz, player);
+
+
         int actualHighScore  = scoreKeeper.getHighScore(quiz);
 
-        assertEquals(32, actualHighScore);
+        assertEquals(score, actualHighScore);
     }
 
     @Test
@@ -48,7 +57,10 @@ public class ScoreKeeperTest {
         String expected = "Batman";
         when(quiz.getId()).thenReturn(id);
         when(player.getName()).thenReturn(expected);
-        scoreKeeper.addHighScore(quiz, player);
+
+        when(itemsFactory.getHighScore(eq(quiz), eq(player))).thenReturn(highScore);
+        when(highScore.getPlayer()).thenReturn(player);
+        scoreKeeper.setLeader(quiz, player);
 
         Player actualLeader  = scoreKeeper.getLeader(id);
         String actual = actualLeader.getName();

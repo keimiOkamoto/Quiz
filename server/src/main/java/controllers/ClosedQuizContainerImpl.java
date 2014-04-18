@@ -32,7 +32,7 @@ public class ClosedQuizContainerImpl implements ClosedQuizContainer, Serializabl
 
     @Override
     public List<Quiz> getClosedQuizList() {
-        return new ArrayList(closedQuizMap.values());
+        return new ArrayList<>(closedQuizMap.values());
     }
 
 

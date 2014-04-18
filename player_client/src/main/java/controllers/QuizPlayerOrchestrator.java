@@ -57,4 +57,5 @@ public interface QuizPlayerOrchestrator {
      */
     Player getWinner(int quizId);
 
+    List<Quiz> getClosedQuizList() throws RemoteException;
 }

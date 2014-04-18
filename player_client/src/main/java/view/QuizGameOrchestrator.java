@@ -20,6 +20,8 @@ public interface QuizGameOrchestrator {
 
     Player makePlayer(Scanner scanner, Player player);
 
+    String printMenu();
+
     String printListOfQuizzes();
 
     void setQuizSize(int size);
@@ -27,6 +29,8 @@ public interface QuizGameOrchestrator {
     int getQuizSize();
 
     String checkForValidNumber(String userInput);
+
+    String getMenuMessage();
 
     String getNameMessage();
 
@@ -54,4 +58,13 @@ public interface QuizGameOrchestrator {
 
     String getStartMessage();
 
+    String printListOfClosedQuizzes();
+
+    String getStartChoice(String userInput);
+
+    String getClosedQuizMessage();
+
+    String getSelectClosedQuizMessage();
+
+    String getExitMessage();
 }

@@ -11,12 +11,13 @@ import java.util.Map;
 
 @Singleton
 public class ScoreKeeperImpl extends UnicastRemoteObject implements ScoreKeeper {
-    private Map<Integer, HighScore> scoreBoardMap = new HashMap<>();
+    private Map<Integer, HighScore> scoreBoardMap;
     private ItemsFactory itemsFactory;
 
     @Inject
     protected ScoreKeeperImpl(ItemsFactory itemsFactory) throws RemoteException {
         this.itemsFactory = itemsFactory;
+        scoreBoardMap = new HashMap<>();
     }
 
     @Override
@@ -44,7 +45,8 @@ public class ScoreKeeperImpl extends UnicastRemoteObject implements ScoreKeeper 
 
     @Override
     public Player getLeader(int quizId) {
-        return scoreBoardMap.get(quizId).getPlayer();
+        HighScore highScore = scoreBoardMap.get(quizId);
+        return highScore.getPlayer();
     }
 
     @Override

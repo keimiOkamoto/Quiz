@@ -64,10 +64,10 @@ public class ServerTest {
     }
 
     @Test
-    public void shouldBeAbleSetPlayerAsWinner() {
+    public void shouldBeAbleSetPlayerAsWinner() throws RemoteException {
         Player player = mock(Player.class);
         int score = 5;
         server.setPlayerAsWinner(player, quiz, score);
-        verify(quizServer).setPlayerAsWinner(player, quiz);
+        verify(quizServer).setPlayerAsWinner(quiz, player);
     }
 }
