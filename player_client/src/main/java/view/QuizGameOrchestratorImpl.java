@@ -260,7 +260,6 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
         for (Question question : questionSet) {
             String userInput = "";
-            int validAnswer = 0;
 
             while (!validInput(userInput)) {
                 try {
@@ -275,23 +274,18 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
                     }
                     userInput = scanner.nextLine();
 
-                    if(validInput(userInput)){
-                        setAnswerIndex(validAnswer);
+                    if(validInput(userInput)) {
+                        setAnswerIndex(userInput);
+
+                        if (answers[getAnswerIndex() - 1].getAnswerType()) {
+                            player.incrementScore();
+                        }
                     }
 
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
             }
-        }
-
-        try {
-            if (answers[getAnswerIndex() - 1].getAnswerType()) {
-                player.incrementScore();
-                System.out.println("Total Score is: " + player.getScore());
-            }
-        } catch (RemoteException e) {
-            e.printStackTrace();
         }
         message = getUserHighScoreMessage();
 
@@ -315,8 +309,8 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     }
 
 
-    private void setAnswerIndex(int answerIndex) {
-        this.answerIndex = answerIndex;
+    private void setAnswerIndex(String answerIndex) {
+        this.answerIndex = Integer.parseInt(answerIndex);
     }
 
     private int getAnswerIndex() {
