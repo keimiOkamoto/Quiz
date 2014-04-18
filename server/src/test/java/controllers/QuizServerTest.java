@@ -27,6 +27,7 @@ public class QuizServerTest {
     private ScoreKeeper scoreKeeper;
     private Player player;
     private PlayerFactory playerFactory;
+    private ClosedQuizContainer closedQuizContainer;
 
     @Before
     public void buildUp() throws RemoteException {
@@ -36,7 +37,8 @@ public class QuizServerTest {
         quiz = mock(Quiz.class);
         itemsFactory = mock(ItemsFactory.class);
         quizContainer = mock(QuizContainer.class);
-        quizServer = new QuizServerImpl(itemsFactory, playerFactory, quizContainer, scoreKeeper);
+        closedQuizContainer = mock(ClosedQuizContainer.class);
+        quizServer = new QuizServerImpl(itemsFactory, playerFactory, quizContainer, scoreKeeper, closedQuizContainer);
     }
 
     @Test

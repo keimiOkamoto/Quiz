@@ -3,6 +3,7 @@ package controllers;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import models.Player;
 import models.Quiz;
 
 import utils.DiskWriter;

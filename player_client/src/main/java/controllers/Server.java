@@ -61,4 +61,6 @@ public interface Server {
     public boolean checkForHighScore(Quiz quiz, Player player) throws RemoteException;
 
     void resetPlayerScore(Player player) throws RemoteException;
+
+    List<Quiz> getClosedQuizList() throws RemoteException;
 }

@@ -50,6 +50,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
                 initialized = false;
             }
             message = quizGameOrchestrator.printListOfQuizzes();
+            if (message.equals("EXIT")) System.exit(0);
 
             while (message.equals(quizGameOrchestrator.getQuizNumberSelectMessage())) {
                 userInput = scanner.nextLine();
@@ -65,6 +66,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
                         try {
                             if (message.equals(quizGameOrchestrator.getNewWinnerMessage(player))) {
                                 System.out.println(message);
+                                quizPlayerOrchestrator.setPlayerAsWinner(player, quiz);
                             }
                         } catch (RemoteException e) {
                             e.printStackTrace();
@@ -141,7 +143,6 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     @Override
     public String printListOfQuizzes() {
 
-        System.out.println("☆ Please select which quiz you would like to play by typing in the index number. ☆");
         List<Quiz> quizList = null;
         try {
             quizList = quizPlayerOrchestrator.getQuizzes();
@@ -150,13 +151,21 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
             System.out.println(e.getMessage());
         }
 
-        quizMenu = new QuizMenuImpl(quizList);
+        if (getQuizSize() == 0) {
+            System.out.println("There are no quizzes available. :(\nPlease wait for someone to set one up.\nAlternatively, make your own quiz!");
+            message = "EXIT";
+        } else {
 
-        try {
-            quizMenu.printListOfQuizzes();
-            message = getQuizNumberSelectMessage();
-        } catch (RemoteException e) {
-            e.getMessage();
+            System.out.println("☆ Please select which quiz you would like to play by typing in the index number. ☆");
+            quizMenu = new QuizMenuImpl(quizList);
+
+            try {
+                quizMenu.printListOfQuizzes();
+                message = getQuizNumberSelectMessage();
+
+            } catch (RemoteException e) {
+                e.getMessage();
+            }
         }
         return message;
     }
@@ -279,7 +288,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
                     }
                     userInput = scanner.nextLine();
 
-                    if(validInput(userInput)) {
+                    if (validInput(userInput)) {
                         setAnswerIndex(userInput);
 
                         if (answers[getAnswerIndex() - 1].getAnswerType()) {
@@ -300,10 +309,6 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
         message = getUserHighScoreMessage();
 
         return message;
-    }
-
-    private void resetPlayerScore(Player player) throws RemoteException {
-        quizPlayerOrchestrator.resetPlayerScore(player);
     }
 
     private boolean validInput(String userInput) {

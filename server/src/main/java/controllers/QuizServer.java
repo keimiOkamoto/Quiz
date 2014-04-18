@@ -146,5 +146,7 @@ public interface QuizServer extends Remote {
 
     void resetPlayerScore(Player player) throws RemoteException;
 
+    List<Quiz> getClosedQuizList() throws RemoteException;
+
     void flush() throws RemoteException;
 }

@@ -15,14 +15,16 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     private ItemsFactory itemsFactory;
     private QuizContainer quizContainer;
     private ScoreKeeper scoreKeeper;
+    private ClosedQuizContainer closedQuizContainer;
     private PlayerFactory playerFactory;
 
     @Inject
-    public QuizServerImpl(ItemsFactory itemsFactory, PlayerFactory playerFactory, QuizContainer quizContainer, ScoreKeeper scoreKeeper) throws RemoteException {
+    public QuizServerImpl(ItemsFactory itemsFactory, PlayerFactory playerFactory, QuizContainer quizContainer, ScoreKeeper scoreKeeper, ClosedQuizContainer closedQuizContainer) throws RemoteException {
         this.itemsFactory = itemsFactory;
         this.playerFactory = playerFactory;
         this.quizContainer = quizContainer;
         this.scoreKeeper = scoreKeeper;
+        this.closedQuizContainer = closedQuizContainer;
     }
 
     @Override
@@ -107,6 +109,10 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
         player.resetScore();
     }
 
+    @Override
+    public List<Quiz> getClosedQuizList() throws RemoteException {
+        return closedQuizContainer.getClosedQuizList();
+    }
     @Override
     public void flush() throws RemoteException {
         quizContainer.flush();

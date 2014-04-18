@@ -72,4 +72,9 @@ public interface QuizServer {
     Player generatePlayer(String name, String country, int age) throws RemoteException;
 
     void resetPlayerScore(Player player) throws RemoteException;
+
+    List<Quiz> getClosedQuizList() throws RemoteException;
+
+    void flush() throws RemoteException;
+
 }

@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Player;
 import models.Quiz;
 
 import java.rmi.Remote;

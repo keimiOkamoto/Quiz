@@ -48,4 +48,9 @@ public class ServerImpl implements Server {
     public void resetPlayerScore(Player player) throws RemoteException {
         quizServer.resetPlayerScore(player);
     }
+
+    @Override
+    public List<Quiz> getClosedQuizList() throws RemoteException {
+        return quizServer.getClosedQuizList();
+    }
 }
