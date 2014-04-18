@@ -1,5 +1,6 @@
 package view;
 
+import com.javafx.tools.doclets.formats.html.SourceToHTMLConverter;
 import constants.ExceptionMessages;
 import controllers.*;
 import exceptions.IllegalGameException;
@@ -23,6 +24,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     private Answer[] answers;
     private static Quiz quiz;
     private int quizSize;
+    private int answerSize;
 
 
     public static void main(String[] args) {
@@ -38,10 +40,10 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
         String userInput = null;
 
+        System.out.println(quizGameOrchestrator.getWelcomeMessage());
         while (userInput == null || !userInput.equals("EXIT")) {
 
             message = quizGameOrchestrator.getWelcomeMessage();
-            System.out.println(message);
 
             if (initialized) {
                 player = quizGameOrchestrator.makePlayer(scanner, player);
@@ -164,12 +166,12 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
     @Override
     public String checkForValidNumber(String userInput) {
-        int index = 0;
+        int index;
         try {
             index = Integer.parseInt(userInput);
             quizGameOrchestrator.setQuizNumber(index);
 
-            if (validRange(index)) {
+            if (validRangeQuizSize(index)) {
                 message = quizGameOrchestrator.getValidNumberMessage();
             } else {
                 System.out.println(ExceptionMessages.INVALID_USER_INPUT);
@@ -182,9 +184,17 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
         return message;
     }
 
-    private boolean validRange(int index) {
+    private boolean validRangeQuizSize(int index) {
         boolean result = true;
         if (index > quizSize || index <= 0) {
+            result = false;
+        }
+        return result;
+    }
+
+    private boolean validRangeAnswerSize(int index) {
+        boolean result = true;
+        if (index > answerSize || index <= 0) {
             result = false;
         }
         return result;
@@ -237,7 +247,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
     @Override
     public String getThanksForPlayingMessage() {
-        return "Thank you for playing, come back soon!\n\n";
+        return "♬ ☆ Thank you for playing, come back soon! ☆ ♬";
     }
 
     @Override
@@ -255,12 +265,21 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
                 Set<Answer> answerSet = question.getAnswers();
 
                 answers = answerSet.toArray(new Answer[answerSet.size()]);
+                setAnswerSize(answers.length);
 
                 for (int y = 0; y < answers.length; y++) {
                     System.out.println((y + 1) + ": " + answers[y].getAnswer());
                 }
                 String userInput = scanner.nextLine();
-                int answerIndex = Integer.parseInt(userInput);
+                int answerIndex = 0;
+                try {
+                    answerIndex = Integer.parseInt(userInput);
+                    if (!validRangeAnswerSize(answerIndex)) {
+                        System.out.println(ExceptionMessages.INVALID_USER_INPUT);
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println(ExceptionMessages.INVALID_USER_INPUT);
+                }
 
                 if (answers[answerIndex - 1].getAnswerType()) {
                     player.incrementScore();
@@ -279,6 +298,10 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
             e.printStackTrace();
         }
         return message;
+    }
+
+    private void setAnswerSize(int answerSize) {
+        this.answerSize = answerSize;
     }
 
     @Override
