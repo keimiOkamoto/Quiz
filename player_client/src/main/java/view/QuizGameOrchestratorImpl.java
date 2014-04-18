@@ -59,8 +59,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
                     if (message.equals(quizGameOrchestrator.getValidClosedQuizMessage())) {
                         System.out.println(quizGameOrchestrator.getClosedQuizMessage());
-                        message = quizGameOrchestrator.selectClosedQuiz(scanner);
-
+                        message = quizGameOrchestrator.selectClosedQuiz(scanner, message);
                     }
                 } //TODO
 
@@ -75,7 +74,34 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     }
 
 
+    @Override
+    public String selectClosedQuiz(Scanner scanner, String message) {
+        System.out.println("ello");
+        List<Quiz> quizList = null;
+        String userInput;
+        try {
+            quizList = quizPlayerOrchestrator.getClosedQuizList();
+            QuizMenu quizMenu1 = new QuizMenuImpl(quizList);
+            quizMenu1.print();
+            answerSize = quizList.size();
 
+
+            userInput = scanner.nextLine();
+            if (validInput(userInput)) {
+                Quiz quiz1 = quizList.get(Integer.parseInt(userInput) - 1);
+                Player player = quizPlayerOrchestrator.getWinner(quiz1.getId());
+                System.out.println("The winner is " + player.getName() + "\nfrom: " + player.getCountry() + "\nage: " + player.getAge());
+            } else {
+                message = quizGameOrchestrator.getClosedQuizMessage();
+                System.out.println(ExceptionMessages.INVALID_USER_INPUT);
+            }
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        return message;
+    }
 
     @Override
     public Player makePlayer(Scanner scanner, Player player) {
@@ -127,10 +153,10 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
         return player;
     }
 
+
     private static boolean checkForNull(String userInput) {
         return userInput == null || userInput.trim().isEmpty();
     }
-
 
     @Override
     public String checkIfClosedQuizIsNull() {
@@ -149,23 +175,27 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
         return message;
     }
 
-    @Override
-    public String selectClosedQuiz(Scanner scanner) {
-        List<Quiz> quizList = null;
+    private boolean checkIfNumber(String userInput) {
+        boolean answer = true;
         try {
-            quizList = quizPlayerOrchestrator.getClosedQuizList();
-
-            for (int x = 1; x >= quizList.size(); x++) {
-                System.out.println(x + ":" + quizList.get(x-1));
-            }
-            message
-
-        } catch (RemoteException e) {
-            e.printStackTrace();
+            Integer.parseInt(userInput);
+        } catch (NumberFormatException e) {
+            answer = false;
         }
-
-        return message;
+        return answer;
     }
+
+    private boolean validInput(String userInput) {
+        return (!checkForNull(userInput)) &&
+                checkIfNumber(userInput) &&
+                validRangeAnswerSize(Integer.parseInt(userInput));
+    }
+
+
+    private boolean validRangeAnswerSize(int index) {
+        return index <= answerSize && index > 0;
+    }
+
 
     @Override
     public String getStartChoice(String userInput) {

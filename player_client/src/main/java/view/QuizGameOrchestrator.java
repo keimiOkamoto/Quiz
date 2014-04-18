@@ -26,6 +26,8 @@ public interface QuizGameOrchestrator {
 
     String checkIfClosedQuizIsNull();
 
+    String selectClosedQuiz(Scanner scanner, String message);
+
     String getStartChoice(String userInput);
 
     String getClosedQuizMessage();
@@ -38,5 +40,4 @@ public interface QuizGameOrchestrator {
 
     String getValidClosedQuizMessage();
 
-    String selectClosedQuiz(Scanner scanner);
 }
