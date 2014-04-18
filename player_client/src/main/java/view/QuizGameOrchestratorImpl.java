@@ -1,6 +1,5 @@
 package view;
 
-import com.javafx.tools.doclets.formats.html.SourceToHTMLConverter;
 import constants.ExceptionMessages;
 import controllers.*;
 import exceptions.IllegalGameException;
@@ -25,6 +24,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     private static Quiz quiz;
     private int quizSize;
     private int answerSize;
+    private int answerIndex;
 
 
     public static void main(String[] args) {
@@ -52,7 +52,6 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
             message = quizGameOrchestrator.printListOfQuizzes();
 
             while (message.equals(quizGameOrchestrator.getQuizNumberSelectMessage())) {
-                System.out.println("ds");
                 userInput = scanner.nextLine();
                 message = quizGameOrchestrator.checkForValidNumber(userInput);
 
@@ -93,12 +92,21 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
             System.out.println(getNameMessage());
             name = scanner.nextLine();
 
-            if (checkForNull(name)) message1 = getCountryMessage();
+            if (!checkForNull(name)) {
+                message1 = getCountryMessage();
+            } else {
+                System.out.println(ExceptionMessages.INVALID_USER_INPUT);
+            }
             while (message1.equals(getCountryMessage())) {
                 System.out.println(message1);
                 country = scanner.nextLine();
 
-                if (checkForNull(country)) message1 = getAgeMessage();
+                if (!checkForNull(country)) {
+                    message1 = getAgeMessage();
+                } else {
+                    System.out.println(ExceptionMessages.INVALID_USER_INPUT);
+                }
+
                 while (message1.equals(getAgeMessage())) {
                     System.out.println(message1);
                     age = scanner.nextLine();
@@ -122,13 +130,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     }
 
     private static boolean checkForNull(String userInput) {
-        boolean result = true;
-
-        if (userInput == null || userInput.trim().isEmpty()) {
-            System.out.println(ExceptionMessages.INVALID_USER_INPUT);
-            result = false;
-        }
-        return result;
+        return userInput == null || userInput.trim().isEmpty();
     }
 
     @Override
@@ -193,11 +195,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     }
 
     private boolean validRangeAnswerSize(int index) {
-        boolean result = true;
-        if (index > answerSize || index <= 0) {
-            result = false;
-        }
-        return result;
+        return index <= answerSize && index > 0;
     }
 
     @Override
@@ -242,17 +240,18 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
     @Override
     public String getNewWinnerMessage(Player player) throws RemoteException {
-        return "\t\t\tHIGH-SCORE!\nCongratulations " + player.getName() + " from " + player.getCountry() + "!";
+        return "\t\tYOU GOT THE HIGHEST SCORE!\n☆☆☆☆☆ Congratulations " + player.getName() + " from " + player.getCountry() + "!  ☆☆☆☆☆";
     }
 
     @Override
     public String getThanksForPlayingMessage() {
-        return "♬ ☆ Thank you for playing, come back soon! ☆ ♬";
+        return "♬ ☆ Thank you for playing, come back soon! ☆ ♬\n";
     }
 
     @Override
     public String play(Quiz quiz, Scanner scanner, Player player) {
         Set<Question> questionSet = null;
+
         try {
             questionSet = quiz.getQuestions();
         } catch (RemoteException e) {
@@ -260,44 +259,68 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
         }
 
         for (Question question : questionSet) {
-            try {
-                System.out.println("QUESTION:" + question.getQuestion());
-                Set<Answer> answerSet = question.getAnswers();
+            String userInput = "";
+            int validAnswer = 0;
 
-                answers = answerSet.toArray(new Answer[answerSet.size()]);
-                setAnswerSize(answers.length);
-
-                for (int y = 0; y < answers.length; y++) {
-                    System.out.println((y + 1) + ": " + answers[y].getAnswer());
-                }
-                String userInput = scanner.nextLine();
-                int answerIndex = 0;
+            while (!validInput(userInput)) {
                 try {
-                    answerIndex = Integer.parseInt(userInput);
-                    if (!validRangeAnswerSize(answerIndex)) {
-                        System.out.println(ExceptionMessages.INVALID_USER_INPUT);
+                    System.out.println("\nQUESTION: " + question.getQuestion());
+                    Set<Answer> answerSet = question.getAnswers();
+
+                    answers = answerSet.toArray(new Answer[answerSet.size()]);
+                    setAnswerSize(answers.length);
+
+                    for (int y = 0; y < answers.length; y++) {
+                        System.out.println((y + 1) + ": " + answers[y].getAnswer());
                     }
-                } catch (NumberFormatException e) {
-                    System.out.println(ExceptionMessages.INVALID_USER_INPUT);
-                }
+                    userInput = scanner.nextLine();
 
-                if (answers[answerIndex - 1].getAnswerType()) {
-                    player.incrementScore();
-                    System.out.println("score is " + player.getScore());
-                }
+                    if(validInput(userInput)){
+                        setAnswerIndex(validAnswer);
+                    }
 
-                message = getUserHighScoreMessage();
-            } catch (RemoteException e) {
-                e.printStackTrace();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
         try {
-            System.out.println("Total Score is: " + player.getScore());
+            if (answers[getAnswerIndex() - 1].getAnswerType()) {
+                player.incrementScore();
+                System.out.println("Total Score is: " + player.getScore());
+            }
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+        message = getUserHighScoreMessage();
+
         return message;
+    }
+
+    private boolean validInput(String userInput) {
+        return (!checkForNull(userInput)) &&
+                checkIfNumber(userInput) &&
+                validRangeAnswerSize(Integer.parseInt(userInput));
+    }
+
+    private boolean checkIfNumber(String userInput) {
+        boolean answer = true;
+        try {
+            Integer.parseInt(userInput);
+        } catch (NumberFormatException e) {
+            answer = false;
+        }
+        return answer;
+    }
+
+
+    private void setAnswerIndex(int answerIndex) {
+        this.answerIndex = answerIndex;
+    }
+
+    private int getAnswerIndex() {
+        return answerIndex;
     }
 
     private void setAnswerSize(int answerSize) {
