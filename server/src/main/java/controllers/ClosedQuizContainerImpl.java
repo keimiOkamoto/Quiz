@@ -12,6 +12,7 @@ import java.util.Map;
 
 @Singleton
 public class ClosedQuizContainerImpl implements ClosedQuizContainer, Serializable {
+
     private static final long serialVersionUID = -9098843522797392142L;
     private Map<Integer, Quiz> closedQuizMap = new HashMap<>();
 

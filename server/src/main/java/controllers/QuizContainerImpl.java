@@ -14,9 +14,10 @@ import java.util.TreeMap;
 
 @Singleton
 public class QuizContainerImpl implements QuizContainer {
+
     private TreeMap<Integer, Quiz> quizTreeMap;
     private ClosedQuizContainer closedQuizContainer;
-    DiskWriter diskWriter;
+    private DiskWriter diskWriter;
 
     @Inject
     public QuizContainerImpl(ClosedQuizContainer closedQuizContainer, DiskWriter diskWriter) {

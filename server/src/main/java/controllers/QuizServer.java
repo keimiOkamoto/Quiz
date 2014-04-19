@@ -9,11 +9,10 @@ import models.Quiz;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Interface for the quiz server.
+ * Interface for the setup and user clients.
  */
 public interface QuizServer extends Remote {
 
@@ -22,7 +21,7 @@ public interface QuizServer extends Remote {
      *
      * @param title A String title.
      * @return false if the same title already exists.
-     * @throws RemoteException
+     * @throws RemoteException if there is a problem with the server/connection.
      */
     boolean titleIsValid(String title) throws RemoteException;
 
@@ -31,31 +30,31 @@ public interface QuizServer extends Remote {
      *
      * @param id An ID of a Quiz.
      * @return false if the ID doesn't exist.
-     * @throws RemoteException
+     * @throws RemoteException if there is a problem with the server/connection.
      */
     boolean iDIsValid(int id) throws RemoteException;
-
-    /**
-     * Ends quiz by given ID.
-     *
-     * @param id The ID ofa quiz.
-     * @throws RemoteException
-     */
-    void endQuiz(int id) throws RemoteException;
 
     /**
      * Saves a quiz to the server.
      *
      * @param quiz A quiz.
-     * @throws RemoteException
+     * @throws RemoteException if there is a problem with the server/connection.
      */
     void save(Quiz quiz) throws RemoteException;
+
+    /**
+     * Ends quiz by given ID.
+     *
+     * @param id The ID ofa quiz.
+     * @throws RemoteException if there is a problem with the server/connection.
+     */
+    void endQuiz(int id) throws RemoteException;
 
     /**
      * Gets a ItemsFactory object.
      *
      * @return An ItemsFactory.
-     * @throws RemoteException
+     * @throws RemoteException if there is a problem with the server/connection.
      */
     ItemsFactory getItemsFactory() throws RemoteException;
 
@@ -64,6 +63,7 @@ public interface QuizServer extends Remote {
      *
      * @param title Title of a quiz
      * @return A quiz.
+     * @throws java.rmi.RemoteException if there is a problem with the server/connection.
      */
     Quiz generateQuiz(String title) throws RemoteException;
 
@@ -72,6 +72,7 @@ public interface QuizServer extends Remote {
      *
      * @param question A Question
      * @return A question
+     * @throws java.rmi.RemoteException if there is a problem with the server/connection.
      */
     Question generateQuestion(String question) throws RemoteException;
 
@@ -81,6 +82,7 @@ public interface QuizServer extends Remote {
      * @param answer A Answer
      * @param answerType False ig it is not the right answer, true if i is.
      * @return An answer
+     * @throws java.rmi.RemoteException if there is a problem with the server/connection.
      */
     Answer generateAnswer(String answer, boolean answerType) throws RemoteException;
 
@@ -91,6 +93,7 @@ public interface QuizServer extends Remote {
      * Getter for a list of available quizzes.
      *
      * @return A list of available quizzes.
+     * @throws java.rmi.RemoteException if there is a problem with the server/connection.
      */
     List<Quiz> getQuizzes() throws RemoteException;
 
@@ -99,15 +102,17 @@ public interface QuizServer extends Remote {
      *
      * @param id ID of a quiz.
      * @return A quiz with the corresponding ID.
+     * @throws java.rmi.RemoteException if there is a problem with the server/connection.
      */
     Quiz getQuiz(int id) throws RemoteException;
 
     /**
      * Checks if the score is the highest score.
      *
-     *
      * @param quiz A quiz.
+     * @param player A player of the quiz.
      * @return False if the score is not the highest.
+     * @throws java.rmi.RemoteException if there is a problem with the server/connection.
      */
     boolean checkForHighScore(Quiz quiz, Player player)throws RemoteException;
 
@@ -115,13 +120,16 @@ public interface QuizServer extends Remote {
      * Getter for a player factory.
      *
      * @return Player object.
+     * @throws java.rmi.RemoteException if there is a problem with the server/connection.
      */
     PlayerFactory getPlayerFactory() throws RemoteException;
 
     /**
      * Setter for setting a player as a winner.
      *
+     * @param quiz A quiz that has been played.
      * @param player A player of a quiz.
+     * @throws java.rmi.RemoteException if there is a problem with the server/connection.
      */
     void setPlayerAsWinner(Quiz quiz, Player player) throws RemoteException;
 
@@ -130,6 +138,7 @@ public interface QuizServer extends Remote {
      *
      * @param quizId The id of the quiz.
      * @return The winner of the quiz.
+     * @throws java.rmi.RemoteException if there is a problem with the server/connection.
      */
     Player getWinnerBy(int quizId) throws RemoteException;
 
@@ -144,9 +153,26 @@ public interface QuizServer extends Remote {
      */
     Player generatePlayer(String name, String country, int age) throws RemoteException;
 
+    /**
+     * Resets the player score.
+     *
+     * @param player A player of the score to be reset.
+     * @throws RemoteException if there is a problem with the server/connection.
+     */
     void resetPlayerScore(Player player) throws RemoteException;
 
+    /**
+     * Getter for a closed quiz list.
+     *
+     * @return a list of closed quizzes.
+     * @throws RemoteException if there is a problem with the server/connection.
+     */
     List<Quiz> getClosedQuizList() throws RemoteException;
 
+    /**
+     * Serializes all items that need to be persisted.
+     *
+     * @throws RemoteException if there is a problem with the server/connection.
+     */
     void flush() throws RemoteException;
 }
