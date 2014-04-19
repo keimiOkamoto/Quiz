@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import factories.ItemsFactory;
 import factories.PlayerFactory;
 import models.*;
-import utils.UniqueNumberGeneratorUtils;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -38,13 +37,13 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     }
 
     @Override
-    public synchronized void endQuiz(int id) throws RemoteException {
-        quizContainer.closeQuizWith(id);
+    public synchronized void save(Quiz quiz) throws RemoteException {
+        quizContainer.save(quiz);
     }
 
     @Override
-    public synchronized void save(Quiz quiz) throws RemoteException {
-        quizContainer.save(quiz);
+    public synchronized void endQuiz(int id) throws RemoteException {
+        quizContainer.closeQuizWith(id);
     }
 
     @Override

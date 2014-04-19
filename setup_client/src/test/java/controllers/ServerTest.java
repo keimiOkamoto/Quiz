@@ -1,5 +1,6 @@
 package controllers;
 
+import factories.ItemsFactory;
 import models.*;
 import org.junit.Before;
 import org.junit.Test;

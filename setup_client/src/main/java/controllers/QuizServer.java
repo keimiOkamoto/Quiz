@@ -1,23 +1,22 @@
 package controllers;
 
-import factories.PlayerFactory;
+import factories.ItemsFactory;
 import models.*;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.List;
 
 /**
- * Interface for the quiz server.
+ * Interface for the quiz server to the setup client and the player client.
  */
 public interface QuizServer extends Remote {
 
     /**
      * Checks if the title already exists.
      *
-     * @param title A String title.
+     * @param title A title string.
      * @return false if the same title already exists.
-     * @throws RemoteException
+     * @throws RemoteException if there is a problem with the server/connection.
      */
     boolean titleIsValid(String title) throws RemoteException;
 
@@ -26,15 +25,15 @@ public interface QuizServer extends Remote {
      *
      * @param id An ID of a Quiz.
      * @return false if the ID doesn't exist.
-     * @throws RemoteException
+     * @throws RemoteException if there is a problem with the server/connection.
      */
     boolean iDIsValid(int id) throws RemoteException;
 
     /**
-     * Ends quiz by given ID.
+     * Ends quiz by ID of a quiz.
      *
-     * @param id The ID ofa quiz.
-     * @throws RemoteException
+     * @param id The ID of a quiz to be closed.
+     * @throws RemoteException if there is a problem with the server/connection.
      */
     void endQuiz(int id) throws RemoteException;
 
@@ -53,14 +52,6 @@ public interface QuizServer extends Remote {
      * @throws RemoteException
      */
     ItemsFactory getItemsFactory() throws RemoteException;
-
-    /**
-     * Get winner by the quiz id.
-     *
-     * @param quizId The id of the quiz.
-     * @return The winner of the quiz.
-     */
-    Player getWinnerBy(int quizId) throws RemoteException;
 
     /**
      * Generates a Quiz
@@ -82,51 +73,8 @@ public interface QuizServer extends Remote {
      * Generate Answer
      *
      * @param answer A Answer
-     * @param answerType False ig it is not the right answer, true if i is.
+     * @param answerType False ig it is not the right answer, true if it is.
      * @return An answer
      */
     Answer generateAnswer(String answer, boolean answerType) ;
-
-
-    /********** Player client methods ***********/
-
-    /**
-     * Getter for a list of available quizzes.
-     *
-     * @return A list of available quizzes.
-     */
-    List<Quiz> getQuizzes() throws RemoteException;
-
-    /**
-     * Getter for a quiz.
-     *
-     * @param id ID of a quiz.
-     * @return A quiz with the corresponding ID.
-     */
-    Quiz getQuiz(int id) throws RemoteException;
-
-    /**
-     * Checks if the score is the highest score.
-     *
-     *
-     * @param quiz A quiz.
-     * @return False if the score is not the highest.
-     */
-    boolean checkForHighScore(Quiz quiz) throws RemoteException;
-
-    /**
-     * Getter for a player factory.
-     *
-     * @return Player object.
-     */
-    PlayerFactory getPlayerFactory() throws RemoteException;
-
-    /**
-     * Setter for setting a player as a winner.
-     *
-     * @param player A player of a quiz.
-     */
-    void setPlayerAsWinner(Quiz quiz, Player player) throws RemoteException;
-
-
 }
