@@ -1,6 +1,6 @@
 package constants;
 
-/**
+/*
  * Exception messages for setup client to avoid 'magic words'
  */
 

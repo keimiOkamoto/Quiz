@@ -6,6 +6,11 @@ import models.Quiz;
 
 import java.rmi.RemoteException;
 
+/**
+ * This class orchestrates the creation of a quiz and the closing of
+ * a quiz.
+ */
+
 public interface QuizOrchestrator {
 
     /**
@@ -13,33 +18,29 @@ public interface QuizOrchestrator {
      *
      * @param title a title for the quiz
      * @return a unique id
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException if the name entered is null or an empty string.
      * @throws exceptions.IllegalQuizException if the name of the quiz already exists.
+     * @throws java.rmi.RemoteException if there is a problem with the server.
      */
     int createQuiz(String title) throws IllegalArgumentException, IllegalQuizException, RemoteException;
-
-    /**
-     * Getter for a title of a quiz
-     *
-     * @return a title of a quiz
-     */
-    String getTitle();
 
     /**
      * Adds a question to a quiz.
      *
      * @param question for a quiz
      * @throws IllegalQuizException if quiz does not exist.
-     * @throws IllegalArgumentException if question is null or empty.
+     * @throws IllegalArgumentException if question is null or an empty string.
+     * @throws java.rmi.RemoteException if there is a problem with the server.
      */
-    void addQuestion(String question) throws  IllegalArgumentException, IllegalQuestionException, IllegalQuizException, RemoteException;
+    void addQuestion(String question) throws  IllegalArgumentException, IllegalQuizException, RemoteException;
 
     /**
      * Add answer to a question.
      *
      * @param answer to a question.
      * @throws IllegalQuestionException if question does not exist.
-     * @throws IllegalArgumentException if answer is null or empty.
+     * @throws IllegalArgumentException if answer is null or an empty string.
+     * @throws java.rmi.RemoteException if there is a problem with the server.
      */
     void addAnswer(String answer, boolean answerType) throws IllegalArgumentException, IllegalQuestionException, RemoteException;
 
@@ -49,20 +50,30 @@ public interface QuizOrchestrator {
      * @param id ID of a quiz.
      * @throws IllegalQuizException if quiz does not exist or id quiz without
      * questions is attempted to be saved.
+     * @throws java.rmi.RemoteException if there is a problem with the server.
      */
     void closeQuiz(int id) throws IllegalQuizException, RemoteException;
 
     /**
-     * Saves quiz to server.
+     * Saves quiz to the server.
      *
-     * @param quiz A quiz.
+     * @param quiz A quiz to be saved.
+     * @throws IllegalQuizException if quiz is null.
+     * @throws java.rmi.RemoteException if there is a problem with the server.
      */
     void save(Quiz quiz) throws IllegalQuizException, RemoteException;
 
     /**
+     * Getter for the title of the quiz
+     *
+     * @return a title of the quiz
+     */
+    String getTitle();
+
+    /**
      * Getter for the quiz.
      *
-     * @return A quiz.
+     * @return Quiz A quiz.
      */
     Quiz getQuiz();
 }
