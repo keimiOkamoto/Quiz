@@ -1,13 +1,10 @@
 package controllers;
 
 import com.google.inject.Singleton;
-import models.Player;
 import models.Quiz;
-import models.ScoreKeeper;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +31,6 @@ public class ClosedQuizContainerImpl implements ClosedQuizContainer, Serializabl
     public List<Quiz> getClosedQuizList() {
         return new ArrayList<>(closedQuizMap.values());
     }
-
 
     @Override
     public Quiz getQuiz(int id) {

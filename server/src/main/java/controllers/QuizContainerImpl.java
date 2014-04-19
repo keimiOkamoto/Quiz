@@ -1,15 +1,12 @@
 package controllers;
 
-
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import models.Player;
 import models.Quiz;
 
 import utils.DiskWriter;
 
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -33,23 +30,6 @@ public class QuizContainerImpl implements QuizContainer {
         }
         this.diskWriter = diskWriter;
         addShutdownHook();
-    }
-
-    /**
-     * This method adds a shutdown hook
-     */
-    private void addShutdownHook() {
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            @Override
-            public void run() {
-                flush();
-            }
-        });
-    }
-
-    @Override
-    public void flush() {
-        diskWriter.writeToDisk(closedQuizContainer, quizTreeMap);
     }
 
     @Override
@@ -102,4 +82,20 @@ public class QuizContainerImpl implements QuizContainer {
         return list;
     }
 
+    @Override
+    public void flush() {
+        diskWriter.writeToDisk(closedQuizContainer, quizTreeMap);
+    }
+
+    /**
+     * This method adds a shutdown hook
+     */
+    private void addShutdownHook() {
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                flush();
+            }
+        });
+    }
 }

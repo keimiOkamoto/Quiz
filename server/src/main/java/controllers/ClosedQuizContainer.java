@@ -1,10 +1,7 @@
 package controllers;
 
-import models.Player;
 import models.Quiz;
 
-import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.util.List;
 
 /**
@@ -18,6 +15,11 @@ public interface ClosedQuizContainer {
      */
     void add(Quiz closedQuiz);
 
+    /**
+     * Getter for a list of closed quizzes.
+     *
+     * @return A list of closed quizzes.
+     */
     List<Quiz> getClosedQuizList();
 
     /**
