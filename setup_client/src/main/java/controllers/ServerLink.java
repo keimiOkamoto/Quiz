@@ -5,5 +5,10 @@ package controllers;
  */
 public interface ServerLink {
 
+    /**
+     * This method gets a QuizServer.
+     *
+     * @return A quizServer
+     */
     QuizServer getQuizServer();
 }
