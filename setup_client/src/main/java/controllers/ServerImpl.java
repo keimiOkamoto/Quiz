@@ -4,7 +4,6 @@ import models.*;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 
 public class ServerImpl implements Server {
     private QuizServer quizServer;
@@ -34,11 +33,6 @@ public class ServerImpl implements Server {
     }
 
     @Override
-    public void closeQuiz(int id)  throws RemoteException {
-        quizServer.endQuiz(id);
-    }
-
-    @Override
     public boolean valid(int id) throws RemoteException {
         return quizServer.iDIsValid(id);
     }
@@ -46,5 +40,10 @@ public class ServerImpl implements Server {
     @Override
     public void save(Quiz quiz) throws RemoteException {
         quizServer.save(quiz);
+    }
+
+    @Override
+    public void closeQuiz(int id)  throws RemoteException {
+        quizServer.endQuiz(id);
     }
 }

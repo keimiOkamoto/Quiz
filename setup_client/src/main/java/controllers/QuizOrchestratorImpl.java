@@ -48,16 +48,16 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
     }
 
     @Override
-    public void closeQuiz(int id) throws IllegalQuizException, RemoteException {
-        if (!server.valid(id)) throw new IllegalQuizException(ExceptionMessages.NO_QUIZ_WITH_ID_EXISTS);
-        server.closeQuiz(id);
-    }
-
-    @Override
     public void save(Quiz quiz) throws IllegalQuizException, RemoteException {
         if (quiz == null) throw new IllegalQuizException(ExceptionMessages.NO_QUIZ_TO_SAVE);
         if (quiz.isEmpty()) throw new IllegalQuizException(ExceptionMessages.NO_QUESTIONS_CANNOT_SAVE);
         server.save(quiz);
+    }
+
+    @Override
+    public void closeQuiz(int id) throws IllegalQuizException, RemoteException {
+        if (!server.valid(id)) throw new IllegalQuizException(ExceptionMessages.NO_QUIZ_WITH_ID_EXISTS);
+        server.closeQuiz(id);
     }
 
     @Override

@@ -45,6 +45,15 @@ public interface QuizOrchestrator {
     void addAnswer(String answer, boolean answerType) throws IllegalArgumentException, IllegalQuestionException, RemoteException;
 
     /**
+     * Saves quiz to the server.
+     *
+     * @param quiz A quiz to be saved.
+     * @throws IllegalQuizException if quiz is null.
+     * @throws java.rmi.RemoteException if there is a problem with the server.
+     */
+    void save(Quiz quiz) throws IllegalQuizException, RemoteException;
+
+    /**
      * Closes a quiz with the corresponding ID.
      *
      * @param id ID of a quiz.
@@ -53,15 +62,6 @@ public interface QuizOrchestrator {
      * @throws java.rmi.RemoteException if there is a problem with the server.
      */
     void closeQuiz(int id) throws IllegalQuizException, RemoteException;
-
-    /**
-     * Saves quiz to the server.
-     *
-     * @param quiz A quiz to be saved.
-     * @throws IllegalQuizException if quiz is null.
-     * @throws java.rmi.RemoteException if there is a problem with the server.
-     */
-    void save(Quiz quiz) throws IllegalQuizException, RemoteException;
 
     /**
      * Getter for the title of the quiz
