@@ -84,7 +84,6 @@ public class DiskWriterImpl implements DiskWriter {
         }
     }
 
-
     @Override
     public Integer getUniqueNumber() {
         return id;

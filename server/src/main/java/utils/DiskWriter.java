@@ -2,7 +2,6 @@ package utils;
 
 
 import controllers.ClosedQuizContainer;
-import controllers.QuizContainer;
 import models.Quiz;
 
 import java.util.TreeMap;
@@ -32,25 +31,45 @@ public interface DiskWriter {
      */
     void readDisk();
 
-
-
-    ClosedQuizContainer getClosedQuizContainer();
-
-    TreeMap<Integer,Quiz> getQuizTreeMap();
-
-    Integer getUniqueNumber();
-
-    void writeIdToDisk(Integer id);
-
+    /**
+     * Checks of the data exists for uniqueNumberGenerator.
+     *
+     * @return true if i does.
+     */
     boolean checkIfIdDataExists();
 
-    void readDiskForIdFile();
-
+    /**
+     * Writes the data to disk.
+     *
+     * @param id the number generated.
+     */
+    void writeIdToDisk(Integer id);
 
     /**
-     * Returns a MeetingContainer
-     *
-     * @return a MeetingContainer
+     * Reads the disk for the previously
+     * saved file.
      */
-   // MeetingContainer getMeetingContainer();
+    void readDiskForIdFile();
+
+    /**
+     * Gets the closed quiz container.
+     *
+     * @return A closed quiz container.
+     */
+    ClosedQuizContainer getClosedQuizContainer();
+
+    /**
+     * Gets a tree map of previously saved quizzes.
+     *
+     * @return Tree map of previously saved quizzes.
+     */
+    TreeMap<Integer,Quiz> getQuizTreeMap();
+
+    /**
+     * Gets a UniqueNumberGenerator.
+     *
+     * @return An integer of where it was last saved.
+     */
+    Integer getUniqueNumber();
+
 }
