@@ -18,8 +18,6 @@ public interface QuizGameOrchestrator {
 
     Player makePlayer(Scanner scanner, Player player);
 
-    String getMenuMessage();
-
     void setQuizNumber(int numberIndex);
 
     String checkForHighScore(Player player, Quiz quiz, Server server);
@@ -29,15 +27,5 @@ public interface QuizGameOrchestrator {
     String selectClosedQuiz(Scanner scanner, String message);
 
     String getStartChoice(String userInput);
-
-    String getClosedQuizMessage();
-
-    String getNameMessage();
-
-    String getCountryMessage();
-
-    String getAgeMessage();
-
-    String getValidClosedQuizMessage();
 
 }

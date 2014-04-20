@@ -1,7 +1,6 @@
 package view;
 
 import constants.ExceptionMessages;
-import constants.SetUpMessages;
 import controllers.QuizPlayerOrchestrator;
 import controllers.Server;
 import exceptions.IllegalGameException;
