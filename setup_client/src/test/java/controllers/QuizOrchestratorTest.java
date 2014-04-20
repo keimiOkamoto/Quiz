@@ -41,7 +41,7 @@ public class QuizOrchestratorTest {
     }
 
     /*
-     * Start of createQuiz()
+     * SetupStart of createQuiz()
      */
     @Test
     public void shouldBeAbleToCreateAQuiz() throws IllegalQuizException, RemoteException {
@@ -112,7 +112,7 @@ public class QuizOrchestratorTest {
     }
 
     /*
-     * Start of addQuestion()
+     * SetupStart of addQuestion()
      */
     @Test
     public void shouldBeAbleToAddQuestionToQuizCreated() throws IllegalQuizException, RemoteException, IllegalQuestionException {
@@ -186,7 +186,7 @@ public class QuizOrchestratorTest {
     }
 
     /*
-     * Start of add(question)
+     * SetupStart of add(question)
      */
     @Test
     public void shouldBeAbleToAddAnswer() throws IllegalQuizException, IllegalQuestionException, RemoteException {
@@ -285,7 +285,7 @@ public class QuizOrchestratorTest {
     }
 
     /*
-     * Start of closeQuiz(int id)
+     * SetupStart of closeQuiz(int id)
      */
     @Test
     public void shouldBeAbleToCloseQuizByQuotingId() throws IllegalQuizException, RemoteException {

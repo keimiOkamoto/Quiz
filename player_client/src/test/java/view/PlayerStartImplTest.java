@@ -3,9 +3,9 @@ package view;
 import org.junit.Before;
 import org.junit.Test;
 
-public class QuizPlayerStartTest {
+public class PlayerStartImplTest {
 
-    private QuizPlayerStart quizPlayerStart;
+    private PlayerStart playerStart;
 
     /*
              * Welcome message with a list of quizzes
@@ -26,7 +26,7 @@ public class QuizPlayerStartTest {
              */
     @Before
     public void buildUp() {
-        quizPlayerStart = new QuizPlayerStartImpl();
+        playerStart = new PlayerStartImpl();
     }
 
     @Test

@@ -16,14 +16,14 @@ import java.util.Set;
 
 public class PlayQuizImpl implements PlayQuiz {
 
-    private QuizPlayerStart quizPlayerStart;
+    private PlayerStart playerStart;
     private QuizPlayerOrchestrator quizPlayerOrchestrator;
     private int quizSize;
     private int answerSize;
     private int answerIndex;
 
-    public PlayQuizImpl(QuizPlayerStart quizPlayerStart, QuizPlayerOrchestrator quizPlayerOrchestrator) {
-        this.quizPlayerStart = quizPlayerStart;
+    public PlayQuizImpl(PlayerStart playerStart, QuizPlayerOrchestrator quizPlayerOrchestrator) {
+        this.playerStart = playerStart;
         this.quizPlayerOrchestrator = quizPlayerOrchestrator;
     }
 
@@ -46,7 +46,7 @@ public class PlayQuizImpl implements PlayQuiz {
             message = checkForValidNumber(userInput, message);
 
             while (message.equals(getValidNumberMessage())) {
-                message = playQuiz(scanner, player, server, quizPlayerStart.getQuiz());
+                message = playQuiz(scanner, player, server, playerStart.getQuiz());
             }
         }
         return message;
@@ -63,7 +63,7 @@ public class PlayQuizImpl implements PlayQuiz {
 
 
     private String getUserHighScoreMessage(Player player, Server server, Quiz quiz) {
-        String message = quizPlayerStart.checkForHighScore(player, quiz, server);
+        String message = playerStart.checkForHighScore(player, quiz, server);
 
         try {
             if (message.equals(getNewWinnerMessage(player))) {
@@ -215,7 +215,7 @@ public class PlayQuizImpl implements PlayQuiz {
         int index;
         try {
             index = Integer.parseInt(userInput);
-            quizPlayerStart.setQuizNumber(index);
+            playerStart.setQuizNumber(index);
 
             if (validRangeQuizSize(index)) {
                 message = getValidNumberMessage();

@@ -7,7 +7,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
-public class Start {
+public class SetupStart {
     /*
      * Event loop for setting up the quiz.
      */

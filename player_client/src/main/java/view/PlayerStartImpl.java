@@ -11,10 +11,10 @@ import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Scanner;
 
-public class QuizPlayerStartImpl implements QuizPlayerStart {
+public class PlayerStartImpl implements PlayerStart {
 
     private static QuizPlayerOrchestrator quizPlayerOrchestrator;
-    private static QuizPlayerStart quizPlayerStart;
+    private static PlayerStart playerStart;
     private static String message;
     private int quizIndex;
     private int answerSize;
@@ -28,7 +28,7 @@ public class QuizPlayerStartImpl implements QuizPlayerStart {
         Server server = new ServerImpl(serverLink);
 
         quizPlayerOrchestrator = new QuizPlayerOrchestratorImpl(server);
-        quizPlayerStart = new QuizPlayerStartImpl();
+        playerStart = new PlayerStartImpl();
 
         String userInput = null;
 
@@ -38,7 +38,7 @@ public class QuizPlayerStartImpl implements QuizPlayerStart {
             message = PlayerMessages.WELCOME_MESSAGE;
 
             if (initialized) {
-                player = quizPlayerStart.makePlayer(scanner, player);
+                player = playerStart.makePlayer(scanner, player);
                 initialized = false;
             }
 
@@ -46,19 +46,19 @@ public class QuizPlayerStartImpl implements QuizPlayerStart {
                 System.out.println(PlayerMessages.GET_MENU_OPTION_MESSAGE);
                 userInput = scanner.nextLine();
                 if (userInput.equals("EXIT")) System.exit(0);
-                message = quizPlayerStart.getStartChoice(userInput);
+                message = playerStart.getStartChoice(userInput);
 
                 while (message.equals(PlayerMessages.VIEW_WINNER_MESSAGE)) {
-                    message = quizPlayerStart.checkIfClosedQuizIsNull();
+                    message = playerStart.checkIfClosedQuizIsNull();
 
                     if (message.equals(PlayerMessages.VALID_MESSAGE)) {
                         System.out.println(PlayerMessages.VIEW_WINNER_MESSAGE);
-                        message = quizPlayerStart.selectClosedQuiz(scanner, message);
+                        message = playerStart.selectClosedQuiz(scanner, message);
                     }
                 }
 
                 while (message.equals(PlayerMessages.QUIZ_SELECT_MESSAGE)) {
-                    PlayQuiz playQuiz = new PlayQuizImpl(quizPlayerStart, quizPlayerOrchestrator);
+                    PlayQuiz playQuiz = new PlayQuizImpl(playerStart, quizPlayerOrchestrator);
                     message = playQuiz.getQuizMenu(scanner, player, server, message);
                 }
             }
