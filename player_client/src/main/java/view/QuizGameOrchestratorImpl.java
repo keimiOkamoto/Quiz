@@ -51,6 +51,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
             while (message.equals(SetUpMessages.WELCOME_MESSAGE)) {
                 System.out.println(quizGameOrchestrator.getMenuMessage());
                 userInput = scanner.nextLine();
+                if (userInput == null) System.exit(0);
                 message = quizGameOrchestrator.getStartChoice(userInput);
 
 
@@ -61,7 +62,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
                         System.out.println(quizGameOrchestrator.getClosedQuizMessage());
                         message = quizGameOrchestrator.selectClosedQuiz(scanner, message);
                     }
-                } //TODO
+                }
 
 
                 //Done
@@ -76,7 +77,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
 
     @Override
     public String selectClosedQuiz(Scanner scanner, String message) {
-        System.out.println("ello");
+
         List<Quiz> quizList = null;
         String userInput;
         try {
@@ -85,12 +86,17 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
             quizMenu1.print();
             answerSize = quizList.size();
 
-
             userInput = scanner.nextLine();
             if (validInput(userInput)) {
                 Quiz quiz1 = quizList.get(Integer.parseInt(userInput) - 1);
-                Player player = quizPlayerOrchestrator.getWinner(quiz1.getId());
-                System.out.println("The winner is " + player.getName() + "\nfrom: " + player.getCountry() + "\nage: " + player.getAge());
+                Player player = null;
+                try {
+                    player = quizPlayerOrchestrator.getWinner(quiz1.getId());
+                    System.out.println("The winner is " + player.getName() + "\nfrom: " + player.getCountry() + "\nage: " + player.getAge());
+                } catch (NullPointerException e) {
+                    System.out.println("No one won the quiz as it was never played :(");
+                }
+
             } else {
                 message = quizGameOrchestrator.getClosedQuizMessage();
                 System.out.println(ExceptionMessages.INVALID_USER_INPUT);
@@ -296,6 +302,4 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
     public String getValidClosedQuizMessage() {
         return "valid";
     }
-
-
 }
