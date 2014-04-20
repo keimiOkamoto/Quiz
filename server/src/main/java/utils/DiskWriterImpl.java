@@ -13,6 +13,7 @@ import java.util.TreeMap;
 
 
 public class DiskWriterImpl implements DiskWriter {
+
     private static final String filename = "quiz.txt";
     private static final String idFile = "id.txt";
 
@@ -69,18 +70,6 @@ public class DiskWriterImpl implements DiskWriter {
     }
 
     @Override
-    public Integer getUniqueNumber() {
-        return id;
-    }
-
-
-    @Override
-    public boolean checkIfIdDataExists() {
-        File file = new File(DiskWriterImpl.idFile);
-        return file.exists();
-    }
-
-    @Override
     public void writeIdToDisk(Integer id) {
         FileOutputStream fos;
         ObjectOutputStream out;
@@ -93,6 +82,18 @@ public class DiskWriterImpl implements DiskWriter {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    @Override
+    public Integer getUniqueNumber() {
+        return id;
+    }
+
+    @Override
+    public boolean checkIfIdDataExists() {
+        File file = new File(DiskWriterImpl.idFile);
+        return file.exists();
     }
 
     @Override
@@ -110,5 +111,4 @@ public class DiskWriterImpl implements DiskWriter {
             e.printStackTrace();
         }
     }
-
 }

@@ -7,6 +7,7 @@ import java.lang.Override;
 
 @Singleton
 public class UniqueNumberGeneratorUtilsImpl implements UniqueNumberGeneratorUtils {
+
     private Integer id = 0;
     private final DiskWriter diskWriter;
 
@@ -22,18 +23,6 @@ public class UniqueNumberGeneratorUtilsImpl implements UniqueNumberGeneratorUtil
         addShutdownHook();
     }
 
-    /**
-     * This method adds a shutdown hook
-     */
-    private void addShutdownHook() {
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            @Override
-            public void run() {
-                flush();
-            }
-        });
-    }
-
     @Override
     public void flush() {
         System.out.println(diskWriter);
@@ -44,5 +33,17 @@ public class UniqueNumberGeneratorUtilsImpl implements UniqueNumberGeneratorUtil
     @Override
     public int getUniqueNumber() {
         return id++;
+    }
+
+    /**
+     * This method adds a shutdown hook
+     */
+    private void addShutdownHook() {
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                flush();
+            }
+        });
     }
 }

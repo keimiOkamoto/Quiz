@@ -16,6 +16,7 @@ public interface DiskWriter {
      * Writes data to disk. Data is serialized here.
      *
      * @param closedQuizContainer a QuizContainer
+     * @param treeMap the
      */
     void writeToDisk(ClosedQuizContainer closedQuizContainer, TreeMap<Integer, Quiz> treeMap);
 

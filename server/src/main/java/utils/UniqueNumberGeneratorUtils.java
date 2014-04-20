@@ -6,12 +6,17 @@ package utils;
  * was made.
  */
 public interface UniqueNumberGeneratorUtils {
-    void flush();
-
     /**
      * Method that gets a unique number;
      *
      * @return a unique number
      */
     int getUniqueNumber();
+
+    /**
+     * Serializes the current state of the
+     * uniqueNumberGenerator when the server
+     * shutsdown.
+     */
+    void flush();
 }
