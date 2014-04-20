@@ -40,7 +40,7 @@ public class ScoreKeeperTest {
     public void shouldBeAbleToGetHighestScore() throws RemoteException {
         int score = 32;
         when(player.getScore()).thenReturn(score);
-        when(itemsFactory.getHighScore(eq(quiz), eq(player))).thenReturn(highScore);
+        when(itemsFactory.generateHighScore(eq(quiz), eq(player))).thenReturn(highScore);
         when(highScore.getHighScore()).thenReturn(score);
 
         scoreKeeper.addHighScore(quiz, player);
@@ -58,7 +58,7 @@ public class ScoreKeeperTest {
         when(quiz.getId()).thenReturn(id);
         when(player.getName()).thenReturn(expected);
 
-        when(itemsFactory.getHighScore(eq(quiz), eq(player))).thenReturn(highScore);
+        when(itemsFactory.generateHighScore(eq(quiz), eq(player))).thenReturn(highScore);
         when(highScore.getPlayer()).thenReturn(player);
         scoreKeeper.setLeader(quiz, player);
 

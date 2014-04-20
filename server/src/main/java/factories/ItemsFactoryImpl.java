@@ -10,6 +10,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 @Singleton
 public class ItemsFactoryImpl extends UnicastRemoteObject implements ItemsFactory {
+
     private UniqueNumberGeneratorUtils uniqueNumberGeneratorUtils;
 
     @Inject
@@ -33,12 +34,12 @@ public class ItemsFactoryImpl extends UnicastRemoteObject implements ItemsFactor
     }
 
     @Override
-    public void flush() throws RemoteException {
-        uniqueNumberGeneratorUtils.flush();
+    public HighScore generateHighScore(Quiz quiz, Player player) throws RemoteException{
+        return new HighScoreImpl(quiz, player);
     }
 
     @Override
-    public HighScore getHighScore(Quiz quiz, Player player) throws RemoteException{
-        return new HighScoreImpl(quiz, player);
+    public void flush() throws RemoteException {
+        uniqueNumberGeneratorUtils.flush();
     }
 }

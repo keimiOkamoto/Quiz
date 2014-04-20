@@ -51,7 +51,7 @@ public class ScoreKeeperImpl extends UnicastRemoteObject implements ScoreKeeper 
 
     @Override
     public void setLeader(Quiz quiz, Player player) throws RemoteException {
-            HighScore highScore = itemsFactory.getHighScore(quiz, player);
+            HighScore highScore = itemsFactory.generateHighScore(quiz, player);
             scoreBoardMap.put(quiz.getId(), highScore);
     }
 
