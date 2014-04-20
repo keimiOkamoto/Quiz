@@ -7,7 +7,7 @@ import models.Quiz;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
-public interface QuizGameOrchestrator {
+public interface QuizPlayerStart {
 
     /**
      * Gets the quiz and allows the player to play the quiz.

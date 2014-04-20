@@ -16,14 +16,14 @@ import java.util.Set;
 
 public class PlayQuizImpl implements PlayQuiz {
 
-    private QuizGameOrchestrator quizGameOrchestrator;
+    private QuizPlayerStart quizPlayerStart;
     private QuizPlayerOrchestrator quizPlayerOrchestrator;
     private int quizSize;
     private int answerSize;
     private int answerIndex;
 
-    public PlayQuizImpl(QuizGameOrchestrator quizGameOrchestrator, QuizPlayerOrchestrator quizPlayerOrchestrator) {
-        this.quizGameOrchestrator = quizGameOrchestrator;
+    public PlayQuizImpl(QuizPlayerStart quizPlayerStart, QuizPlayerOrchestrator quizPlayerOrchestrator) {
+        this.quizPlayerStart = quizPlayerStart;
         this.quizPlayerOrchestrator = quizPlayerOrchestrator;
     }
 
@@ -41,11 +41,12 @@ public class PlayQuizImpl implements PlayQuiz {
             quizMenu.print();
 
             String userInput = scanner.nextLine();
+            if (userInput.equals("EXIT")) System.exit(0);
 
             message = checkForValidNumber(userInput, message);
 
             while (message.equals(getValidNumberMessage())) {
-                message = playQuiz(scanner, player, server, quizGameOrchestrator.getQuiz());
+                message = playQuiz(scanner, player, server, quizPlayerStart.getQuiz());
             }
         }
         return message;
@@ -62,7 +63,7 @@ public class PlayQuizImpl implements PlayQuiz {
 
 
     private String getUserHighScoreMessage(Player player, Server server, Quiz quiz) {
-        String message = quizGameOrchestrator.checkForHighScore(player, quiz, server);
+        String message = quizPlayerStart.checkForHighScore(player, quiz, server);
 
         try {
             if (message.equals(getNewWinnerMessage(player))) {
@@ -104,6 +105,7 @@ public class PlayQuizImpl implements PlayQuiz {
                         System.out.println((y + 1) + ": " + answers[y].getAnswer());
                     }
                     userInput = scanner.nextLine();
+                    if (userInput.equals("EXIT")) System.exit(0);
 
                     if (validInput(userInput)) {
                         setAnswerIndex(userInput);
@@ -128,7 +130,6 @@ public class PlayQuizImpl implements PlayQuiz {
         return message;
     }
 
-
     private boolean validRangeQuizSize(int index) {
         boolean result = true;
         if (index > quizSize || index <= 0) {
@@ -137,13 +138,11 @@ public class PlayQuizImpl implements PlayQuiz {
         return result;
     }
 
-
     private boolean validInput(String userInput) {
         return (!checkForNull(userInput)) &&
                 checkIfNumber(userInput) &&
                 validRangeAnswerSize(Integer.parseInt(userInput));
     }
-
 
     private boolean validRangeAnswerSize(int index) {
         return index <= answerSize && index > 0;
@@ -216,7 +215,7 @@ public class PlayQuizImpl implements PlayQuiz {
         int index;
         try {
             index = Integer.parseInt(userInput);
-            quizGameOrchestrator.setQuizNumber(index);
+            quizPlayerStart.setQuizNumber(index);
 
             if (validRangeQuizSize(index)) {
                 message = getValidNumberMessage();

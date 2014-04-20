@@ -11,10 +11,10 @@ import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Scanner;
 
-public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
+public class QuizPlayerStartImpl implements QuizPlayerStart {
 
     private static QuizPlayerOrchestrator quizPlayerOrchestrator;
-    private static QuizGameOrchestrator quizGameOrchestrator;
+    private static QuizPlayerStart quizPlayerStart;
     private static String message;
     private int quizIndex;
     private int answerSize;
@@ -28,7 +28,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
         Server server = new ServerImpl(serverLink);
 
         quizPlayerOrchestrator = new QuizPlayerOrchestratorImpl(server);
-        quizGameOrchestrator = new QuizGameOrchestratorImpl();
+        quizPlayerStart = new QuizPlayerStartImpl();
 
         String userInput = null;
 
@@ -38,27 +38,27 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
             message = PlayerMessages.WELCOME_MESSAGE;
 
             if (initialized) {
-                player = quizGameOrchestrator.makePlayer(scanner, player);
+                player = quizPlayerStart.makePlayer(scanner, player);
                 initialized = false;
             }
 
             while (message.equals(PlayerMessages.WELCOME_MESSAGE)) {
                 System.out.println(PlayerMessages.GET_MENU_OPTION_MESSAGE);
                 userInput = scanner.nextLine();
-                if (userInput == null) System.exit(0);
-                message = quizGameOrchestrator.getStartChoice(userInput);
+                if (userInput.equals("EXIT")) System.exit(0);
+                message = quizPlayerStart.getStartChoice(userInput);
 
                 while (message.equals(PlayerMessages.VIEW_WINNER_MESSAGE)) {
-                    message = quizGameOrchestrator.checkIfClosedQuizIsNull();
+                    message = quizPlayerStart.checkIfClosedQuizIsNull();
 
                     if (message.equals(PlayerMessages.VALID_MESSAGE)) {
                         System.out.println(PlayerMessages.VIEW_WINNER_MESSAGE);
-                        message = quizGameOrchestrator.selectClosedQuiz(scanner, message);
+                        message = quizPlayerStart.selectClosedQuiz(scanner, message);
                     }
                 }
 
                 while (message.equals(PlayerMessages.QUIZ_SELECT_MESSAGE)) {
-                    PlayQuiz playQuiz = new PlayQuizImpl(quizGameOrchestrator, quizPlayerOrchestrator);
+                    PlayQuiz playQuiz = new PlayQuizImpl(quizPlayerStart, quizPlayerOrchestrator);
                     message = playQuiz.getQuizMenu(scanner, player, server, message);
                 }
             }
@@ -77,9 +77,10 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
             answerSize = quizList.size();
 
             userInput = scanner.nextLine();
+            if(userInput.equals("EXIT")) System.exit(0);
             if (validInput(userInput)) {
                 Quiz quiz1 = quizList.get(Integer.parseInt(userInput) - 1);
-                Player player = null;
+                Player player;
                 try {
                     player = quizPlayerOrchestrator.getWinner(quiz1.getId());
                     System.out.println("The winner is " + player.getName() + "\nfrom: " + player.getCountry() + "\nage: " + player.getAge());
@@ -110,7 +111,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
         while (message1 == PlayerMessages.START_MESSAGE) {
             System.out.println(PlayerMessages.GET_NAME_MESSAGE);
             name = scanner.nextLine();
-            if (name == "EXIT") System.exit(0);
+            if (name.equals("EXIT")) System.exit(0);
 
             if (!checkForNull(name)) {
                 message1 = PlayerMessages.GET_COUNTRY_MESSAGE;
@@ -120,7 +121,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
             while (message1.equals(PlayerMessages.GET_COUNTRY_MESSAGE)) {
                 System.out.println(message1);
                 country = scanner.nextLine();
-                if (country == "EXIT") System.exit(0);
+                if (country.equals("EXIT")) System.exit(0);
 
                 if (!checkForNull(country)) {
                     message1 = PlayerMessages.GET_AGE_MESSAGE;
@@ -131,7 +132,7 @@ public class QuizGameOrchestratorImpl implements QuizGameOrchestrator {
                 while (message1.equals(PlayerMessages.GET_AGE_MESSAGE)) {
                     System.out.println(message1);
                     age = scanner.nextLine();
-                    if (age == "EXIT") System.exit(0);
+                    if (age.equals("EXIT")) System.exit(0);
 
                     age1 = 0;
                     try {

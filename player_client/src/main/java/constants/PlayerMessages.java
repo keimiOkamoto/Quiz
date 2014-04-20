@@ -7,7 +7,7 @@ public class PlayerMessages {
     public static final String VALID_MESSAGE = "valid";
     public static final String GET_AGE_MESSAGE = "☆ Please enter your age ☆";
     public static final String GET_COUNTRY_MESSAGE = "☆ Please enter your country ☆";
-    public static final String GET_MENU_OPTION_MESSAGE = "Press 1: To play a quiz Press 2: To view quizzes that have been closed.";
+    public static final String GET_MENU_OPTION_MESSAGE = "Press 1: To play a quiz Press 2: To view quizzes that have been closed \nor type 'EXIT' to exit the program at any point.";
     public static final String VIEW_WINNER_MESSAGE = "☆ Please enter the quiz number you want to view the winner of! ☆ ";
     public static final String GET_NAME_MESSAGE = "☆ Please enter your name ☆";
     public static final String NO_CLOSED_QUIZ_MESSAGE = "No quizzes have been closed!";
