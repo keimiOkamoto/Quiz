@@ -16,6 +16,13 @@ public interface PlayerStart {
      */
     Quiz getQuiz();
 
+    /**
+     *
+     *
+     * @param scanner
+     * @param player
+     * @return
+     */
     Player makePlayer(Scanner scanner, Player player);
 
     void setQuizNumber(int numberIndex);
