@@ -25,8 +25,8 @@ The Setup client can set up as many quizzes as possible and close quizzes
 quoting the ID of the quiz. (Given when the quiz is made)
 
     - Run SetupStart.java to start the Player Client.
-    -â1â To create a quiz.
-    -â2â To close a quiz.
+    -’1â To create a quiz.
+    -‘â2â’ To close a quiz.
     -âEXITâ Can be typed at any point to close the application.
 
 
