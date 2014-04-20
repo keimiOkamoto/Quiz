@@ -15,7 +15,7 @@ Server
 The server hold all current quizzes and closed quizzes. 
 It is also responsible of holding the highest score and player to a particular quiz.
 
-    -StartServer to launch the server.
+    -Run StartServer.java to launch the server.
     -Press enter to close the server
 
 Setup
