@@ -50,6 +50,7 @@ public class UserAnswerViewImpl implements UserAnswerView {
             message = setupOrchestrator.getMessageForYesOrNo(userInput);
         } catch (IllegalQuestionException e) {
             System.out.println(e.getMessage());
+            message = SetUpMessages.REQUEST_ANSWER;
         } catch (RemoteException e) {
             System.out.println(ExceptionMessages.SERVER_ERROR);
         }

@@ -144,6 +144,9 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
         return answer;
     }
 
+    /*
+     * Helper method to check if the used input is valid.
+     */
     private boolean correct(String userInput) {
         boolean value = false;
         if (userInput.trim().equals(SetUpMessages.YES)) {
