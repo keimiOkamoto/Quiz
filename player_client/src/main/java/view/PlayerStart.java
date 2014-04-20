@@ -4,7 +4,6 @@ import controllers.Server;
 import models.Player;
 import models.Quiz;
 
-import java.rmi.RemoteException;
 import java.util.Scanner;
 
 public interface PlayerStart {
@@ -17,9 +16,9 @@ public interface PlayerStart {
     Quiz getQuiz();
 
     /**
+     *Method that sets a player up.
      *
-     *
-     * @param scanner
+     * @param scanner A scanner for the user to type in
      * @param player
      * @return
      */
