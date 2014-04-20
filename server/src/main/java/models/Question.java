@@ -5,6 +5,9 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Set;
 
+/**
+ * A question for the quiz.
+ */
 public interface Question extends Remote {
     /**
      * Adds an answer to the question.

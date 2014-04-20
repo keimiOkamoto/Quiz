@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 public class AnswerImpl extends UnicastRemoteObject implements Answer {
+
     private String answerStr;
     private boolean answerType;
 

@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class QuestionImpl extends UnicastRemoteObject implements Question {
+
     private Set<Answer> answerSet = new HashSet<>();
     private String question;
 

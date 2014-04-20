@@ -11,6 +11,7 @@ import java.util.Map;
 
 @Singleton
 public class ScoreKeeperImpl extends UnicastRemoteObject implements ScoreKeeper {
+
     private Map<Integer, HighScore> scoreBoardMap;
     private ItemsFactory itemsFactory;
 

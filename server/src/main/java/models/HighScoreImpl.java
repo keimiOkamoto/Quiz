@@ -3,6 +3,7 @@ package models;
 import java.rmi.RemoteException;
 
 public class HighScoreImpl implements HighScore {
+
     private Quiz quiz;
     private Player player;
 

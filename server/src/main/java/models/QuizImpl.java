@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class QuizImpl extends UnicastRemoteObject implements Quiz {
+
     private int id;
     private Set<Question> questionSet;
     private String title;
