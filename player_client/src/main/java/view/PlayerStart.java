@@ -16,16 +16,29 @@ public interface PlayerStart {
     Quiz getQuiz();
 
     /**
-     *Method that sets a player up.
+     * Method that sets a player up.
      *
      * @param scanner A scanner for the user to type in
-     * @param player
-     * @return
+     * @param player An empty player object.
+     * @return A player with the name, age and country assigned by the user.
      */
     Player makePlayer(Scanner scanner, Player player);
 
+    /**
+     * Sets the quiz index.
+     *
+     * @param numberIndex a number for the index number of the quiz.
+     */
     void setQuizNumber(int numberIndex);
 
+    /**
+     *
+     *
+     * @param player
+     * @param quiz
+     * @param server
+     * @return
+     */
     String checkForHighScore(Player player, Quiz quiz, Server server);
 
     String checkIfClosedQuizIsNull();
