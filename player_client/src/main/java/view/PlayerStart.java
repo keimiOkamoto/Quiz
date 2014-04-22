@@ -34,15 +34,29 @@ public interface PlayerStart {
     /**
      *
      *
-     * @param player
-     * @param quiz
-     * @param server
-     * @return
+     * @param player A player of the quiz
+     * @param quiz A quiz
+     * @param server A server
+     * @returnA useful message if it is. That will
+     * determine the next event.
      */
     String checkForHighScore(Player player, Quiz quiz, Server server);
 
+    /**
+     * Validates if the closed quiz is empty.
+     *
+     * @return A useful message if it is. That will
+     * determine the next event.
+     */
     String checkIfClosedQuizIsNull();
 
+    /**
+     *
+     *
+     * @param scanner
+     * @param message
+     * @return
+     */
     String selectClosedQuiz(Scanner scanner, String message);
 
     String getStartChoice(String userInput);
