@@ -28,7 +28,7 @@ public interface Server {
      * @return A Question object.
      * @throws java.rmi.RemoteException
      */
-    Question createQuestion(String question) throws RemoteException;
+//    Question createQuestion(String question) throws RemoteException;
 
     /**
      * Creates answers.
@@ -38,7 +38,7 @@ public interface Server {
      * @return An Answer object.
      * @throws java.rmi.RemoteException if there is a problem with the server.
      */
-    Answer createAnswer(String answer, boolean answerType)throws RemoteException;
+//    Answer createAnswer(String answer, boolean answerType)throws RemoteException;
 
     /**
      * Checks if the same quiz title already exists.
@@ -61,10 +61,9 @@ public interface Server {
     /**
      * Saves quiz to server.
      *
-     * @param quiz A quiz to be saved.
      * @throws java.rmi.RemoteException java.rmi.RemoteException if there is a problem with the server.
      */
-    void save(Quiz quiz) throws RemoteException;
+    void save() throws RemoteException;
 
     /**
      * Closes a quiz with the corresponding id.
@@ -86,4 +85,6 @@ public interface Server {
     boolean questionContains(String answer);
 
     void addToQuestion(String answer, boolean answerType);
+
+    boolean isQuizEmpty();
 }

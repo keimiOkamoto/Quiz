@@ -37,10 +37,9 @@ public interface QuizServer extends Remote {
     /**
      * Saves a quiz to the server.
      *
-     * @param quiz A quiz.
      * @throws RemoteException if there is a problem with the server/connection.
      */
-    void save(Quiz quiz) throws RemoteException;
+    void save() throws RemoteException;
 
     /**
      * Ends quiz by given ID.
@@ -74,7 +73,7 @@ public interface QuizServer extends Remote {
      * @return A question
      * @throws java.rmi.RemoteException if there is a problem with the server/connection.
      */
-    Question generateQuestion(String question) throws RemoteException;
+//    Question generateQuestion(String question) throws RemoteException;
 
     /**
      * Generate Answer
@@ -84,10 +83,14 @@ public interface QuizServer extends Remote {
      * @return An answer
      * @throws java.rmi.RemoteException if there is a problem with the server/connection.
      */
-    Answer generateAnswer(String answer, boolean answerType) throws RemoteException;
+//    Answer generateAnswer(String answer, boolean answerType) throws RemoteException;
 
 
     /********** Player client methods ***********/
+
+    Question generateQuestion(String question) throws RemoteException;
+
+    Answer generateAnswer(String answer, boolean answerType) throws RemoteException;
 
     /**
      * Getter for a list of available quizzes.
@@ -188,6 +191,6 @@ public interface QuizServer extends Remote {
 
     void addToQuestion(String answer, boolean answerType) throws RemoteException;
 
-
+    boolean isQuizEmpty() throws RemoteException;
 
 }

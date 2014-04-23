@@ -191,7 +191,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
 
     private void save() {
         try {
-            quizOrchestrator.save(quizOrchestrator.getQuiz());
+            quizOrchestrator.save();
         } catch (IllegalQuizException e) {
             System.out.println(e.getMessage());
         } catch (RemoteException e) {

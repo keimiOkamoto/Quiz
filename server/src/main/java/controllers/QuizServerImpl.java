@@ -151,4 +151,9 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     public void addToQuestion(String answer, boolean answerType) throws RemoteException {
         question.add(generateAnswer(answer, answerType));
     }
+
+    @Override
+    public boolean isQuizEmpty() throws RemoteException {
+        return quiz.isEmpty();
+    }
 }

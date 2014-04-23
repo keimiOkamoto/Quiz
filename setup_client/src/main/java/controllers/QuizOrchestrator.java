@@ -47,11 +47,10 @@ public interface QuizOrchestrator {
     /**
      * Saves quiz to the server.
      *
-     * @param quiz A quiz to be saved.
      * @throws IllegalQuizException if quiz is null.
      * @throws java.rmi.RemoteException if there is a problem with the server.
      */
-    void save(Quiz quiz) throws IllegalQuizException, RemoteException;
+    void save() throws IllegalQuizException, RemoteException;
 
     /**
      * Closes a quiz with the corresponding ID.
@@ -70,10 +69,10 @@ public interface QuizOrchestrator {
      */
     String getTitle();
 
-    /**
-     * Getter for the quiz.
-     *
-     * @return Quiz A quiz.
-     */
-    Quiz getQuiz();
+//    /**
+//     * Getter for the quiz.
+//     *
+//     * @return Quiz A quiz.
+//     */
+//    Quiz getQuiz();
 }

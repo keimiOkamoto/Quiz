@@ -212,7 +212,7 @@ public class SetupOrchestratorTest {
         String userInput = SetUpMessages.SAVE;
         String actual = setupOrchestrator.getMessageForSave(userInput);
 
-        verify(quizOrchestrator).save(quizOrchestrator.getQuiz());
+        verify(quizOrchestrator).save();
 
         assertEquals(SetUpMessages.SAVE_SUCCESS, actual);
     }

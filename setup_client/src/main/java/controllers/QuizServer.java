@@ -40,10 +40,9 @@ public interface QuizServer extends Remote {
     /**
      * Saves a quiz to the server.
      *
-     * @param quiz A quiz.
      * @throws RemoteException
      */
-    void save(Quiz quiz) throws RemoteException;
+    void save() throws RemoteException;
 
     /**
      * Gets a ItemsFactory object.
@@ -59,7 +58,7 @@ public interface QuizServer extends Remote {
      * @param title Title of a quiz
      * @return A quiz.
      */
-    Quiz generateQuiz(String title) throws RemoteException;
+    int generateQuiz(String title) throws RemoteException;
 
     /**
      * Generate Question.
@@ -67,7 +66,7 @@ public interface QuizServer extends Remote {
      * @param question A Question
      * @return A question
      */
-    Question generateQuestion(String question) throws RemoteException;
+//    Question generateQuestion(String question) throws RemoteException;
 
     /**
      * Generate Answer
@@ -76,7 +75,7 @@ public interface QuizServer extends Remote {
      * @param answerType False ig it is not the right answer, true if it is.
      * @return An answer
      */
-    Answer generateAnswer(String answer, boolean answerType) ;
+//    Answer generateAnswer(String answer, boolean answerType) ;
 
     boolean isQuizNull();
 
@@ -89,4 +88,6 @@ public interface QuizServer extends Remote {
     boolean questionContains(String answer);
 
     void addToQuestion(String answer, boolean answerType);
+
+    boolean isQuizEmpty();
 }

@@ -14,6 +14,7 @@ import java.rmi.RemoteException;
  */
 public class QuizOrchestratorImpl implements QuizOrchestrator {
     private Server server;
+    private String title;
 
     public QuizOrchestratorImpl(Server server) {
         this.server = server;
@@ -23,8 +24,8 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
     public int createQuiz(String title) throws IllegalArgumentException, IllegalQuizException, RemoteException {
         if (invalid(title)) throw new IllegalArgumentException(ExceptionMessages.EMPTY_TITLE);
         if (!server.valid(title)) throw new IllegalQuizException(ExceptionMessages.DUPLICATE_QUIZ);
-        int id = server.createQuiz(title.trim());
-        return id;
+        this.title = title;
+        return server.createQuiz(title.trim());
     }
 
     @Override
@@ -58,19 +59,13 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
 
     @Override
     public String getTitle() {
-        String title = null;
-        try {
-            title = quiz.getTitle();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
         return title;
     }
-
-    @Override
-    public Quiz getQuiz() {
-        return quiz;
-    }
+//
+//    @Override
+//    public Quiz getQuiz() {
+//        return quiz;
+//    }
 
     /*
      * Validates if the input is valid.

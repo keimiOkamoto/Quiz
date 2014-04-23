@@ -1,7 +1,5 @@
 package controllers;
 
-import models.*;
-
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
@@ -13,19 +11,19 @@ public class ServerImpl implements Server {
     }
 
     @Override
-    public Quiz createQuiz(String title) throws RemoteException {
-        return quizServer.generateQuiz(title);
+    public int createQuiz(String title) throws RemoteException {
+         return quizServer.generateQuiz(title);
     }
 
-    @Override
-    public Question createQuestion(String question) throws RemoteException {
-        return quizServer.generateQuestion(question);
-    }
+//    @Override
+//    public Question createQuestion(String question) throws RemoteException {
+//        return quizServer.generateQuestion(question);
+//    }
 
-    @Override
-    public Answer createAnswer(String answer, boolean answerType) throws RemoteException {
-        return quizServer.generateAnswer(answer, answerType);
-    }
+//    @Override
+//    public Answer createAnswer(String answer, boolean answerType) throws RemoteException {
+//        return quizServer.generateAnswer(answer, answerType);
+//    }
 
     @Override
     public boolean valid(String title) throws RemoteException {
@@ -38,8 +36,8 @@ public class ServerImpl implements Server {
     }
 
     @Override
-    public void save(Quiz quiz) throws RemoteException {
-        quizServer.save(quiz);
+    public void save() throws RemoteException {
+        quizServer.save();
     }
 
     @Override
@@ -75,5 +73,10 @@ public class ServerImpl implements Server {
     @Override
     public void addToQuestion(String answer, boolean answerType) {
         quizServer.addToQuestion(answer, answerType);
+    }
+
+    @Override
+    public boolean isQuizEmpty() {
+        return quizServer.isQuizEmpty();
     }
 }
