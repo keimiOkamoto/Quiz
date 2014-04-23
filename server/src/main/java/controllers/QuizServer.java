@@ -62,10 +62,10 @@ public interface QuizServer extends Remote {
      * Generates a Quiz
      *
      * @param title Title of a quiz
-     * @return A quiz.
+     * @return A quiz ID.
      * @throws java.rmi.RemoteException if there is a problem with the server/connection.
      */
-    Quiz generateQuiz(String title) throws RemoteException;
+    int generateQuiz(String title) throws RemoteException;
 
     /**
      * Generate Question.
@@ -175,4 +175,19 @@ public interface QuizServer extends Remote {
      * @throws RemoteException if there is a problem with the server/connection.
      */
     void flush() throws RemoteException;
+
+    boolean isQuizNull() throws RemoteException;
+
+    boolean quizContains(String questionStr) throws RemoteException;
+
+    void addQuestionToQuiz(String question) throws RemoteException;
+
+    boolean isQuestionNull() throws RemoteException;
+
+    boolean questionContains(String answer) throws RemoteException;
+
+    void addToQuestion(String answer, boolean answerType) throws RemoteException;
+
+
+
 }

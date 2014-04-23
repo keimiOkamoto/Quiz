@@ -14,8 +14,6 @@ import java.rmi.RemoteException;
  */
 public class QuizOrchestratorImpl implements QuizOrchestrator {
     private Server server;
-    private Quiz quiz;
-    private Question question;
 
     public QuizOrchestratorImpl(Server server) {
         this.server = server;
@@ -25,33 +23,31 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
     public int createQuiz(String title) throws IllegalArgumentException, IllegalQuizException, RemoteException {
         if (invalid(title)) throw new IllegalArgumentException(ExceptionMessages.EMPTY_TITLE);
         if (!server.valid(title)) throw new IllegalQuizException(ExceptionMessages.DUPLICATE_QUIZ);
-        quiz = server.createQuiz(title.trim());
-        return quiz.getId();
+        int id = server.createQuiz(title.trim());
+        return id;
     }
 
     @Override
     public void addQuestion(String questionStr) throws IllegalArgumentException, IllegalQuizException, RemoteException {
         if (invalid(questionStr)) throw new IllegalArgumentException(ExceptionMessages.EMPTY_QUESTION);
-        if (quiz == null) throw new IllegalQuizException(ExceptionMessages.NO_QUIZ_EXISTS);
-        if (quiz.contains(questionStr)) throw new IllegalQuizException(ExceptionMessages.DUPLICATE_QUESTION);
-        question = server.createQuestion(questionStr);
-        quiz.addQuestion(question);
+        if (server.isQuizNull()) throw new IllegalQuizException(ExceptionMessages.NO_QUIZ_EXISTS);
+        if (server.quizContains(questionStr)) throw new IllegalQuizException(ExceptionMessages.DUPLICATE_QUESTION);
+        server.addQuestionToQuiz(questionStr);
     }
 
     @Override
     public void addAnswer(String answer, boolean answerType) throws IllegalQuestionException, IllegalArgumentException, RemoteException {
         if (invalid(answer)) throw new IllegalArgumentException(ExceptionMessages.EMPTY_ANSWER);
-        if (question == null) throw new IllegalQuestionException(ExceptionMessages.NO_QUESTION_EXISTS);
-        if (question.contains(answer)) throw new IllegalQuestionException(ExceptionMessages.DUPLICATE_ANSWER);
-        Answer answer1 = server.createAnswer(answer, answerType);
-        question.add(answer1);
+        if (server.isQuestionNull()) throw new IllegalQuestionException(ExceptionMessages.NO_QUESTION_EXISTS);
+        if (server.questionContains(answer)) throw new IllegalQuestionException(ExceptionMessages.DUPLICATE_ANSWER);
+        server.addToQuestion(answer, answerType);
     }
 
     @Override
-    public void save(Quiz quiz) throws IllegalQuizException, RemoteException {
-        if (quiz == null) throw new IllegalQuizException(ExceptionMessages.NO_QUIZ_TO_SAVE);
-        if (quiz.isEmpty()) throw new IllegalQuizException(ExceptionMessages.NO_QUESTIONS_CANNOT_SAVE);
-        server.save(quiz);
+    public void save() throws IllegalQuizException, RemoteException {
+        if (server.isQuizNull()) throw new IllegalQuizException(ExceptionMessages.NO_QUIZ_TO_SAVE);
+        if (server.isQuizEmpty()) throw new IllegalQuizException(ExceptionMessages.NO_QUESTIONS_CANNOT_SAVE);
+        server.save();
     }
 
     @Override

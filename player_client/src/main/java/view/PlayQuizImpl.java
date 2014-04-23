@@ -170,7 +170,6 @@ public class PlayQuizImpl implements PlayQuiz {
         this.answerIndex = Integer.parseInt(answerIndex);
     }
 
-
     private void setAnswerSize(int answerSize) {
         this.answerSize = answerSize;
     }

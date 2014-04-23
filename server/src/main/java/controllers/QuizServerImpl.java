@@ -16,6 +16,8 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     private ScoreKeeper scoreKeeper;
     private ClosedQuizContainer closedQuizContainer;
     private PlayerFactory playerFactory;
+    private Quiz quiz;
+    private Question question;
 
     @Inject
     public QuizServerImpl(ItemsFactory itemsFactory, PlayerFactory playerFactory, QuizContainer quizContainer, ScoreKeeper scoreKeeper, ClosedQuizContainer closedQuizContainer) throws RemoteException {
@@ -37,7 +39,7 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     }
 
     @Override
-    public synchronized void save(Quiz quiz) throws RemoteException {
+    public synchronized void save() throws RemoteException {
         quizContainer.save(quiz);
     }
 
@@ -52,8 +54,9 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     }
 
     @Override
-    public synchronized Quiz generateQuiz(String title) throws RemoteException {
-        return itemsFactory.generateQuiz(title);
+    public synchronized int generateQuiz(String title) throws RemoteException {
+        quiz = itemsFactory.generateQuiz(title);
+        return quiz.getId();
     }
 
     @Override
@@ -116,5 +119,36 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     public synchronized void flush() throws RemoteException {
         quizContainer.flush();
         itemsFactory.flush();
+    }
+
+    @Override
+    public boolean isQuizNull() throws RemoteException {
+        return quiz == null;
+    }
+
+    @Override
+    public boolean quizContains(String questionStr) throws RemoteException {
+        return quiz.contains(questionStr);
+    }
+
+    @Override
+    public void addQuestionToQuiz(String questionStr) throws RemoteException {
+        question = generateQuestion(questionStr);
+        quiz.addQuestion(question);
+    }
+
+    @Override
+    public boolean isQuestionNull() throws RemoteException {
+        return question == null;
+    }
+
+    @Override
+    public boolean questionContains(String answer) throws RemoteException {
+        return question.contains(answer);
+    }
+
+    @Override
+    public void addToQuestion(String answer, boolean answerType) throws RemoteException {
+        question.add(generateAnswer(answer, answerType));
     }
 }

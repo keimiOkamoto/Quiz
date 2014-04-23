@@ -77,4 +77,16 @@ public interface QuizServer extends Remote {
      * @return An answer
      */
     Answer generateAnswer(String answer, boolean answerType) ;
+
+    boolean isQuizNull();
+
+    boolean quizContains(String questionStr);
+
+    void addQuestionToQuiz(String question);
+
+    boolean isQuestionNull();
+
+    boolean questionContains(String answer);
+
+    void addToQuestion(String answer, boolean answerType);
 }

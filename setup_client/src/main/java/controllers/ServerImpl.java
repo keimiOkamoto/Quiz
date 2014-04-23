@@ -46,4 +46,34 @@ public class ServerImpl implements Server {
     public void closeQuiz(int id)  throws RemoteException {
         quizServer.endQuiz(id);
     }
+
+    @Override
+    public boolean isQuizNull() {
+        return quizServer.isQuizNull();
+    }
+
+    @Override
+    public boolean quizContains(String questionStr) {
+        return quizServer.quizContains(questionStr);
+    }
+
+    @Override
+    public void addQuestionToQuiz(String question) {
+        quizServer.addQuestionToQuiz(question);
+    }
+
+    @Override
+    public boolean isQuestionNull() {
+        return quizServer.isQuestionNull();
+    }
+
+    @Override
+    public boolean questionContains(String answer) {
+        return quizServer.questionContains(answer);
+    }
+
+    @Override
+    public void addToQuestion(String answer, boolean answerType) {
+        quizServer.addToQuestion(answer, answerType);
+    }
 }

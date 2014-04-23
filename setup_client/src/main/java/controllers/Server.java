@@ -16,10 +16,10 @@ public interface Server {
      * creates a quiz.
      *
      * @param title Title of a quiz.
-     * @return a quiz with a title.
+     * @return a quiz ID.
      * @throws java.rmi.RemoteException if there is a problem with the server.
      */
-    Quiz createQuiz(String title) throws RemoteException;
+    int createQuiz(String title) throws RemoteException;
 
     /**
      * Creates a question.
@@ -73,4 +73,17 @@ public interface Server {
      * @throws java.rmi.RemoteException if there is a problem with the server.
      */
     void closeQuiz(int id) throws RemoteException;
+
+
+    boolean isQuizNull();
+
+    boolean quizContains(String questionStr);
+
+    void addQuestionToQuiz(String question);
+
+    boolean isQuestionNull();
+
+    boolean questionContains(String answer);
+
+    void addToQuestion(String answer, boolean answerType);
 }
