@@ -39,7 +39,6 @@ public class ServerStart {
         System.out.println("Press enter to shutdown the server.");
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
-        quizServer.flush();
         System.exit(0);
     }
 }

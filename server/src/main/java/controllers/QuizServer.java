@@ -172,13 +172,6 @@ public interface QuizServer extends Remote {
      */
     List<Quiz> getClosedQuizList() throws RemoteException;
 
-    /**
-     * Serializes all items that need to be persisted.
-     *
-     * @throws RemoteException if there is a problem with the server/connection.
-     */
-    void flush() throws RemoteException;
-
     boolean isQuizNull() throws RemoteException;
 
     boolean quizContains(String questionStr) throws RemoteException;

@@ -3,6 +3,7 @@ package models;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import factories.ItemsFactory;
+import utils.DiskWriter;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -11,14 +12,19 @@ import java.util.Map;
 
 @Singleton
 public class ScoreKeeperImpl extends UnicastRemoteObject implements ScoreKeeper {
-
+    private static final long serialVersionUID = -4812254102171441893L;
     private Map<Integer, HighScore> scoreBoardMap;
     private ItemsFactory itemsFactory;
 
     @Inject
-    protected ScoreKeeperImpl(ItemsFactory itemsFactory) throws RemoteException {
+    protected ScoreKeeperImpl(ItemsFactory itemsFactory, DiskWriter diskWriter) throws RemoteException {
+        if (diskWriter.checkIfHighScoreDataExists()) {
+            scoreBoardMap = diskWriter.getHighScoreBoardMap();
+        } else {
+            scoreBoardMap = new HashMap<>();
+        }
         this.itemsFactory = itemsFactory;
-        scoreBoardMap = new HashMap<>();
+        diskWriter.persist(scoreBoardMap);
     }
 
     @Override
@@ -59,7 +65,8 @@ public class ScoreKeeperImpl extends UnicastRemoteObject implements ScoreKeeper 
     @Override
     public boolean scoreIsHighest(Player player, Quiz quiz) throws RemoteException {
         boolean result = true;
-        if (scoreBoardMap.containsKey(quiz.getId())) {
+        int id = quiz.getId();
+        if (scoreBoardMap.containsKey(id)) {
             try {
                 HighScore highScore = scoreBoardMap.get(quiz.getId());
                 int currentHighest = highScore.getHighScore();

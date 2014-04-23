@@ -17,7 +17,6 @@ public class QuizContainerImpl implements QuizContainer {
 
     private TreeMap<Integer, Quiz> quizTreeMap;
     private ClosedQuizContainer closedQuizContainer;
-    private DiskWriter diskWriter;
 
     @Inject
     public QuizContainerImpl(ClosedQuizContainer closedQuizContainer, DiskWriter diskWriter) {
@@ -29,8 +28,7 @@ public class QuizContainerImpl implements QuizContainer {
             this.closedQuizContainer = closedQuizContainer;
             this.quizTreeMap = new TreeMap<>();
         }
-        this.diskWriter = diskWriter;
-        addShutdownHook();
+        diskWriter.persist(closedQuizContainer, quizTreeMap);
     }
 
     @Override
@@ -81,22 +79,5 @@ public class QuizContainerImpl implements QuizContainer {
             list.add(quiz);
         }
         return list;
-    }
-
-    @Override
-    public void flush() {
-        diskWriter.writeToDisk(closedQuizContainer, quizTreeMap);
-    }
-
-    /**
-     * This method adds a shutdown hook
-     */
-    private void addShutdownHook() {
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            @Override
-            public void run() {
-                flush();
-            }
-        });
     }
 }

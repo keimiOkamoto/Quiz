@@ -115,11 +115,6 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     public synchronized List<Quiz> getClosedQuizList() throws RemoteException {
         return closedQuizContainer.getClosedQuizList();
     }
-    @Override
-    public synchronized void flush() throws RemoteException {
-        quizContainer.flush();
-        itemsFactory.flush();
-    }
 
     @Override
     public boolean isQuizNull() throws RemoteException {

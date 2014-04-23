@@ -2,8 +2,10 @@ package utils;
 
 
 import controllers.ClosedQuizContainer;
+import models.HighScore;
 import models.Quiz;
 
+import java.util.Map;
 import java.util.TreeMap;
 
 /**
@@ -17,7 +19,7 @@ public interface DiskWriter {
      * @param closedQuizContainer a QuizContainer
      * @param treeMap the
      */
-    void writeToDisk(ClosedQuizContainer closedQuizContainer, TreeMap<Integer, Quiz> treeMap);
+    void writeToDisk();
 
     /**
      * Checks of the data exists
@@ -37,6 +39,17 @@ public interface DiskWriter {
      * @return true if i does.
      */
     boolean checkIfIdDataExists();
+
+    /*
+    HighScore object
+     */
+    void writeHighScoreBoardToDisk();
+
+    boolean checkIfHighScoreDataExists();
+
+    void readDiskForHighScore();
+
+    Map<Integer, HighScore> getHighScoreBoardMap();
 
     /**
      * Writes the data to disk.
@@ -72,4 +85,9 @@ public interface DiskWriter {
      */
     Integer getUniqueNumber();
 
+    void flush();
+
+    void persist(ClosedQuizContainer closedQuizContainer, TreeMap<Integer, Quiz> quizTreeMap);
+
+    void persist(Map<Integer, HighScore> scoreBoardMap);
 }

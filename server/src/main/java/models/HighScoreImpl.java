@@ -1,8 +1,9 @@
 package models;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 
-public class HighScoreImpl implements HighScore {
+public class HighScoreImpl implements HighScore,Serializable {
 
     private Quiz quiz;
     private Player player;

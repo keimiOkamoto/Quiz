@@ -3,6 +3,7 @@ package models;
 import factories.ItemsFactory;
 import org.junit.Before;
 import org.junit.Test;
+import utils.DiskWriter;
 
 import java.rmi.RemoteException;
 
@@ -18,12 +19,14 @@ public class ScoreKeeperTest {
     private Player player;
     private ItemsFactory itemsFactory;
     private HighScore highScore;
+    private DiskWriter diskWriter;
 
     @Before
     public void buildUp() throws RemoteException {
+        diskWriter = mock(DiskWriter.class);
         player = mock(Player.class);
         itemsFactory = mock(ItemsFactory.class);
-        scoreKeeper = new ScoreKeeperImpl(itemsFactory);
+        scoreKeeper = new ScoreKeeperImpl(itemsFactory, diskWriter);
         highScore = mock(HighScore.class);
         quiz = mock(Quiz.class);
     }
