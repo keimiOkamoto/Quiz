@@ -1,6 +1,7 @@
 package controllers;
 
 import com.google.inject.Singleton;
+import factories.QuizServerFactory;
 
 import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
@@ -30,7 +31,8 @@ public class ServerLinkImpl implements ServerLink {
     public QuizServer getQuizServer() {
         QuizServer quizServer = null;
         try {
-             quizServer = (QuizServer) registry.lookup("QuizServer");
+            QuizServerFactory quizServerFactory = (QuizServerFactory) registry.lookup("QuizServer");
+            quizServer = quizServerFactory.getQuizServer();
         } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();
         }

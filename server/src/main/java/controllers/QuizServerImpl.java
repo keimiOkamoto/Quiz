@@ -1,6 +1,5 @@
 package controllers;
 
-import com.google.inject.Inject;
 import factories.ItemsFactory;
 import factories.PlayerFactory;
 import models.*;
@@ -19,7 +18,6 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     private Quiz quiz;
     private Question question;
 
-    @Inject
     public QuizServerImpl(ItemsFactory itemsFactory, PlayerFactory playerFactory, QuizContainer quizContainer, ScoreKeeper scoreKeeper, ClosedQuizContainer closedQuizContainer) throws RemoteException {
         this.itemsFactory = itemsFactory;
         this.playerFactory = playerFactory;
@@ -113,7 +111,7 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
 
     @Override
     public synchronized List<Quiz> getClosedQuizList() throws RemoteException {
-        return closedQuizContainer.getClosedQuizList();
+        return quizContainer.getClosedQuizList();
     }
 
     @Override

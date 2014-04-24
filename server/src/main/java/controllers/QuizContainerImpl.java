@@ -80,4 +80,9 @@ public class QuizContainerImpl implements QuizContainer {
         }
         return list;
     }
+
+    @Override
+    public List<Quiz> getClosedQuizList() {
+        return closedQuizContainer.getClosedQuizList();
+    }
 }

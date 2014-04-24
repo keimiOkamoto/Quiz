@@ -52,4 +52,6 @@ public interface QuizContainer {
      * @return A list of available quizzes.
      */
     List<Quiz> getQuizzes();
+
+    List<Quiz> getClosedQuizList();
 }

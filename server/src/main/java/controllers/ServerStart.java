@@ -4,6 +4,8 @@ package controllers;
  */
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import factories.QuizServerFactory;
+import factories.QuizServerFactoryImpl;
 import modules.QuizSeverModule;
 
 import java.rmi.RMISecurityManager;
@@ -20,7 +22,7 @@ public class ServerStart {
      */
     public static void main(String[] args) throws RemoteException {
         Injector injector = Guice.createInjector(new QuizSeverModule());
-        QuizServer quizServer = injector.getInstance(QuizServerImpl.class);
+        QuizServerFactory quizServerFactory = injector.getInstance(QuizServerFactoryImpl.class);
 
         System.setProperty("java.security.policy", "server/security.policy");
         if (System.getSecurityManager() == null) {
@@ -29,7 +31,7 @@ public class ServerStart {
 
         try {
             Registry registry = LocateRegistry.createRegistry(1099);
-            registry.rebind("QuizServer", quizServer);
+            registry.rebind("QuizServer", quizServerFactory);
 
             System.out.println("Server is ready.");
         } catch (RemoteException e) {
