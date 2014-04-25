@@ -1,7 +1,6 @@
 package controllers;
 
 import factories.ItemsFactory;
-import models.*;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -61,33 +60,56 @@ public interface QuizServer extends Remote {
     int generateQuiz(String title) throws RemoteException;
 
     /**
-     * Generate Question.
+     * Checks if the Quiz value is null.
      *
-     * @param question A Question
-     * @return A question
+     * @return true if it is null.
      */
-//    Question generateQuestion(String question) throws RemoteException;
-
-    /**
-     * Generate Answer
-     *
-     * @param answer A Answer
-     * @param answerType False ig it is not the right answer, true if it is.
-     * @return An answer
-     */
-//    Answer generateAnswer(String answer, boolean answerType) ;
-
     boolean isQuizNull();
 
+    /**
+     * Checks if the quiz contains the same question.
+     *
+     * @param questionStr The question for the quiz.
+     * @return true if it does contain duplicates.
+     */
     boolean quizContains(String questionStr);
 
+    /**
+     * Adds a questions string to the quiz.
+     *
+     * @param question A question for the quiz.
+     */
     void addQuestionToQuiz(String question);
 
+    /**
+     * Checks if the question value is null.
+     *
+     * @return true if it is null.
+     */
     boolean isQuestionNull();
 
+    /**
+     * Checks if the quiz contains the same answer.
+     *
+     * @param answer An answer String for the question.
+     * @return trues id it does contain duplicates.
+     */
     boolean questionContains(String answer);
 
+    /**
+     * Adds the answer and the answer value, true for correct
+     * and false for incorrect.
+     *
+     * @param answer An answer for the question.
+     * @param answerType true for correct
+     * and false for incorrect.
+     */
     void addToQuestion(String answer, boolean answerType);
 
+    /**
+     * Checks if the Quiz is empty.
+     *
+     * @return true if it is empty.
+     */
     boolean isQuizEmpty();
 }

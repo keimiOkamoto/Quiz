@@ -63,25 +63,6 @@ public interface QuizServer extends Remote {
      */
     int generateQuiz(String title) throws RemoteException;
 
-    /**
-     * Generate Question.
-     *
-     * @param question A Question
-     * @return A question
-     * @throws java.rmi.RemoteException if there is a problem with the server/connection.
-     */
-//    Question generateQuestion(String question) throws RemoteException;
-
-    /**
-     * Generate Answer
-     *
-     * @param answer A Answer
-     * @param answerType False ig it is not the right answer, true if i is.
-     * @return An answer
-     * @throws java.rmi.RemoteException if there is a problem with the server/connection.
-     */
-//    Answer generateAnswer(String answer, boolean answerType) throws RemoteException;
-
 
     /********** Player client methods ***********/
 
