@@ -61,7 +61,7 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
 
     /*
      * Validates if the input is valid.
-     * i.e not empty.
+     * i.e not empty
      */
     private boolean invalid(String questionStr) {
         return questionStr == null || questionStr.trim().isEmpty();

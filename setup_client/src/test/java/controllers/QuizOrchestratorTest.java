@@ -190,11 +190,12 @@ public class QuizOrchestratorTest {
 
     @Test
     public void shouldThrowIllegalQuestionExceptionIfQuestionDoesNotExist() throws IllegalQuestionException, RemoteException {
-        when(server.isQuestionNull()).thenReturn(true);
+        when(server.questionContains(anyString())).thenReturn(true);
         thrown.expect(IllegalQuestionException.class);
-        thrown.expectMessage(ExceptionMessages.NO_QUESTION_EXISTS);
+        thrown.expectMessage(ExceptionMessages.DUPLICATE_ANSWER);
 
-        quizOrchestrator.addAnswer("Any answer", true);
+        String answer = "lion";
+        quizOrchestrator.addAnswer(answer, true);
     }
 
     @Test
