@@ -9,5 +9,4 @@ public class UniqueNumberGeneratorUtilsModule extends AbstractModule {
     protected void configure() {
         bind(DiskWriter.class).to(DiskWriterImpl.class);
     }
-
 }

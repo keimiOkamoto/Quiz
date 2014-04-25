@@ -44,9 +44,16 @@ public interface QuizPlayerOrchestrator {
      * score is the highest.
      *
      * @param player
+     * @param quiz
      */
     void setPlayerAsWinner(Player player, Quiz quiz) throws RemoteException;
 
+    /**
+     * Resets players score.
+     *
+     * @param player A player playing the quiz.
+     * @throws RemoteException
+     */
     void resetPlayerScore(Player player) throws RemoteException;
 
     /**

@@ -25,8 +25,6 @@ public class UniqueNumberGeneratorUtilsImpl implements UniqueNumberGeneratorUtil
 
     @Override
     public void flush() {
-        System.out.println(diskWriter);
-        System.out.println(id);
         diskWriter.writeIdToDisk(id);
     }
 

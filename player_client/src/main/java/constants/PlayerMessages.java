@@ -8,8 +8,8 @@ public class PlayerMessages {
     public static final String GET_AGE_MESSAGE = "* Please enter your age *";
     public static final String GET_COUNTRY_MESSAGE = "* Please enter your country *";
     public static final String GET_MENU_OPTION_MESSAGE = "Press 1: To play a quiz Press 2: To view quizzes that have been closed \nor type 'EXIT' to exit the program at any point.";
-    public static final String VIEW_WINNER_MESSAGE = "* Please enter the quiz number you want to view the winner of! ☆ ";
-    public static final String GET_NAME_MESSAGE = "* Please enter your name ☆";
+    public static final String VIEW_WINNER_MESSAGE = "* Please enter the quiz number you want to view the winner of! * ";
+    public static final String GET_NAME_MESSAGE = "* Please enter your name *";
     public static final String NO_CLOSED_QUIZ_MESSAGE = "No quizzes have been closed!";
     public static final String START_MESSAGE = "start";
     public static final String QUIZ_NEVER_PLAYED_MESSAGE = "No one won the quiz as it was never played :(";
@@ -29,4 +29,6 @@ public class PlayerMessages {
     public static final String NUMBER_VALID_MESSAGE = "Number valid.";
     public static final String NO_QUIZZES_MESSAGE = "There are no quizzes available. :(\nPlease wait for someone to set one up.\nAlternatively, make your own quiz!";
     public static final String IS_HIGH_SCORE_MESSAGE = "is highScore";
+    public static final String EMPTY_STRING = "";
+
 }

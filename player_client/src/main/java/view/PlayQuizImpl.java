@@ -93,7 +93,7 @@ public class PlayQuizImpl implements PlayQuiz {
         }
 
         for (Question question : questionSet) {
-            String userInput = "";
+            String userInput = PlayerMessages.EMPTY_STRING;
             while (!validInput(userInput)) {
                 try {
                     System.out.println(PlayerMessages.QUESTION_MESSAGE + question.getQuestion());

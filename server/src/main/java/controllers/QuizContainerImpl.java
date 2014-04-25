@@ -29,6 +29,7 @@ public class QuizContainerImpl implements QuizContainer {
             this.closedQuizContainer = closedQuizContainer;
             this.quizTreeMap = new TreeMap<>();
         }
+        diskWriter.persist(closedQuizContainer, quizTreeMap);
         this.diskWriter = diskWriter;
     }
 

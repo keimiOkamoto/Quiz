@@ -7,8 +7,18 @@ import java.rmi.RemoteException;
  */
 public interface HighScore {
 
+    /**
+     * Get player country.
+     *
+     * @return Player's country.
+     */
     String getPlayerCountry();
 
+    /**
+     * Gets the player's age.
+     *
+     * @return Players age.
+     */
     int getPlayerAge();
 
     /**

@@ -108,7 +108,7 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     @Override
     public synchronized void resetPlayerScore(Player player) throws RemoteException {
         player.resetScore();
-    }//TODO
+    }
 
     @Override
     public synchronized List<Quiz> getClosedQuizList() throws RemoteException {
