@@ -34,7 +34,7 @@ public class PlayerStartImpl implements PlayerStart {
         String userInput = null;
 
         System.out.println(PlayerMessages.WELCOME_MESSAGE);
-        while (userInput == null || !userInput.equals("EXIT")) {
+        while (userInput == null || !userInput.equals(PlayerMessages.EXIT_MESSAGE)) {
 
             message = PlayerMessages.WELCOME_MESSAGE;
 
@@ -46,7 +46,7 @@ public class PlayerStartImpl implements PlayerStart {
             while (message.equals(PlayerMessages.WELCOME_MESSAGE)) {
                 System.out.println(PlayerMessages.GET_MENU_OPTION_MESSAGE);
                 userInput = scanner.nextLine();
-                if (userInput.equals("EXIT")) System.exit(0);
+                if (userInput.equals(PlayerMessages.EXIT_MESSAGE)) System.exit(0);
                 message = playerStart.getStartChoice(userInput);
 
                 while (message.equals(PlayerMessages.VIEW_WINNER_MESSAGE)) {
@@ -78,13 +78,13 @@ public class PlayerStartImpl implements PlayerStart {
             answerSize = quizList.size();
 
             userInput = scanner.nextLine();
-            if(userInput.equals("EXIT")) System.exit(0);
+            if(userInput.equals(PlayerMessages.EXIT_MESSAGE)) System.exit(0);
             if (validInput(userInput)) {
                 Quiz quiz1 = quizList.get(Integer.parseInt(userInput) - 1);
                 HighScore highScore;
                 try {
                     highScore = quizPlayerOrchestrator.getWinner(quiz1.getId());
-                    System.out.println("The winner is " + highScore.getPlayerName() + " from " + highScore.getPlayerCountry() + ", age: " + highScore.getPlayerAge());
+                    System.out.println(PlayerMessages.WINNER_MESSAGE + highScore.getPlayerName() + PlayerMessages.FROM_MESSAGE + highScore.getPlayerCountry() + PlayerMessages.AGE_MESSAGE + highScore.getPlayerAge());
                 } catch (NullPointerException e) {
                     System.out.println(PlayerMessages.QUIZ_NEVER_PLAYED_MESSAGE);
                 }
@@ -112,7 +112,7 @@ public class PlayerStartImpl implements PlayerStart {
         while (message1 == PlayerMessages.START_MESSAGE) {
             System.out.println(PlayerMessages.GET_NAME_MESSAGE);
             name = scanner.nextLine();
-            if (name.equals("EXIT")) System.exit(0);
+            if (name.equals(PlayerMessages.EXIT_MESSAGE)) System.exit(0);
 
             if (!checkForNull(name)) {
                 message1 = PlayerMessages.GET_COUNTRY_MESSAGE;
@@ -122,7 +122,7 @@ public class PlayerStartImpl implements PlayerStart {
             while (message1.equals(PlayerMessages.GET_COUNTRY_MESSAGE)) {
                 System.out.println(message1);
                 country = scanner.nextLine();
-                if (country.equals("EXIT")) System.exit(0);
+                if (country.equals(PlayerMessages.EXIT_MESSAGE)) System.exit(0);
 
                 if (!checkForNull(country)) {
                     message1 = PlayerMessages.GET_AGE_MESSAGE;
@@ -133,7 +133,7 @@ public class PlayerStartImpl implements PlayerStart {
                 while (message1.equals(PlayerMessages.GET_AGE_MESSAGE)) {
                     System.out.println(message1);
                     age = scanner.nextLine();
-                    if (age.equals("EXIT")) System.exit(0);
+                    if (age.equals(PlayerMessages.EXIT_MESSAGE)) System.exit(0);
 
                     age1 = 0;
                     try {
@@ -224,7 +224,7 @@ public class PlayerStartImpl implements PlayerStart {
     }
 
     private String getNewWinnerMessage(Player player) throws RemoteException {
-        return "\t\tYOU GOT THE HIGHEST SCORE!\n☆☆☆☆☆ Congratulations " + player.getName() + " from " + player.getCountry() + "!  ☆☆☆☆☆";
+        return PlayerMessages.CONGRATS_MESSAGE + player.getName() + PlayerMessages.FROM_MESSAGE + player.getCountry() + PlayerMessages.STAR_DECORATION;
     }
 
     private static boolean checkForNull(String userInput) {

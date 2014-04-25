@@ -13,4 +13,11 @@ public class PlayerMessages {
     public static final String NO_CLOSED_QUIZ_MESSAGE = "No quizzes have been closed!";
     public static final String START_MESSAGE = "start";
     public static final String QUIZ_NEVER_PLAYED_MESSAGE = "No one won the quiz as it was never played :(";
+    public static final String EXIT_MESSAGE = "EXIT";
+    public static final String CONGRATS_MESSAGE = "\t\tYOU GOT THE HIGHEST SCORE!\n☆☆☆☆☆ Congratulations ";
+    public static final String FROM_MESSAGE = " from ";
+    public static final String STAR_DECORATION = "!  ☆☆☆☆☆";
+    public static final String WINNER_MESSAGE = "The winner is ";
+    public static final String AGE_MESSAGE =  ", age, " ;
+
 }

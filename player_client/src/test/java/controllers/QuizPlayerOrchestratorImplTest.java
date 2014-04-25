@@ -95,7 +95,7 @@ public class QuizPlayerOrchestratorImplTest {
         when(server.getWinnerBy(anyInt())).thenReturn(highScore);
         HighScore actual = quizPlayerOrchestrator.getWinner(id);
 
-        assertEquals(player, actual);
+        assertEquals(highScore, actual);
     }
 
     @Test

@@ -57,7 +57,7 @@ public class ServerTest {
     }
 
     @Test
-    public void shouldBeAbleToGetWinnerByQuizId() {
+    public void shouldBeAbleToGetWinnerByQuizId() throws RemoteException {
         int quizId = 5;
         server.getWinnerBy(quizId);
         verify(quizServer).getWinnerBy(quizId);
