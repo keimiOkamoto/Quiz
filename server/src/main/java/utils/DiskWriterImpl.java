@@ -61,6 +61,7 @@ public class DiskWriterImpl implements DiskWriter {
             fis = new FileInputStream(DiskWriterImpl.QUIZ_TXT);
             in = new ObjectInputStream(fis);
             closedQuizContainer = (ClosedQuizContainer) in.readObject();
+            System.out.println(closedQuizContainer.getClosedQuizList().size());
             treeMap = (TreeMap<Integer, Quiz>) in.readObject();
             in.close();
         } catch (ClassNotFoundException | IOException e) {

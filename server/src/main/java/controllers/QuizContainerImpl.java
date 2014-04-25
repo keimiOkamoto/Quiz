@@ -17,6 +17,7 @@ public class QuizContainerImpl implements QuizContainer {
 
     private TreeMap<Integer, Quiz> quizTreeMap;
     private ClosedQuizContainer closedQuizContainer;
+    private DiskWriter diskWriter;
 
     @Inject
     public QuizContainerImpl(ClosedQuizContainer closedQuizContainer, DiskWriter diskWriter) {
@@ -28,7 +29,7 @@ public class QuizContainerImpl implements QuizContainer {
             this.closedQuizContainer = closedQuizContainer;
             this.quizTreeMap = new TreeMap<>();
         }
-        diskWriter.persist(closedQuizContainer, quizTreeMap);
+        this.diskWriter = diskWriter;
     }
 
     @Override
@@ -54,12 +55,14 @@ public class QuizContainerImpl implements QuizContainer {
     public void closeQuizWith(int id) {
         Quiz closedQuiz = quizTreeMap.remove(id);
         closedQuizContainer.add(closedQuiz);
+        diskWriter.persist(closedQuizContainer, quizTreeMap);
     }
 
     @Override
     public void save(Quiz quiz) {
         try {
             quizTreeMap.put(quiz.getId(), quiz);
+            diskWriter.persist(closedQuizContainer, quizTreeMap);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
