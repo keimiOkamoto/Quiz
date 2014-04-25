@@ -102,55 +102,9 @@ public class PlayerStartImpl implements PlayerStart {
 
     @Override
     public Player makePlayer(Scanner scanner, Player player) {
-        String message1;
-        String name = null;
-        String country = null;
-        String age;
-        int age1 = 0;
-        message1 = PlayerMessages.START_MESSAGE;
+        PlayerCreator playerCreator = new PlayerCreatorImpl();
 
-        while (message1 == PlayerMessages.START_MESSAGE) {
-            System.out.println(PlayerMessages.GET_NAME_MESSAGE);
-            name = scanner.nextLine();
-            if (name.equals(PlayerMessages.EXIT_MESSAGE)) System.exit(0);
-
-            if (!checkForNull(name)) {
-                message1 = PlayerMessages.GET_COUNTRY_MESSAGE;
-            } else {
-                System.out.println(ExceptionMessages.INVALID_USER_INPUT);
-            }
-            while (message1.equals(PlayerMessages.GET_COUNTRY_MESSAGE)) {
-                System.out.println(message1);
-                country = scanner.nextLine();
-                if (country.equals(PlayerMessages.EXIT_MESSAGE)) System.exit(0);
-
-                if (!checkForNull(country)) {
-                    message1 = PlayerMessages.GET_AGE_MESSAGE;
-                } else {
-                    System.out.println(ExceptionMessages.INVALID_USER_INPUT);
-                }
-
-                while (message1.equals(PlayerMessages.GET_AGE_MESSAGE)) {
-                    System.out.println(message1);
-                    age = scanner.nextLine();
-                    if (age.equals(PlayerMessages.EXIT_MESSAGE)) System.exit(0);
-
-                    age1 = 0;
-                    try {
-                        age1 = Integer.parseInt(age);
-                        break;
-                    } catch (NumberFormatException e) {
-                        System.out.println(ExceptionMessages.NO_NUMBER_ENTERED);
-                    }
-                }
-            }
-        }
-        try {
-            player = quizPlayerOrchestrator.addPlayer(name, country, age1);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        return player;
+        return playerCreator.createPlayer(player, scanner, quizPlayerOrchestrator);
     }
 
     @Override
@@ -175,9 +129,9 @@ public class PlayerStartImpl implements PlayerStart {
         if (userInput == null || userInput.trim().isEmpty()) {
             System.out.println(ExceptionMessages.INVALID_USER_INPUT);
             message = PlayerMessages.WELCOME_MESSAGE;
-        } else if (userInput.equals("1")) {
+        } else if (userInput.equals(PlayerMessages.ONE_MESSAGE)) {
             message = PlayerMessages.QUIZ_SELECT_MESSAGE;
-        } else if (userInput.equals("2")) {
+        } else if (userInput.equals(PlayerMessages.TWO_MESSAGE)) {
             message = PlayerMessages.VIEW_WINNER_MESSAGE;
         } else {
             message = PlayerMessages.WELCOME_MESSAGE;

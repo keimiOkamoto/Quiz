@@ -19,5 +19,14 @@ public class PlayerMessages {
     public static final String STAR_DECORATION = "!  ☆☆☆☆☆";
     public static final String WINNER_MESSAGE = "The winner is ";
     public static final String AGE_MESSAGE =  ", age, " ;
-
+    public static final String ONE_MESSAGE =  "1" ;
+    public static final String TWO_MESSAGE = "2";
+    public static final String QUESTION_MESSAGE = "\nQUESTION: ";
+    public static final String COLON_MESSAGE = ": ";
+    public static final String PLAYER_SCORE_MESSAGE = "¸¸.•*¨*•♫♪ You scored: ";
+    public static final String OUT_OF_MESSAGE = " out of ";
+    public static final String MUSIC_DECORATION = "! ♪♫•*¨*•.¸¸";
+    public static final String NUMBER_VALID_MESSAGE = "Number valid.";
+    public static final String NO_QUIZZES_MESSAGE = "There are no quizzes available. :(\nPlease wait for someone to set one up.\nAlternatively, make your own quiz!";
+    public static final String IS_HIGH_SCORE_MESSAGE = "is highScore";
 }

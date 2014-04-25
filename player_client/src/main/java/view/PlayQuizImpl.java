@@ -1,6 +1,7 @@
 package view;
 
 import constants.ExceptionMessages;
+import constants.PlayerMessages;
 import controllers.QuizPlayerOrchestrator;
 import controllers.Server;
 import exceptions.IllegalGameException;
@@ -41,7 +42,7 @@ public class PlayQuizImpl implements PlayQuiz {
             quizMenu.print();
 
             String userInput = scanner.nextLine();
-            if (userInput.equals("EXIT")) System.exit(0);
+            if (userInput.equals(PlayerMessages.EXIT_MESSAGE)) System.exit(0);
 
             message = checkForValidNumber(userInput, message);
 
@@ -69,7 +70,7 @@ public class PlayQuizImpl implements PlayQuiz {
             if (message.equals(getNewWinnerMessage(player))) {
                 System.out.println(message);
                 quizPlayerOrchestrator.setPlayerAsWinner(player, quiz);
-                message = getThanksForPlayingMessage();
+                message = PlayerMessages.THANKS_FOR_PLAYING;
                 System.out.println(message);
                 quizPlayerOrchestrator.resetPlayerScore(player);
             }
@@ -95,17 +96,17 @@ public class PlayQuizImpl implements PlayQuiz {
             String userInput = "";
             while (!validInput(userInput)) {
                 try {
-                    System.out.println("\nQUESTION: " + question.getQuestion());
+                    System.out.println(PlayerMessages.QUESTION_MESSAGE + question.getQuestion());
                     Set<Answer> answerSet = question.getAnswers();
 
                     Answer[] answers = answerSet.toArray(new Answer[answerSet.size()]);
                     setAnswerSize(answers.length);
 
                     for (int y = 0; y < answers.length; y++) {
-                        System.out.println((y + 1) + ": " + answers[y].getAnswer());
+                        System.out.println((y + 1) + PlayerMessages.COLON_MESSAGE + answers[y].getAnswer());
                     }
                     userInput = scanner.nextLine();
-                    if (userInput.equals("EXIT")) System.exit(0);
+                    if (userInput.equals(PlayerMessages.EXIT_MESSAGE)) System.exit(0);
 
                     if (validInput(userInput)) {
                         setAnswerIndex(userInput);
@@ -121,7 +122,7 @@ public class PlayQuizImpl implements PlayQuiz {
             }
         }
         try {
-            System.out.println("¸¸.•*¨*•♫♪ You scored: " + player.getScore() + " out of " + questionSet.size() + "! ♪♫•*¨*•.¸¸");
+            System.out.println(PlayerMessages.PLAYER_SCORE_MESSAGE + player.getScore() + PlayerMessages.OUT_OF_MESSAGE + questionSet.size() + PlayerMessages.MUSIC_DECORATION);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -174,10 +175,6 @@ public class PlayQuizImpl implements PlayQuiz {
         this.answerSize = answerSize;
     }
 
-    private String getQuizNumberSelectMessage() {
-        return "☆ Please enter the quiz number you want to play! ☆ ";
-    }
-
     private void setQuizSize(int size) {
         this.quizSize = size;
     }
@@ -186,28 +183,20 @@ public class PlayQuizImpl implements PlayQuiz {
         return "Game start";
     }
 
-    private String getThanksForPlayingMessage() {
-        return "♬ ☆ Thank you for playing, come back soon! ☆ ♬\n";
-    }
-
-
     private String getNewWinnerMessage(Player player) throws RemoteException {
-        return "\t\tYOU GOT THE HIGHEST SCORE!\n☆☆☆☆☆ Congratulations " + player.getName() + " from " + player.getCountry() + "!  ☆☆☆☆☆";
+        return PlayerMessages.CONGRATS_MESSAGE + player.getName() + PlayerMessages.FROM_MESSAGE + player.getCountry() + PlayerMessages.STAR_DECORATION;
     }
-
 
     private String getValidNumberMessage() {
-        return "Number valid.";
+        return PlayerMessages.NUMBER_VALID_MESSAGE;
     }
-
 
     private String getExitMessage() {
-        return "There are no quizzes available. :(\nPlease wait for someone to set one up.\nAlternatively, make your own quiz!";
+        return PlayerMessages.NO_QUIZZES_MESSAGE;
     }
 
-
     public String getUserHighScoreMessage() {
-        return "is highScore";
+        return PlayerMessages.IS_HIGH_SCORE_MESSAGE;
     }
 
     private String checkForValidNumber(String userInput, String message) {
