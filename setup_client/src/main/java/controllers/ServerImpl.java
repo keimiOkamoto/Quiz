@@ -1,11 +1,14 @@
 package controllers;
 
+import com.google.inject.Inject;
+
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 public class ServerImpl implements Server {
     private QuizServer quizServer;
 
+    @Inject
     public ServerImpl(ServerLink serverLink) throws RemoteException, NotBoundException {
         this.quizServer = serverLink.getQuizServer();
     }

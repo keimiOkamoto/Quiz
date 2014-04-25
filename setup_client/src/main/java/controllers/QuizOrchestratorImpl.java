@@ -1,5 +1,6 @@
 package controllers;
 
+import com.google.inject.Inject;
 import constants.ExceptionMessages;
 import exceptions.IllegalQuestionException;
 import exceptions.IllegalQuizException;
@@ -13,6 +14,7 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
     private Server server;
     private String title;
 
+    @Inject
     public QuizOrchestratorImpl(Server server) {
         this.server = server;
     }

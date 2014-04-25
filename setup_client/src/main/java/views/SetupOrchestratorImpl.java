@@ -1,5 +1,6 @@
 package views;
 
+import com.google.inject.Inject;
 import constants.ExceptionMessages;
 import constants.SetUpMessages;
 import controllers.*;
@@ -14,6 +15,7 @@ public class SetupOrchestratorImpl implements SetupOrchestrator {
     private String message = null;
     private String answer;
 
+    @Inject
     public SetupOrchestratorImpl(QuizOrchestrator quizOrchestrator) {
         this.quizOrchestrator = quizOrchestrator;
     }

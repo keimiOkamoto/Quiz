@@ -1,7 +1,10 @@
 package views;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import constants.ExceptionMessages;
 import controllers.*;
+import modules.SetupOrchestratorModule;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -13,18 +16,12 @@ public class SetupStart {
      */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ServerLink serverLink = new ServerLinkImpl();
         Views views = new ViewsImpl();
-        Server server = null;
 
-        try {
-            server = new ServerImpl(serverLink);
-        } catch (RemoteException | NotBoundException e) {
-            System.out.println(ExceptionMessages.SERVER_ERROR);
-        }
-        QuizOrchestrator quizOrchestrator = new QuizOrchestratorImpl(server);
-        SetupOrchestrator setupOrchestrator = new SetupOrchestratorImpl(quizOrchestrator);
         GameSetupView gameSetupView = views.getGameSetupView();
+
+        Injector injector = Guice.createInjector(new SetupOrchestratorModule());
+        SetupOrchestrator setupOrchestrator = injector.getInstance(SetupOrchestratorImpl.class);
 
         String message = "";
 
