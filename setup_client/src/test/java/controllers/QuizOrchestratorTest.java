@@ -14,6 +14,7 @@ import org.junit.rules.ExpectedException;
 import java.rmi.RemoteException;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -46,7 +47,8 @@ public class QuizOrchestratorTest {
     @Test
     public void shouldBeAbleToCreateAQuiz() throws IllegalQuizException, RemoteException {
         String expected = "The colour quiz!";
-//        when(server.createQuiz(expected)).thenReturn(quiz);
+        int id = 0;
+        when(server.createQuiz(expected)).thenReturn(id);
         when(server.valid(anyString())).thenReturn(true);
         quizOrchestrator.createQuiz(expected);
 
@@ -57,8 +59,9 @@ public class QuizOrchestratorTest {
 
         assertEquals(expected, actual);
 
+        int id1 = 1;
         expected = "The animal quiz!";
-//        when(server.createQuiz(expected)).thenReturn(quiz);
+        when(server.createQuiz(expected)).thenReturn(id1);
         quizOrchestrator.createQuiz(expected);
 
         verify(server).createQuiz(expected);
@@ -72,16 +75,15 @@ public class QuizOrchestratorTest {
     @Test
     public void shouldBeAbleToReturnIdWhenCreatingAQuiz() throws IllegalQuizException, RemoteException {
         String title = "Animal Quiz";
-//        when(server.createQuiz(anyString())).thenReturn(quiz);
+        int id = 5;
+        when(server.createQuiz(anyString())).thenReturn(id);
         when(server.valid(anyString())).thenReturn(true);
 
-        int expected = 2;
-        when(quiz.getId()).thenReturn(expected);
+        when(quiz.getId()).thenReturn(id);
 
         int actual = quizOrchestrator.createQuiz(title);
-        verify(quiz).getId();
 
-        assertEquals(expected,actual);
+        assertEquals(id,actual);
     }
 
     @Test
@@ -116,21 +118,14 @@ public class QuizOrchestratorTest {
      */
     @Test
     public void shouldBeAbleToAddQuestionToQuizCreated() throws IllegalQuizException, RemoteException, IllegalQuestionException {
-        String title = "A quiz";
-//        when(server.createQuiz(anyString())).thenReturn(quiz);
-        when(server.valid(anyString())).thenReturn(true);
-        quizOrchestrator.createQuiz(title);
-        verify(server).createQuiz(title);
-
         String question1 = "What is the biggest cat?";
-//        when(server.createQuestion(anyString())).thenReturn(question);
-        when(quiz.contains(question1)).thenReturn(false);
         quizOrchestrator.addQuestion(question1);
-        verify(quiz).addQuestion(question);
+        verify(server).addQuestionToQuiz(question1);
     }
 
     @Test
     public void shouldThrowIllegalQuizExceptionIfQuizIsNull() throws IllegalQuizException, RemoteException, IllegalQuestionException {
+        when(server.isQuizNull()).thenReturn(true);
         thrown.expect(IllegalQuizException.class);
         thrown.expectMessage(ExceptionMessages.NO_QUIZ_EXISTS);
 
@@ -140,12 +135,6 @@ public class QuizOrchestratorTest {
 
     @Test
     public void shouldThrowIllegalArgumentExceptionIfStringIsNull() throws IllegalQuizException, RemoteException, IllegalQuestionException {
-        String title = "A quiz";
-//        when(server.createQuiz(anyString())).thenReturn(quiz);
-        when(server.valid(anyString())).thenReturn(true);
-        quizOrchestrator.createQuiz(title);
-        verify(server).createQuiz(title);
-
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage(ExceptionMessages.EMPTY_QUESTION);
 
@@ -154,34 +143,20 @@ public class QuizOrchestratorTest {
 
     @Test
     public void shouldThrowIllegalArgumentExceptionIfStringIsEmpty() throws IllegalQuizException, RemoteException, IllegalQuestionException {
-        String title = "A quiz";
-//        when(server.createQuiz(anyString())).thenReturn(quiz);
-        when(server.valid(anyString())).thenReturn(true);
-        quizOrchestrator.createQuiz(title);
-        verify(server).createQuiz(title);
-
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Question entered is empty. Please try again.");
+        thrown.expectMessage(ExceptionMessages.EMPTY_QUESTION);
 
         quizOrchestrator.addQuestion("    ");
     }
 
     @Test
     public void shouldThrowIllegalQuizExceptionIfQuestionAlreadyExists() throws IllegalQuizException, RemoteException, IllegalQuestionException {
-        String title = "Animal quiz";
-//        when(server.createQuiz(anyString())).thenReturn(quiz);
-        when(server.valid(anyString())).thenReturn(true);
-        quizOrchestrator.createQuiz(title);
-        verify(server).createQuiz(title);
-
-//        when(server.createQuestion(anyString())).thenReturn(question);
-
-        String stringAnswer = "Lion";
-        when(quiz.contains(stringAnswer)).thenReturn(true);
+        when(server.quizContains(anyString())).thenReturn(true);
 
         thrown.expect(IllegalQuizException.class);
         thrown.expectMessage(ExceptionMessages.DUPLICATE_QUESTION);
 
+        String stringAnswer = "Lion";
         quizOrchestrator.addQuestion(stringAnswer);
     }
 
@@ -190,22 +165,10 @@ public class QuizOrchestratorTest {
      */
     @Test
     public void shouldBeAbleToAddAnswer() throws IllegalQuizException, IllegalQuestionException, RemoteException {
-        String title = "Animal quiz";
-        when(quiz.contains(anyString())).thenReturn(false);
-//        when(server.createQuiz(anyString())).thenReturn(quiz);
-        when(server.valid(anyString())).thenReturn(true);
-        quizOrchestrator.createQuiz(title);
-        verify(server).createQuiz(title);
-
         String question1 = "What is the biggest cat?";
-//        when(server.createQuestion(anyString())).thenReturn(question);
-        quizOrchestrator.addQuestion(question1);
-        verify(quiz).addQuestion(question);
+        quizOrchestrator.addAnswer(question1, true);
 
-        String stringAnswer = "Lion";
-//        when(server.createAnswer(stringAnswer, true)).thenReturn(answer);
-        quizOrchestrator.addAnswer(stringAnswer, true);
-        verify(question).add(answer);
+        verify(server).addToQuestion(anyString(), anyBoolean());
     }
 
     @Test
