@@ -3,9 +3,6 @@ package controllers;
 import constants.ExceptionMessages;
 import exceptions.IllegalQuestionException;
 import exceptions.IllegalQuizException;
-import models.Answer;
-import models.Question;
-import models.Quiz;
 
 import java.rmi.RemoteException;
 
@@ -61,14 +58,10 @@ public class QuizOrchestratorImpl implements QuizOrchestrator {
     public String getTitle() {
         return title;
     }
-//
-//    @Override
-//    public Quiz getQuiz() {
-//        return quiz;
-//    }
 
     /*
      * Validates if the input is valid.
+     * i.e not empty.
      */
     private boolean invalid(String questionStr) {
         return questionStr == null || questionStr.trim().isEmpty();

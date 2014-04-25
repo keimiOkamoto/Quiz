@@ -2,7 +2,6 @@ package controllers;
 
 import exceptions.IllegalQuestionException;
 import exceptions.IllegalQuizException;
-import models.Quiz;
 
 import java.rmi.RemoteException;
 
@@ -63,16 +62,9 @@ public interface QuizOrchestrator {
     void closeQuiz(int id) throws IllegalQuizException, RemoteException;
 
     /**
-     * Getter for the title of the quiz
+     * Getter for the title of the quiz.
      *
-     * @return a title of the quiz
+     * @return a title of the quiz.
      */
     String getTitle();
-
-//    /**
-//     * Getter for the quiz.
-//     *
-//     * @return Quiz A quiz.
-//     */
-//    Quiz getQuiz();
 }
