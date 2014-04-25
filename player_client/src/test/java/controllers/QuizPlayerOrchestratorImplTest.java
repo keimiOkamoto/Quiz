@@ -2,6 +2,7 @@ package controllers;
 
 import constants.ExceptionMessages;
 import exceptions.IllegalQuizException;
+import models.HighScore;
 import models.Player;
 import models.Quiz;
 import org.junit.Before;
@@ -25,6 +26,7 @@ public class QuizPlayerOrchestratorImplTest {
     private Server server;
     private Quiz quiz;
     private Player player;
+    private HighScore highScore;
 
     @Before
     public void buildUp() {
@@ -32,6 +34,7 @@ public class QuizPlayerOrchestratorImplTest {
         player = mock(Player.class);
         quizPlayerOrchestrator = new QuizPlayerOrchestratorImpl(server);
         quiz = mock(Quiz.class);
+        highScore = mock(HighScore.class);
     }
 
     @Rule
@@ -87,10 +90,10 @@ public class QuizPlayerOrchestratorImplTest {
     }
 
     @Test
-    public void shouldBeAbleToGetTheWinner() {
+    public void shouldBeAbleToGetTheWinner() throws RemoteException {
         int id = 6;
-        when(server.getWinnerBy(anyInt())).thenReturn(player);
-        Player actual = quizPlayerOrchestrator.getWinner(id);
+        when(server.getWinnerBy(anyInt())).thenReturn(highScore);
+        HighScore actual = quizPlayerOrchestrator.getWinner(id);
 
         assertEquals(player, actual);
     }

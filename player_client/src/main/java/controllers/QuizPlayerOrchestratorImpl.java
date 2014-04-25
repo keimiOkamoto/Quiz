@@ -3,11 +3,11 @@ package controllers;
 import constants.ExceptionMessages;
 import exceptions.IllegalGameException;
 import exceptions.IllegalQuizException;
+import models.HighScore;
 import models.Player;
 import models.Quiz;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
@@ -48,7 +48,7 @@ public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
     }
 
     @Override
-    public Player getWinner(int quizId) {
+    public HighScore getWinner(int quizId) throws RemoteException {
         return server.getWinnerBy(quizId);
     }
 

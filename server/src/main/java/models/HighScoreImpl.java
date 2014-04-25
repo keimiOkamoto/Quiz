@@ -2,8 +2,9 @@ package models;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 
-public class HighScoreImpl implements HighScore, Serializable {
+public class HighScoreImpl extends UnicastRemoteObject implements HighScore {
 
     private int score;
     private int age;
@@ -11,7 +12,7 @@ public class HighScoreImpl implements HighScore, Serializable {
     private String name;
     private String country;
 
-    public HighScoreImpl(Quiz quiz, Player player) {
+    public HighScoreImpl(Quiz quiz, Player player) throws RemoteException {
         this.quiz = quiz;
         try {
             this.name = player.getName();
@@ -24,17 +25,17 @@ public class HighScoreImpl implements HighScore, Serializable {
     }
 
     @Override
-    public String getPlayerName() {
+    public String getPlayerName() throws RemoteException {
         return name;
     }
 
     @Override
-    public String getPlayerCountry() {
+    public String getPlayerCountry() throws RemoteException {
         return country;
     }
 
     @Override
-    public int getPlayerAge() {
+    public int getPlayerAge() throws RemoteException {
         return age;
     }
 

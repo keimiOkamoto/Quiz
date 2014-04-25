@@ -80,12 +80,12 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     }
 
     @Override
-    public synchronized boolean checkForHighScore(Quiz quiz, Player player)throws RemoteException {
+    public synchronized boolean checkForHighScore(Quiz quiz, Player player) throws RemoteException {
         return scoreKeeper.scoreIsHighest(player, quiz);
     }
 
     @Override
-    public synchronized PlayerFactory getPlayerFactory()throws RemoteException {
+    public synchronized PlayerFactory getPlayerFactory() throws RemoteException {
         return playerFactory;
     }
 
@@ -95,7 +95,7 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     }
 
     @Override
-    public synchronized HighScore getWinnerBy(int quizId)throws RemoteException  {
+    public synchronized HighScore getWinnerBy(int quizId) throws RemoteException  {
         return scoreKeeper.getLeader(quizId);
     }
 

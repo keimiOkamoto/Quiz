@@ -4,6 +4,7 @@ import constants.ExceptionMessages;
 import constants.PlayerMessages;
 import controllers.*;
 import exceptions.IllegalGameException;
+import models.HighScore;
 import models.Player;
 import models.Quiz;
 
@@ -80,10 +81,10 @@ public class PlayerStartImpl implements PlayerStart {
             if(userInput.equals("EXIT")) System.exit(0);
             if (validInput(userInput)) {
                 Quiz quiz1 = quizList.get(Integer.parseInt(userInput) - 1);
-                Player player;
+                HighScore highScore;
                 try {
-                    player = quizPlayerOrchestrator.getWinner(quiz1.getId());
-                    System.out.println("The winner is " + player.getName() + "\nfrom: " + player.getCountry() + "\nage: " + player.getAge());
+                    highScore = quizPlayerOrchestrator.getWinner(quiz1.getId());
+                    System.out.println("The winner is " + highScore.getPlayerName() + " from " + highScore.getPlayerCountry() + ", age: " + highScore.getPlayerAge());
                 } catch (NullPointerException e) {
                     System.out.println(PlayerMessages.QUIZ_NEVER_PLAYED_MESSAGE);
                 }

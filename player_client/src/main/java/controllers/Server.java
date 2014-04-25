@@ -40,7 +40,7 @@ public interface Server {
      * @return Winner of a quiz.
      * @param quizId
      */
-    Player getWinnerBy(int quizId);
+    models.HighScore getWinnerBy(int quizId) throws RemoteException;
 
     /**
      * Sets the player as the winner.

@@ -1,7 +1,7 @@
 package controllers;
 
+import models.HighScore;
 import models.Player;
-import models.PlayerFactory;
 import models.Quiz;
 
 import java.rmi.RemoteException;
@@ -27,10 +27,10 @@ public class ServerImpl implements Server {
     @Override
     public Player createPlayer(String name, String country, int age) throws RemoteException {
         return quizServer.generatePlayer(name, country, age);
-    } //TODO
+    }
 
     @Override
-    public Player getWinnerBy(int quizId) {
+    public HighScore getWinnerBy(int quizId) throws RemoteException {
         return quizServer.getWinnerBy(quizId);
     }
 

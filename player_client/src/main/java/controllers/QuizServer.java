@@ -1,5 +1,6 @@
 package controllers;
 
+import models.HighScore;
 import models.Player;
 import models.PlayerFactory;
 import models.Quiz;
@@ -51,7 +52,7 @@ public interface QuizServer {
      * @param quizId The id of the quiz.
      * @return The winner of the quiz.
      */
-    Player getWinnerBy(int quizId);
+    HighScore getWinnerBy(int quizId) throws RemoteException;
 
     /**
      * Setter for setting a player as a winner.

@@ -55,7 +55,7 @@ public interface QuizPlayerOrchestrator {
      * @param quizId The id for a quiz.
      * @return The winner. (Player)
      */
-    Player getWinner(int quizId);
+    models.HighScore getWinner(int quizId) throws RemoteException;
 
     List<Quiz> getClosedQuizList() throws RemoteException;
 }
