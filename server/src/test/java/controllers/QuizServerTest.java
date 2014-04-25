@@ -10,9 +10,7 @@ import java.rmi.RemoteException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -75,9 +73,12 @@ public class QuizServerTest {
 
     @Test
     public void shouldBeAbleToSaveQuizToContainer() throws RemoteException {
-        Quiz quiz = mock(Quiz.class);
+        when(itemsFactory.generateQuiz(anyString())).thenReturn(quiz);
+        quizServer.generateQuiz("any title");
+
         quizServer.save();
-        verify(quizContainer).save(quiz);
+
+        verify(quizContainer).save(eq(quiz));
     }
 
     @Test
@@ -168,16 +169,13 @@ public class QuizServerTest {
     public void shouldBeAbleToSetWinner() throws RemoteException {
         int quizId = 5;
 
-        when(quiz.getId()).thenReturn(quizId);
-        when(player.getScore()).thenReturn(50);
-        when(player.getName()).thenReturn("Green Goblin");
         quizServer.setPlayerAsWinner(quiz, player);
         verify(scoreKeeper).setLeader(quiz, player);
 
         when(scoreKeeper.getLeader(quizId)).thenReturn(highScore);
         HighScore actual = quizServer.getWinnerBy(quizId);
 
-        assertEquals(player, actual);
+        assertEquals(highScore, actual);
     }
 
     @Test

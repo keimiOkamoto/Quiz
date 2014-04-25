@@ -103,12 +103,12 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     @Override
     public synchronized Player generatePlayer(String name, String country, int age) throws RemoteException {
         return playerFactory.generatePlayer(name, country, age);
-    }//TODO
+    }
 
     @Override
     public synchronized void resetPlayerScore(Player player) throws RemoteException {
         player.resetScore();
-    }
+    }//TODO
 
     @Override
     public synchronized List<Quiz> getClosedQuizList() throws RemoteException {
