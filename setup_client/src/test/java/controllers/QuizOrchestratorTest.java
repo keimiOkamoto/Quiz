@@ -173,20 +173,7 @@ public class QuizOrchestratorTest {
 
     @Test
     public void shouldThrowIllegalArgumentExceptionIfStringIsNullForAddAnswer() throws IllegalQuestionException, IllegalQuizException, RemoteException {
-        String title = "A Quiz";
-//        when(server.createQuiz(anyString())).thenReturn(quiz);
-        when(server.valid(anyString())).thenReturn(true);
-        quizOrchestrator.createQuiz(title);
-        verify(server).createQuiz(title);
-
-        String questionString = "How many teeth does a lion have?";
-        when(quiz.contains(questionString)).thenReturn(false);
-//        when(server.createQuestion(anyString())).thenReturn(question);
-        quizOrchestrator.addQuestion(questionString);
-        verify(quiz).addQuestion(question);
-
-        when(question.contains(anyString())).thenReturn(true);
-
+        when(server.isQuestionNull()).thenReturn(true);
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage(ExceptionMessages.EMPTY_ANSWER);
 
@@ -195,20 +182,6 @@ public class QuizOrchestratorTest {
 
     @Test
     public void shouldThrowIllegalArgumentExceptionIfStringIsEmptyForAddAnswer() throws IllegalQuestionException, IllegalQuizException, RemoteException {
-        String title = "A models.Quiz";
-//        when(server.createQuiz(anyString())).thenReturn(quiz);
-        when(server.valid(anyString())).thenReturn(true);
-        quizOrchestrator.createQuiz(title);
-        verify(server).createQuiz(title);
-
-        String questionString = "How many teeth does a lion have?";
-//        when(server.createQuestion(anyString())).thenReturn(question);
-        when(quiz.contains(questionString)).thenReturn(false);
-        quizOrchestrator.addQuestion(questionString);
-        verify(quiz).addQuestion(question);
-
-        when(question.contains(anyString())).thenReturn(true);
-
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage(ExceptionMessages.EMPTY_ANSWER);
 
@@ -217,34 +190,20 @@ public class QuizOrchestratorTest {
 
     @Test
     public void shouldThrowIllegalQuestionExceptionIfQuestionDoesNotExist() throws IllegalQuestionException, RemoteException {
+        when(server.isQuestionNull()).thenReturn(true);
         thrown.expect(IllegalQuestionException.class);
         thrown.expectMessage(ExceptionMessages.NO_QUESTION_EXISTS);
 
-        String answer = "lion";
-        quizOrchestrator.addAnswer(answer, true);
+        quizOrchestrator.addAnswer("Any answer", true);
     }
 
     @Test
     public void shouldThrowIllegalQuestionExceptionIfDuplicateAnswerIsEntered() throws IllegalQuizException, IllegalQuestionException, RemoteException {
-        String title = "Animal quiz";
-        when(server.valid(anyString())).thenReturn(true);
-//        when(server.createQuiz(anyString())).thenReturn(quiz);
-        quizOrchestrator.createQuiz(title);
-        verify(server).createQuiz(title);
-
-        String question1 = "What is the biggest cat?";
-        when(quiz.contains(anyString())).thenReturn(false);
-//        when(server.createQuestion(anyString())).thenReturn(question);
-        quizOrchestrator.addQuestion(question1);
-        verify(quiz).addQuestion(question);
-
-        String stringAnswer = "Lion";
-        when(question.contains(stringAnswer)).thenReturn(true);
-
+        when(server.questionContains(anyString())).thenReturn(true);
         thrown.expect(IllegalQuestionException.class);
         thrown.expectMessage(ExceptionMessages.DUPLICATE_ANSWER);
 
-        quizOrchestrator.addAnswer(stringAnswer, true);
+        quizOrchestrator.addAnswer("Some duplicate answer", true);
     }
 
     /*
@@ -280,6 +239,7 @@ public class QuizOrchestratorTest {
 
     @Test
     public void shouldThrowIllegalQuizExceptionIfQuizDoesNotExist() throws IllegalQuizException, RemoteException {
+        when(server.isQuizNull()).thenReturn(true);
         thrown.expect(IllegalQuizException.class);
         thrown.expectMessage(ExceptionMessages.NO_QUIZ_TO_SAVE);
 
@@ -288,6 +248,7 @@ public class QuizOrchestratorTest {
 
     @Test
     public void shouldThrowIllegalQuizExceptionIfQuizDoesNotContainAQuestion() throws IllegalQuizException, RemoteException {
+        when(server.isQuizEmpty()).thenReturn(true);
         thrown.expect(IllegalQuizException.class);
         thrown.expectMessage(ExceptionMessages.NO_QUESTIONS_CANNOT_SAVE);
 
