@@ -190,4 +190,21 @@ public class QuizServerTest {
         assertEquals(highScore, actual);
         verify(scoreKeeper).getLeader(anyInt());
     }
+
+    @Test
+    public void shouldBeAbleToGeneratePlayer() throws RemoteException {
+        String name = "Adam";
+        String country = "UK";
+        int age = 21;
+
+        when(playerFactory.generatePlayer(anyString(), anyString(), anyInt())).thenReturn(player);
+        when(player.getName()).thenReturn(name);
+        when(player.getCountry()).thenReturn(country);
+
+        Player actual = quizServer.generatePlayer(name, country, age);
+
+        assertEquals(player.getName(), actual.getName());
+
+        verify(playerFactory).generatePlayer(anyString(),anyString(),anyInt());
+    }
 }
