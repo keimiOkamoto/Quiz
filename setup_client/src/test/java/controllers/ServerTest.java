@@ -1,16 +1,12 @@
 package controllers;
 
 import factories.ItemsFactory;
-import models.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -40,25 +36,6 @@ public class ServerTest {
         server.createQuiz(title);
         verify(quizServer).generateQuiz(anyString());
     }
-//
-//    @Test
-//    public void shouldBeAbleToCreateQuestion() throws RemoteException {
-//        String question = "Where is the treasure buried?";
-//        Question expectedQuestion = mock(Question.class);
-//
-//        verify(quizServer).
-//    }
-//
-//    @Test
-//    public void shouldBeAbleToCreateAnswer() throws RemoteException {
-//        String answer = "on the moon";
-//        Answer expectedAnswer = mock(Answer.class);
-//
-////        when(quizServer.generateAnswer(anyString(), anyBoolean())).thenReturn(expectedAnswer);
-////        Answer actualQuestion = server.createAnswer(answer, true);
-//
-////        assertEquals(expectedAnswer, actualQuestion);
-//    }
 
     /*
      * Test for valid (String title)
@@ -106,8 +83,70 @@ public class ServerTest {
      */
     @Test
     public void shouldBeAbleToCheckIfQuizIsNull() throws RemoteException {
-
         server.isQuizNull();
+
         verify(quizServer).isQuizNull();
+    }
+
+    /*
+     * Test for quizContains(String questionStr)
+     */
+    @Test
+    public void shouldBeAbleToCheckIfQuizContainsIdBeingCalled() throws RemoteException {
+        String answer = "Yes";
+        server.questionContains(answer);
+
+        verify(quizServer).questionContains(answer);
+    }
+
+    /*
+     * Test for addQuestionToQuiz(String question)
+     */
+    @Test
+    public void shouldBeAbleToCallAddQuestionToQuiz() throws RemoteException {
+        String question = "Are cats cute?";
+        server.addQuestionToQuiz(question);
+
+        verify(quizServer).addQuestionToQuiz(question);
+    }
+
+    /*
+     *Test for isQuestionNull()
+     */
+    @Test
+    public void shouldBeAbleToCheckIfQuestionIsNull() {
+        server.isQuestionNull();
+
+        verify(quizServer).isQuestionNull();
+    }
+
+    /*
+     * Test for questionContains(String answer)
+     */
+    @Test
+    public void shouldBeAbleToCheckIfQuestionContainsAnAnswerStr() throws RemoteException {
+        server.questionContains("Yes");
+
+        verify(quizServer).questionContains(anyString());
+    }
+
+    /*
+     * Test for addToQuestion(String answer, boolean answerType)
+     */
+    @Test
+    public void shouldBeAbleToAddAnswersToQuestion() {
+        server.addQuestionToQuiz("any question");
+
+        verify(quizServer).addQuestionToQuiz(anyString());
+    }
+
+    /*
+     * Test for isQuizEmpty()
+     */
+    @Test
+    public void shouldBeAbleToCheckIfQuizIsEmpty() throws RemoteException {
+        server.isQuizEmpty();
+
+        verify(quizServer).isQuizEmpty();
     }
 }
