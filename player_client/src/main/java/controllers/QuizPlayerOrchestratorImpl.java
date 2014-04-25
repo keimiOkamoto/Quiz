@@ -1,5 +1,6 @@
 package controllers;
 
+import com.google.inject.Inject;
 import constants.ExceptionMessages;
 import exceptions.IllegalGameException;
 import exceptions.IllegalQuizException;
@@ -13,6 +14,7 @@ import java.util.List;
 public class QuizPlayerOrchestratorImpl implements QuizPlayerOrchestrator {
     private Server server;
 
+    @Inject
     public QuizPlayerOrchestratorImpl(Server server) {
         this.server = server;
     }

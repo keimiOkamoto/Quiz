@@ -1,5 +1,6 @@
 package controllers;
 
+import com.google.inject.Inject;
 import models.HighScore;
 import models.Player;
 import models.Quiz;
@@ -10,6 +11,7 @@ import java.util.List;
 public class ServerImpl implements Server {
     private QuizServer quizServer;
 
+    @Inject
     public ServerImpl(ServerLink serverLink) {
         quizServer = serverLink.getQuizServer();
     }

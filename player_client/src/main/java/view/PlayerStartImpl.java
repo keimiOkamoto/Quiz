@@ -1,5 +1,8 @@
 package view;
 
+import com.google.inject.Guice;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
 import constants.ExceptionMessages;
 import constants.PlayerMessages;
 import controllers.*;
@@ -7,6 +10,8 @@ import exceptions.IllegalGameException;
 import models.HighScore;
 import models.Player;
 import models.Quiz;
+import modules.QuizPlayerOrchestratorModule;
+import modules.ServerModule;
 
 import java.rmi.RemoteException;
 import java.util.List;
@@ -21,14 +26,17 @@ public class PlayerStartImpl implements PlayerStart {
     private int answerSize;
 
 
-    public static void main(String[] args) throws IllegalGameException, RemoteException {
+    public static void main(String[] args) {
         boolean initialized = true;
         Scanner scanner = new Scanner(System.in);
         Player player = null;
-        ServerLink serverLink = new ServerLinkImpl();
-        Server server = new ServerImpl(serverLink);
 
-        quizPlayerOrchestrator = new QuizPlayerOrchestratorImpl(server);
+        Injector injector = Guice.createInjector(new QuizPlayerOrchestratorModule());
+        quizPlayerOrchestrator = injector.getInstance(QuizPlayerOrchestratorImpl.class);
+
+        Injector injector1 = Guice.createInjector(new ServerModule());
+        Server server = injector1.getInstance(ServerImpl.class);
+
         playerStart = new PlayerStartImpl();
 
         String userInput = null;
@@ -60,7 +68,11 @@ public class PlayerStartImpl implements PlayerStart {
 
                 while (message.equals(PlayerMessages.QUIZ_SELECT_MESSAGE)) {
                     PlayQuiz playQuiz = new PlayQuizImpl(playerStart, quizPlayerOrchestrator);
-                    message = playQuiz.getQuizMenu(scanner, player, server, message);
+                    try {
+                        message = playQuiz.getQuizMenu(scanner, player, server, message);
+                    } catch (RemoteException | IllegalGameException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
