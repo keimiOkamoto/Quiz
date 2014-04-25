@@ -51,9 +51,8 @@ public class ScoreKeeperImpl extends UnicastRemoteObject implements ScoreKeeper 
     }
 
     @Override
-    public Player getLeader(int quizId) {
-        HighScore highScore = scoreBoardMap.get(quizId);
-        return highScore.getPlayer();
+    public HighScore getLeader(int quizId) {
+        return scoreBoardMap.get(quizId);
     }
 
     @Override

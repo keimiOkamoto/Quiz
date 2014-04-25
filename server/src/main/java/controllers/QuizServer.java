@@ -2,10 +2,7 @@ package controllers;
 
 import factories.ItemsFactory;
 import factories.PlayerFactory;
-import models.Answer;
-import models.Player;
-import models.Question;
-import models.Quiz;
+import models.*;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -143,7 +140,7 @@ public interface QuizServer extends Remote {
      * @return The winner of the quiz.
      * @throws java.rmi.RemoteException if there is a problem with the server/connection.
      */
-    Player getWinnerBy(int quizId) throws RemoteException;
+     HighScore getWinnerBy(int quizId) throws RemoteException;
 
     /**
      * Generates a Player.

@@ -5,21 +5,41 @@ import java.rmi.RemoteException;
 
 public class HighScoreImpl implements HighScore, Serializable {
 
+    private int score;
+    private int age;
     private Quiz quiz;
-    private Player player;
+    private String name;
+    private String country;
 
     public HighScoreImpl(Quiz quiz, Player player) {
         this.quiz = quiz;
-        this.player = player;
+        try {
+            this.name = player.getName();
+            this.country = player.getCountry();
+            this.age = player.getAge();
+            this.score = player.getScore();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public String getPlayerName() {
+        return name;
+    }
+
+    @Override
+    public String getPlayerCountry() {
+        return country;
+    }
+
+    @Override
+    public int getPlayerAge() {
+        return age;
     }
 
     @Override
     public int getHighScore() throws RemoteException {
-        return player.getScore();
-    }
-
-    @Override
-    public Player getPlayer() {
-        return player;
+        return score;
     }
 }

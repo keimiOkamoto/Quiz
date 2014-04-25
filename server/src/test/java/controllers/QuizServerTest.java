@@ -2,6 +2,7 @@ package controllers;
 
 import factories.ItemsFactory;
 import factories.PlayerFactory;
+import models.HighScore;
 import models.Player;
 import models.Quiz;
 import models.ScoreKeeper;
@@ -27,6 +28,7 @@ public class QuizServerTest {
     private Player player;
     private PlayerFactory playerFactory;
     private ClosedQuizContainer closedQuizContainer;
+    private HighScore highScore;
 
     @Before
     public void buildUp() throws RemoteException {
@@ -38,6 +40,7 @@ public class QuizServerTest {
         quizContainer = mock(QuizContainer.class);
         closedQuizContainer = mock(ClosedQuizContainer.class);
         quizServer = new QuizServerImpl(itemsFactory, playerFactory, quizContainer, scoreKeeper, closedQuizContainer);
+        highScore = mock(HighScore.class);
     }
 
     @Test
@@ -134,8 +137,8 @@ public class QuizServerTest {
         quizServer.setPlayerAsWinner(quiz, player);
         verify(scoreKeeper).setLeader(quiz, player);
 
-        when(scoreKeeper.getLeader(quizId)).thenReturn(player);
-        Player actual = quizServer.getWinnerBy(quizId);
+        when(scoreKeeper.getLeader(quizId)).thenReturn(highScore);
+        HighScore actual = quizServer.getWinnerBy(quizId);
 
         assertEquals(player, actual);
     }

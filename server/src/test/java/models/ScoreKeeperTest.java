@@ -62,11 +62,11 @@ public class ScoreKeeperTest {
         when(player.getName()).thenReturn(expected);
 
         when(itemsFactory.generateHighScore(eq(quiz), eq(player))).thenReturn(highScore);
-        when(highScore.getPlayer()).thenReturn(player);
+        when(highScore.getPlayerName()).thenReturn(expected);
         scoreKeeper.setLeader(quiz, player);
 
-        Player actualLeader  = scoreKeeper.getLeader(id);
-        String actual = actualLeader.getName();
+        HighScore actualLeader  = scoreKeeper.getLeader(id);
+        String actual = actualLeader.getPlayerName();
 
         assertEquals(expected, actual);
     }

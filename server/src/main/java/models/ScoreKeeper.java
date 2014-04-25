@@ -36,7 +36,7 @@ public interface ScoreKeeper {
      * @param quizId A quiz's id.
      * @return The leader of the quiz.(player)
      */
-    Player getLeader(int quizId);
+    HighScore getLeader(int quizId);
 
     /**
      * Sets the player of a particular quiz

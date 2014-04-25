@@ -95,7 +95,7 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     }
 
     @Override
-    public synchronized Player getWinnerBy(int quizId)throws RemoteException  {
+    public synchronized HighScore getWinnerBy(int quizId)throws RemoteException  {
         return scoreKeeper.getLeader(quizId);
     }
 
