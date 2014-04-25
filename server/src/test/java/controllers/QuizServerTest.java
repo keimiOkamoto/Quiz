@@ -2,10 +2,7 @@ package controllers;
 
 import factories.ItemsFactory;
 import factories.PlayerFactory;
-import models.HighScore;
-import models.Player;
-import models.Quiz;
-import models.ScoreKeeper;
+import models.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,6 +10,7 @@ import java.rmi.RemoteException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -76,19 +74,58 @@ public class QuizServerTest {
     }
 
     @Test
-    public void shouldBeAbleToGetItemsFactory() throws RemoteException {
-        ItemsFactory actualItemsFactory = quizServer.getItemsFactory();
-        assertEquals(itemsFactory, actualItemsFactory);
-    }
-
-    @Test
     public void shouldBeAbleToSaveQuizToContainer() throws RemoteException {
         Quiz quiz = mock(Quiz.class);
         quizServer.save();
         verify(quizContainer).save(quiz);
     }
 
+    @Test
+    public void shouldBeAbleToGetItemsFactory() throws RemoteException {
+        ItemsFactory actualItemsFactory = quizServer.getItemsFactory();
+        assertEquals(itemsFactory, actualItemsFactory);
+    }
+
     /********** Player client methods ***********/
+
+    @Test
+    public void shouldBeAbleToGenerateAQuiz() throws RemoteException {
+        String title = "Quiz about cats";
+        int id = 5;
+        when(quiz.getId()).thenReturn(id);
+        when(itemsFactory.generateQuiz(anyString())).thenReturn(quiz);
+
+        int actual = quizServer.generateQuiz(title);
+
+        assertEquals(id, actual);
+    }
+
+    @Test
+    public void shouldBeAbleToGenerateAQuestion() throws RemoteException {
+        Question question = mock(Question.class);
+        String questionStr = "What colour is a smurf?";
+
+        when(question.getQuestion()).thenReturn(questionStr);
+        when(itemsFactory.generateQuestion(anyString())).thenReturn(question);
+
+        Question actual = quizServer.generateQuestion(questionStr);
+        String actualStr = actual.getQuestion();
+
+        assertEquals(question, actual);
+        assertEquals(questionStr, actualStr);
+    }
+
+    @Test
+    public void shouldBeAbleToGenerateAnswer() throws RemoteException {
+        Answer answer = mock(Answer.class);
+        String answerStr = "blue";
+
+        when(itemsFactory.generateAnswer(anyString(), anyBoolean())).thenReturn(answer);
+
+        Answer actual = quizServer.generateAnswer(answerStr, true);
+
+        assertEquals(answer, actual);
+    }
 
     @Test
     public void shouldBeAbleToGetListOfQuizzes() throws RemoteException {

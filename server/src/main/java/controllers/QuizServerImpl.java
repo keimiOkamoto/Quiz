@@ -37,19 +37,22 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     }
 
     @Override
-    public synchronized void save() throws RemoteException {
-        quizContainer.save(quiz);
+    public synchronized void endQuiz(int id) throws RemoteException {
+        quizContainer.closeQuizWith(id);
     }
 
     @Override
-    public synchronized void endQuiz(int id) throws RemoteException {
-        quizContainer.closeQuizWith(id);
+    public synchronized void save() throws RemoteException {
+        quizContainer.save(quiz);
     }
 
     @Override
     public synchronized ItemsFactory getItemsFactory() throws RemoteException {
         return itemsFactory;
     }
+
+    /********** Player client methods ***********/
+
 
     @Override
     public synchronized int generateQuiz(String title) throws RemoteException {
@@ -66,8 +69,6 @@ public class QuizServerImpl extends UnicastRemoteObject implements QuizServer {
     public synchronized Answer generateAnswer(String answer, boolean answerType) throws RemoteException {
         return itemsFactory.generateAnswer(answer, answerType);
     }
-
-    /********** Player client methods ***********/
 
     @Override
     public synchronized List<Quiz> getQuizzes() throws RemoteException {
