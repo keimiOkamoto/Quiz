@@ -15,16 +15,6 @@ public class ServerImpl implements Server {
          return quizServer.generateQuiz(title);
     }
 
-//    @Override
-//    public Question createQuestion(String question) throws RemoteException {
-//        return quizServer.generateQuestion(question);
-//    }
-
-//    @Override
-//    public Answer createAnswer(String answer, boolean answerType) throws RemoteException {
-//        return quizServer.generateAnswer(answer, answerType);
-//    }
-
     @Override
     public boolean valid(String title) throws RemoteException {
         return quizServer.titleIsValid(title);
