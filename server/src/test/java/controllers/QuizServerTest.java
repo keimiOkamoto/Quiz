@@ -179,4 +179,15 @@ public class QuizServerTest {
 
         assertEquals(player, actual);
     }
+
+    @Test
+    public void shouldBeAbleToGetWinnerByID() throws RemoteException {
+        int id = 5;
+
+        when(scoreKeeper.getLeader(anyInt())).thenReturn(highScore);
+        HighScore actual = quizServer.getWinnerBy(id);
+
+        assertEquals(highScore, actual);
+        verify(scoreKeeper).getLeader(anyInt());
+    }
 }
