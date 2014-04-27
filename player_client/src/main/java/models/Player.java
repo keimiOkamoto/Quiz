@@ -4,7 +4,6 @@ import java.rmi.RemoteException;
 
 public interface Player {
 
-
     /**
      * Getter for a players ID.
      *

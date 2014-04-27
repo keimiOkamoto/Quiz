@@ -11,7 +11,8 @@ public interface PlayerStart {
     /**
      * Gets the quiz and allows the player to play the quiz.
      *
-     * @return the message that will lead to the next event.
+     * @return A useful message, that will
+     * determine the next event.
      */
     Quiz getQuiz();
 
@@ -37,7 +38,7 @@ public interface PlayerStart {
      * @param player A player of the quiz
      * @param quiz A quiz
      * @param server A server
-     * @returnA useful message if it is. That will
+     * @return A useful message if it is. That will
      * determine the next event.
      */
     String checkForHighScore(Player player, Quiz quiz, Server server);
@@ -45,20 +46,29 @@ public interface PlayerStart {
     /**
      * Validates if the closed quiz is empty.
      *
-     * @return A useful message if it is. That will
+     * @return A useful message, that will
      * determine the next event.
      */
     String checkIfClosedQuizIsNull();
 
     /**
+     * Takes an input from the player to choose a closed quiz
+     * to view it's information.
      *
-     *
-     * @param scanner
-     * @param message
-     * @return
+     * @param scanner A scanner for the user to type input.
+     * @param message A message that will determine the next event.
+     * @return A useful message, that will
+     * determine the next event.
      */
     String selectClosedQuiz(Scanner scanner, String message);
 
+    /**
+     * Gets the users choice for what to do.
+     *
+     * @param userInput A user input that will determine the next event.
+     * @return A useful message, that will
+     * determine the next event.
+     */
     String getStartChoice(String userInput);
 
 }
