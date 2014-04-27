@@ -7,7 +7,7 @@ import java.util.Set;
 public interface Quiz extends Remote {
 
     /**
-     * Adds a uestion to the quiz.
+     * Adds a question to the quiz.
      *
      * @param question a question
      */

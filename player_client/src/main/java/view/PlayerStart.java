@@ -33,7 +33,7 @@ public interface PlayerStart {
     void setQuizNumber(int numberIndex);
 
     /**
-     *
+     * Checks if the player scored the highest score.
      *
      * @param player A player of the quiz
      * @param quiz A quiz
@@ -70,5 +70,4 @@ public interface PlayerStart {
      * determine the next event.
      */
     String getStartChoice(String userInput);
-
 }
