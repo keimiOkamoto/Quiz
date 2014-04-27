@@ -35,7 +35,7 @@ public class PlayQuizImpl implements PlayQuiz {
         if (quizList == null || quizList.isEmpty()) {
             System.out.println(getExitMessage() + "\n");
             message = PlayerMessages.GET_MENU_OPTION_MESSAGE;
-            //System.exit(0);
+
         } else {
             System.out.println(message);
             setQuizSize(quizList.size());
