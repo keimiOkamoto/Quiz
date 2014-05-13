@@ -4,7 +4,7 @@
 Quiz
 =========
 
-A quiz system that allows a user to set a quiz up stating an arbitrary number of questions and as many possible answers with that question. No duplicate questions and answers assoisiated with that question is allowed. 
+A quiz system that allows a user to set a quiz up, stating an arbitrary number of questions and as many possible answers with that question. No duplicate questions and answers associated with that quiz is allowed. 
 
 The setup client may choose to close the quiz using option 2.
 They must type the quiz’s ID in order to do so.
@@ -40,4 +40,13 @@ They may also view past (closed) quizzes together with the highest score and pla
     -‘1’ To play a quiz and view lis of available quizzes. 
     -‘2’ To view past quizzes.
     -‘EXIT’ Can be typed at any point to close the application.
+    
+    
+References
+=========
+http://docs.oracle.com/javase/7/docs/technotes/guides/lang/hook-design.html
+http://www.tutorialspoint.com/java/lang/runtime_addshutdownhook.htm
+http://javaevangelist.blogspot.co.uk/2011/05/application-shutdown-hook.html
+http://docs.oracle.com/javase/7/docs/api/java/lang/Runtime.html
+http://www.vogella.com/tutorials/JavaSerialization/article.html
 
